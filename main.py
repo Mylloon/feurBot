@@ -55,7 +55,7 @@ def main(accessToken, accessTokenSecret, consumerKey, consumerSecret, user):
     for friend in api.friends(user, skip_status = True):
         friends.append(friend._json["screen_name"])
 
-    print(f"Scroll sur Twitter avec les abonnés de @{user}...")
+    print(f"Scroll sur Twitter avec les abonnements de @{user}...")
     stream.filter(track = quoi, languages = ["fr"], is_async = True)
 
 if __name__ == '__main__':
