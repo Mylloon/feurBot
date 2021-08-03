@@ -28,12 +28,13 @@ class Listener(StreamListener):
         if seniority(status._json["created_at"]):
             tweetText = sub(r'https?:\/\/\S+| +?\?|\?| +?\!| ?\!', '', status._json["text"])
             if tweetText.endswith(tuple(quoi)):
-                if status._json["user"]["screen_name"] in friends:
+                if status._json["user"]["id"] in friends:
                     try:
                         self.api.update_status(status = choice(feur), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
                         print(f"{status._json['user']['screen_name']} est passé au coiffeur !")
                     except Exception as error:
                         print(f"Error happens! {error}")
+                        pass
 
 def seniority(date: str):
     datetimeObject = datetime.strptime(date, '%a %b %d %H:%M:%S +0000 %Y') # Convert String format to datetime format
@@ -42,7 +43,7 @@ def seniority(date: str):
     return False if age.days >= 1 else True # False if older than a day
 
 def permute(array: list):
-    quoi = []
+    quoiListe = []
 
     for text in array: # all element of the list
         n = len(text)
@@ -58,8 +59,8 @@ def permute(array: list):
             temp = ""
             for i in combination:
                 temp += i
-            quoi.append(temp)
-    return quoi
+            quoiListe.append(temp)
+    return quoiListe
 
 def main(accessToken, accessTokenSecret, consumerKey, consumerSecret, user):
     """Main method."""
@@ -72,14 +73,10 @@ def main(accessToken, accessTokenSecret, consumerKey, consumerSecret, user):
     stream = Stream(auth = api.auth, listener = listener)
 
     try:
-        countOfFriends = api.get_user(user)._json["friends_count"]
-        friendsFromAPI = api.friends(user, skip_status = True, count = countOfFriends)
+        listOfFriendsID = api.friends_ids(user)
     except Exception as error:
         print(f"Une erreur est survenue, réessayez plus tard ({error})")
         exit(1)
-    for friend in friendsFromAPI:
-        friends.append(friend._json["screen_name"])
-    print(f"Liste des comptes snipé ({len(friends)}): {', '.join(friends)}")
 
     print(f"Scroll sur Twitter avec les abonnements de @{user}...")
     stream.filter(track = quoi, languages = ["fr"], is_async = True)
@@ -94,8 +91,7 @@ if __name__ == '__main__':
     PSEUDO is the PSEUDO of the account you want to listen to snipe.
     """
     quoi = permute(["quoi", "koi"])
-    quoi.append("https://twitter.com/shukuzi62/status/1422611919538724868/video/1")
-    feur = ["feur", "(feur)", "FEUR", "feur lol"]
+    feur = ["feur", "(feur)", "FEUR", "feur lol", "https://twitter.com/shukuzi62/status/1422611919538724868/video/1"]
     friends = []
     keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDO"])
     main(keys["TOKEN"], keys["TOKEN_SECRET"], keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"], keys["PSEUDO"])
