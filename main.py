@@ -42,6 +42,27 @@ def seniority(date: str):
     age = datetime.now(timezone('UTC')) - datetimeObject # Time now in UTC minus the time we got to get the age of the date
     return False if age.days >= 1 else True # False if older than a day
 
+def permute(array: list):
+    quoi = []
+
+    for text in array: # all element of the list
+        n = len(text)
+        mx = 1 << n # Number of permutations is 2^n
+        text = text.lower() # Converting string to lower case
+
+        for i in range(mx): # Using all subsequences and permuting them
+            combination = [k for k in text]
+            for j in range(n):
+                if (((i >> j) & 1) == 1): # If j-th bit is set, we convert it to upper case
+                    combination[j] = text[j].upper()
+
+            temp = ""
+            for i in combination:
+                temp += i
+            quoi.append(temp)
+
+    return quoi
+
 def main(accessToken, accessTokenSecret, consumerKey, consumerSecret, user):
     """Main method."""
     auth = OAuthHandler(consumerKey, consumerSecret)
@@ -67,7 +88,7 @@ if __name__ == '__main__':
     --
     PSEUDO is the PSEUDO of the account you want to listen to snipe. A proportion of who s.he follow will be targeted.
     """
-    quoi = ["quoi", "koi"]
+    quoi = permute(["quoi", "koi"])
     feur = ["feur", "(feur)", "FEUR", "feur lol"]
     friends = []
     keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDO"])
