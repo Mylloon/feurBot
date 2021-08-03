@@ -44,7 +44,7 @@ def getFriendsID(api, users: list):
     liste = []
     for user in users:
         liste.extend(api.friends_ids(user))
-    return liste
+    return list(set(liste))
 
 def seniority(date: str):
     datetimeObject = datetime.strptime(date, '%a %b %d %H:%M:%S +0000 %Y') # Convert String format to datetime format
