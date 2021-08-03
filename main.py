@@ -19,10 +19,9 @@ def load(variables):
     return keys
 
 class Listener(StreamListener):
-    def __init__(self, api = None, user = None):
+    def __init__(self, api = None):
         super(Listener, self).__init__()
         self.api = api
-        self.user = user
 
     def on_status(self, status):
         """Answer to tweets."""
@@ -32,14 +31,9 @@ class Listener(StreamListener):
                 if status._json["user"]["screen_name"] in friends:
                     try:
                         self.api.update_status(status = choice(feur), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
-                        try:
-                            getFriends(self.api, self.user)
-                        except:
-                            pass
                         print(f"{status._json['user']['screen_name']} est passé au coiffeur !")
                     except Exception as error:
                         print(f"Error happens! {error}")
-                        pass
 
 def seniority(date: str):
     datetimeObject = datetime.strptime(date, '%a %b %d %H:%M:%S +0000 %Y') # Convert String format to datetime format
@@ -75,18 +69,15 @@ def main(accessToken, accessTokenSecret, consumerKey, consumerSecret, user):
     
     api = API(auth)
 
-    listener = Listener(api, user)
+    listener = Listener(api)
     stream = Stream(auth = api.auth, listener = listener)
 
-    getFriends(api, user)
+    for friend in api.friends(user, skip_status = True):
+        friends.append(friend._json["screen_name"])
+    print(f"Liste des comptes snipé : {', '.join(friends)}")
 
     print(f"Scroll sur Twitter avec les abonnements de @{user}...")
     stream.filter(track = quoi, languages = ["fr"], is_async = True)
-
-def getFriends(api, user):
-    for friend in api.friends(user, skip_status = True):
-        if "screen_name" not in friends:
-            friends.append(friend._json["screen_name"])
 
 if __name__ == '__main__':
     """
