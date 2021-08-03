@@ -26,7 +26,7 @@ class Listener(StreamListener):
     def on_status(self, status):
         """Answer to tweets."""
         if seniority(status._json["created_at"]):
-            tweetText = sub(r' +?\?|\?| +?\!| ?\!', '', status._json["text"])
+            tweetText = sub(r'https?:\/\/\S+| +?\?|\?| +?\!| ?\!', '', status._json["text"])
             if tweetText.endswith(tuple(quoi)):
                 if status._json["user"]["screen_name"] in friends:
                     try:
