@@ -12,17 +12,20 @@ def load(variables):
     load_dotenv() # load .env file
     for var in variables:
         try:
-            keys[var] = environ[var]
+            res = environ[var]
+            if var == "PSEUDOS":
+                res = list(set(res.split(',')) - {""}) # create a list for the channels and remove blank channels and doubles
+            keys[var] = res
         except KeyError:
             print(f"Please set the environment variable {var} (.env file supported)")
             exit(1)
     return keys
 
 class Listener(StreamListener):
-    def __init__(self, api = None, user = None):
+    def __init__(self, api = None, users = None):
         super(Listener, self).__init__()
         self.api = api
-        self.listOfFriendsID = api.friends_ids(user)
+        self.listOfFriendsID = getFriendsID(api, users)
 
     def on_status(self, status):
         """Answer to tweets."""
@@ -36,6 +39,12 @@ class Listener(StreamListener):
                     except Exception as error:
                         print(f"Error happens! {error}")
                         pass
+
+def getFriendsID(api, users: list):
+    liste = []
+    for user in users:
+        liste.extend(api.friends_ids(user))
+    return liste
 
 def seniority(date: str):
     datetimeObject = datetime.strptime(date, '%a %b %d %H:%M:%S +0000 %Y') # Convert String format to datetime format
@@ -63,17 +72,17 @@ def permute(array: list):
             quoiListe.append(temp)
     return quoiListe
 
-def main(accessToken, accessTokenSecret, consumerKey, consumerSecret, user):
+def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSecret: str, users: list):
     """Main method."""
     auth = OAuthHandler(consumerKey, consumerSecret)
     auth.set_access_token(accessToken, accessTokenSecret)
     
     api = API(auth_handler = auth, wait_on_rate_limit = True)
 
-    listener = Listener(api, user)
+    listener = Listener(api, users)
     stream = Stream(auth = api.auth, listener = listener)
 
-    print(f"Scroll sur Twitter avec les abonnements de @{user}...")
+    print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(users)}...")
     stream.filter(track = quoi, languages = ["fr"], is_async = True)
 
 if __name__ == '__main__':
@@ -87,5 +96,5 @@ if __name__ == '__main__':
     """
     quoi = permute(["quoi", "koi"])
     feur = ["feur", "(feur)", "FEUR", "feur lol", "https://twitter.com/shukuzi62/status/1422611919538724868/video/1"]
-    keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDO"])
-    main(keys["TOKEN"], keys["TOKEN_SECRET"], keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"], keys["PSEUDO"])
+    keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS"])
+    main(keys["TOKEN"], keys["TOKEN_SECRET"], keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"], keys["PSEUDOS"])
