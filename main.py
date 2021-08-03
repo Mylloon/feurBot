@@ -19,9 +19,10 @@ def load(variables):
     return keys
 
 class Listener(StreamListener):
-    def __init__(self, api = None):
+    def __init__(self, api = None, user = None):
         super(Listener, self).__init__()
         self.api = api
+        self.user = user
 
     def on_status(self, status):
         """Answer to tweets."""
@@ -31,6 +32,10 @@ class Listener(StreamListener):
                 if status._json["user"]["screen_name"] in friends:
                     try:
                         self.api.update_status(status = choice(feur), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
+                        try:
+                            getFriends(self.api, self.user)
+                        except:
+                            pass
                         print(f"{status._json['user']['screen_name']} est passé au coiffeur !")
                     except Exception as error:
                         print(f"Error happens! {error}")
@@ -70,14 +75,18 @@ def main(accessToken, accessTokenSecret, consumerKey, consumerSecret, user):
     
     api = API(auth)
 
-    listener = Listener(api)
+    listener = Listener(api, user)
     stream = Stream(auth = api.auth, listener = listener)
 
-    for friend in api.friends(user, skip_status = True):
-        friends.append(friend._json["screen_name"])
+    getFriends(api, user)
 
     print(f"Scroll sur Twitter avec les abonnements de @{user}...")
     stream.filter(track = quoi, languages = ["fr"], is_async = True)
+
+def getFriends(api, user):
+    for friend in api.friends(user, skip_status = True):
+        if "screen_name" not in friends:
+            friends.append(friend._json["screen_name"])
 
 if __name__ == '__main__':
     """
@@ -89,6 +98,7 @@ if __name__ == '__main__':
     PSEUDO is the PSEUDO of the account you want to listen to snipe. A proportion of who s.he follow will be targeted.
     """
     quoi = permute(["quoi", "koi"])
+    quoi.append("https://twitter.com/shukuzi62/status/1422611919538724868/video/1")
     feur = ["feur", "(feur)", "FEUR", "feur lol"]
     friends = []
     keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDO"])
