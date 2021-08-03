@@ -13,4 +13,4 @@ PSEUDO          | Pseudo du compte que vous voulez écouter pour le snipe, pas t
 
 Ensuite installe les dépendances avec `pip install -r requirements.txt`.
 
-Et enfin  `python3 main.py`
+Et enfin  `python3 main.py`.
