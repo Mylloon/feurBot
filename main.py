@@ -3,7 +3,7 @@ from os import environ
 from tweepy import OAuthHandler, API, StreamListener, Stream
 from re import sub
 from random import choice
-from datetime import datetime, timedelta
+from datetime import datetime
 from pytz import timezone
 
 def load(variables):
