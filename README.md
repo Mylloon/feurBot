@@ -9,7 +9,7 @@ TOKEN           | Token d'accès disponible dans la section `Authentication Toke
 TOKEN_SECRET    | Token d'accès secret disponible dans la section `Authentication Tokens` sous la sous-rubrique `Access Token and Secret`
 CONSUMER_KEY    | Clé API disponible dans la section `Consumer Keys`
 CONSUMER_SECRET | Clé secrète API disponible dans la section `Consumer Keys`
-PSEUDO          | Pseudo du compte que vous voulez écouter pour le snipe, pas tout ceux qu'il/elle suit sera ciblée.
+PSEUDO          | Pseudo du compte que vous voulez écouter pour le snipe
 
 Ensuite installe les dépendances avec `pip install -r requirements.txt`.
 

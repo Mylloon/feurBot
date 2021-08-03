@@ -59,7 +59,6 @@ def permute(array: list):
             for i in combination:
                 temp += i
             quoi.append(temp)
-
     return quoi
 
 def main(accessToken, accessTokenSecret, consumerKey, consumerSecret, user):
@@ -67,14 +66,20 @@ def main(accessToken, accessTokenSecret, consumerKey, consumerSecret, user):
     auth = OAuthHandler(consumerKey, consumerSecret)
     auth.set_access_token(accessToken, accessTokenSecret)
     
-    api = API(auth)
+    api = API(auth_handler = auth, wait_on_rate_limit = True)
 
     listener = Listener(api)
     stream = Stream(auth = api.auth, listener = listener)
 
-    for friend in api.friends(user, skip_status = True):
+    try:
+        countOfFriends = api.get_user(user)._json["friends_count"]
+        friendsFromAPI = api.friends(user, skip_status = True, count = countOfFriends)
+    except Exception as error:
+        print(f"Une erreur est survenue, réessayez plus tard ({error})")
+        exit(1)
+    for friend in friendsFromAPI:
         friends.append(friend._json["screen_name"])
-    print(f"Liste des comptes snipé : {', '.join(friends)}")
+    print(f"Liste des comptes snipé ({len(friends)}): {', '.join(friends)}")
 
     print(f"Scroll sur Twitter avec les abonnements de @{user}...")
     stream.filter(track = quoi, languages = ["fr"], is_async = True)
@@ -86,7 +91,7 @@ if __name__ == '__main__':
     CONSUMER_KEY is the API Key available in the Consumer Keys section.
     CONSUMER_SECRET is the API Secret Key available in the Consumer Keys section.
     --
-    PSEUDO is the PSEUDO of the account you want to listen to snipe. A proportion of who s.he follow will be targeted.
+    PSEUDO is the PSEUDO of the account you want to listen to snipe.
     """
     quoi = permute(["quoi", "koi"])
     quoi.append("https://twitter.com/shukuzi62/status/1422611919538724868/video/1")
