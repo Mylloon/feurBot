@@ -19,16 +19,18 @@ def load(variables):
     return keys
 
 class Listener(StreamListener):
-    def __init__(self, api = None):
+    def __init__(self, api = None, user = None):
         super(Listener, self).__init__()
         self.api = api
+        self.listOfFriendsID = api.friends_ids(user)
 
     def on_status(self, status):
         """Answer to tweets."""
+        print(status._json["user"]["id"])
         if seniority(status._json["created_at"]):
             tweetText = sub(r'https?:\/\/\S+| +?\?|\?| +?\!| ?\!', '', status._json["text"])
             if tweetText.endswith(tuple(quoi)):
-                if status._json["user"]["id"] in friends:
+                if status._json["user"]["id"] in self.listOfFriendsID:
                     try:
                         self.api.update_status(status = choice(feur), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
                         print(f"{status._json['user']['screen_name']} est passé au coiffeur !")
@@ -69,14 +71,8 @@ def main(accessToken, accessTokenSecret, consumerKey, consumerSecret, user):
     
     api = API(auth_handler = auth, wait_on_rate_limit = True)
 
-    listener = Listener(api)
+    listener = Listener(api, user)
     stream = Stream(auth = api.auth, listener = listener)
-
-    try:
-        listOfFriendsID = api.friends_ids(user)
-    except Exception as error:
-        print(f"Une erreur est survenue, réessayez plus tard ({error})")
-        exit(1)
 
     print(f"Scroll sur Twitter avec les abonnements de @{user}...")
     stream.filter(track = quoi, languages = ["fr"], is_async = True)
@@ -92,6 +88,5 @@ if __name__ == '__main__':
     """
     quoi = permute(["quoi", "koi"])
     feur = ["feur", "(feur)", "FEUR", "feur lol", "https://twitter.com/shukuzi62/status/1422611919538724868/video/1"]
-    friends = []
     keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDO"])
     main(keys["TOKEN"], keys["TOKEN_SECRET"], keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"], keys["PSEUDO"])
