@@ -45,7 +45,7 @@ class Listener(StreamListener):
                     except AttributeError:
                         tweet = status.text
                     # recovery of the last "usable" word of the tweet
-                    regex = r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+|\.+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|…"
+                    regex = r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+|\.+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|…|\^+"
                     tweetText = sub(regex, "", tweet.lower())
                     lastWord = tweetText.split()[-1:][0]
                     if keys["VERBOSE"]:
