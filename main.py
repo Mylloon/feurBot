@@ -137,7 +137,7 @@ if __name__ == '__main__':
 
     # creation of answers
     feur = createBaseAnswers("feur")
-    feur.extend(["https://twitter.com/shukuzi62/status/1422611919538724868/video/1"]) # add a message in addition to the default answers
+    feur.extend(["https://twitter.com/shukuzi62/status/1422611919538724868/video/1", "feur (-isson)"]) # add a message in addition to the default answers
     stiti = createBaseAnswers("stiti")
     bril = createBaseAnswers("bril")
     
