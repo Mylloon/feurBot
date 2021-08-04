@@ -31,21 +31,21 @@ class Listener(StreamListener):
 
     def on_status(self, status):
         """Answer to tweets."""
-        if seniority(status._json["created_at"]):
-            tweetText = sub(r'https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~', '', status._json["text"])
-            if status._json["user"]["id"] in self.listOfFriendsID:
+        if status._json["user"]["id"] in self.listOfFriendsID:
+            if seniority(status._json["created_at"]):
+                tweetText = sub(r'https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~', '', status._json["text"])
                 lastWord = tweetText.split()[-1:][0].lower()
                 if lastWord in universalBase:
+                    if lastWord in quoiBase:
+                        answer = feur
+                    elif lastWord in ouiBase:
+                        answer = stiti
+                    elif lastWord in nonBase:
+                        answer = bril
+                    else: # temporary
+                        print(f"{errorMessage} I didn't know how to answer.")
+                        return
                     try:
-                        if lastWord in quoiBase:
-                            answer = feur
-                        elif lastWord in ouiBase:
-                            answer = stiti
-                        elif lastWord in nonBase:
-                            answer = bril
-                        else:
-                            print(f"{errorMessage} I didn't know how to answer.")
-                            return
                         self.api.update_status(status = choice(answer), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
                         print(f"{status._json['user']['screen_name']} s'est fait {answer[0]} !")
                     except Exception as error:
