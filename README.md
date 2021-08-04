@@ -6,6 +6,7 @@ Bot qui envoie automatiquement des réponses ennuyante quand les personnes que t
 quoi  | feur (ou équivalent)
 oui   | stiti (ou équivalent)
 non   | bril (ou équivalent)
+
 N'hésitez pas à ouvrir un ticket ou faire une merge request pour ajouter des mots/réponses.
 
 Pour le lancer, complète le `.envexample` et renomme le en `.env`.
