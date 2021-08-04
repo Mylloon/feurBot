@@ -33,27 +33,32 @@ class Listener(StreamListener):
         """Answer to tweets."""
         if status._json["user"]["id"] in self.listOfFriendsID: # verification of the author of the tweet
             if seniority(status._json["created_at"]): # verification of the age of the tweet
-                # recovery of the last "usable" word of the tweet
-                regex = r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+|\.+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|…"
-                tweetText = sub(regex, "", status._json["text"].lower())
-                lastWord = tweetText.split()[-1:][0]
-                print(f"Tweet trouvé de {status._json['user']['screen_name']} (dernier mot : \"{lastWord}\")...", end = " ")
-                if lastWord in universalBase: # check if the last word found is a supported word
-                    answer = None
-                    for mot in base.items():
-                        if lastWord in mot[1]:
-                            answer = answers[mot[0]]
-                    if answer == None:
-                        print(f"{errorMessage} Aucune réponse trouvée.")
+                if not hasattr(status, "retweeted_status"): # ignore Retweet
+                    try: # retrieve the entire tweet
+                        tweet = status.extended_tweet["full_text"]
+                    except AttributeError:
+                        tweet = status.text
+                    # recovery of the last "usable" word of the tweet
+                    regex = r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+|\.+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|…"
+                    tweetText = sub(regex, "", tweet.lower())
+                    lastWord = tweetText.split()[-1:][0]
+                    print(f"Tweet trouvé de {status._json['user']['screen_name']} (dernier mot : \"{lastWord}\")...", end = " ")
+                    if lastWord in universalBase: # check if the last word found is a supported word
+                        answer = None
+                        for mot in base.items():
+                            if lastWord in mot[1]:
+                                answer = answers[mot[0]]
+                        if answer == None:
+                            print(f"{errorMessage} Aucune réponse trouvée.")
+                        else:
+                            print(f"Envoie d'un {answer[0]}...", end = " ")
+                            try: # send answer
+                                self.api.update_status(status = choice(answer), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
+                                print(f"{status._json['user']['screen_name']} s'est fait {answer[0]} !")
+                            except Exception as error:
+                                print(f"\n{errorMessage} {error}")
                     else:
-                        print(f"Envoie d'un {answer[0]}...", end = " ")
-                        try: # send answer
-                            self.api.update_status(status = choice(answer), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
-                            print(f"{status._json['user']['screen_name']} s'est fait {answer[0]} !")
-                        except Exception as error:
-                            print(f"\n{errorMessage} {error}")
-                else:
-                    print("Annulation car le dernier mot n'est pas intéressant.")
+                        print("Annulation car le dernier mot n'est pas intéressant.")
 
     def do_stuff(self):
         while True:
