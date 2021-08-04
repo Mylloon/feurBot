@@ -46,7 +46,7 @@ class Listener(StreamListener):
                         tweet = status.text
                     # recovery of the last "usable" word of the tweet
                     regex = r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+|\.+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|…|\^+"
-                    tweetText = sub(regex, "", tweet.lower())
+                    tweetText = sub(regex, " ", tweet.lower())
                     lastWord = tweetText.split()[-1:][0]
                     if keys["VERBOSE"]:
                         print(f"Tweet trouvé de {status._json['user']['screen_name']} (dernier mot : \"{lastWord}\")...", end = " ")
