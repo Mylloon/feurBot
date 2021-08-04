@@ -36,6 +36,7 @@ class Listener(StreamListener):
                 # recovery of the last "usable" word of the tweet
                 tweetText = sub(r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+|\.+", "", status._json["text"].lower())
                 lastWord = tweetText.split()[-1:][0]
+                print(f"Tweet trouvé (dernier mot: \"{lastWord}\")...", end = " ")
                 if lastWord in universalBase: # check if the last word found is a supported word
                     if lastWord in quoiBase:
                         answer = feur
@@ -43,11 +44,12 @@ class Listener(StreamListener):
                         answer = stiti
                     elif lastWord in nonBase:
                         answer = bril
+                    print(f"Envoie de d'un {answer[0]}...", end = " ")
                     try: # send answer
                         self.api.update_status(status = choice(answer), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
                         print(f"{status._json['user']['screen_name']} s'est fait {answer[0]} !")
                     except Exception as error:
-                        print(f"{errorMessage} {error}")
+                        print(f"\n{errorMessage} {error}")
 
     def do_stuff(self):
         while True:
