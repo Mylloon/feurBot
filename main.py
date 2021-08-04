@@ -47,7 +47,7 @@ class Listener(StreamListener):
                             print(f"{errorMessage} I didn't know how to answer.")
                             return
                         self.api.update_status(status = choice(answer), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
-                        print(f"{status._json['user']['screen_name']} est passé au coiffeur !")
+                        print(f"{status._json['user']['screen_name']} s'est fait {answer[0]} !")
                     except Exception as error:
                         print(f"{errorMessage} {error}")
 
