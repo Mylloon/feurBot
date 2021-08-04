@@ -133,7 +133,8 @@ if __name__ == '__main__':
     base = {
         "quoi": ["quoi", "koi", "quoient", "q u o i"],
         "oui": ["oui", "ui"],
-        "non": ["non", "nn"]
+        "non": ["non", "nn"],
+        "nan": ["nan"]
     }
     universalBase = createBaseTrigger(list(base.values()))
 
@@ -148,7 +149,8 @@ if __name__ == '__main__':
             "https://twitter.com/antoinelae/status/1422943594403581957/video/1"
         ],
         "oui": createBaseAnswers("stiti"),
-        "non": createBaseAnswers("bril")
+        "non": createBaseAnswers("bril"),
+        "nan": createBaseAnswers("cy")
     }
     
     # loading environment variables and launching the bot
