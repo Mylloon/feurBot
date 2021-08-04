@@ -100,7 +100,7 @@ def createBaseTrigger(*lists) -> list:
 
 def createBaseAnswers(word) -> list:
     """Generates default answers for a given word"""
-    return [word, f"({word})", word.capitalize(), f"{word} lol"]
+    return [word, f"({word})", word.upper(), f"{word} lol"]
 
 def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSecret: str, users: list):
     """Main method."""
