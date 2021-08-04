@@ -18,7 +18,7 @@ def load(variables) -> dict:
                 res = list(set(res.split(',')) - {""}) # create a list for the channels and remove blank channels and doubles
             keys[var] = res
         except KeyError:
-            print(f"Please set the environment variable {var} (.env file supported)")
+            print(f"Veuillez définir la variable d'environnement {var} (fichier .env supporté)")
             exit(1)
     return keys
 
@@ -38,18 +38,21 @@ class Listener(StreamListener):
                 lastWord = tweetText.split()[-1:][0]
                 print(f"Tweet trouvé (dernier mot: \"{lastWord}\")...", end = " ")
                 if lastWord in universalBase: # check if the last word found is a supported word
-                    if lastWord in quoiBase:
-                        answer = feur
-                    elif lastWord in ouiBase:
-                        answer = stiti
-                    elif lastWord in nonBase:
-                        answer = bril
-                    print(f"Envoie d'un {answer[0]}...", end = " ")
-                    try: # send answer
-                        self.api.update_status(status = choice(answer), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
-                        print(f"{status._json['user']['screen_name']} s'est fait {answer[0]} !")
-                    except Exception as error:
-                        print(f"\n{errorMessage} {error}")
+                    answer = None
+                    for mot in base.items():
+                        if lastWord in mot[1]:
+                            answer = answers[mot[0]]
+                    if answer == None:
+                        print(f"{errorMessage} Aucune réponse trouvée.")
+                    else:
+                        print(f"Envoie d'un {answer[0]}...", end = " ")
+                        try: # send answer
+                            self.api.update_status(status = choice(answer), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
+                            print(f"{status._json['user']['screen_name']} s'est fait {answer[0]} !")
+                        except Exception as error:
+                            print(f"\n{errorMessage} {error}")
+                else:
+                    print("Annulation parce que le dernier mot n'est pas intéressant.")
 
     def do_stuff(self):
         while True:
@@ -91,7 +94,7 @@ def permute(array: list) -> list:
             quoiListe.append(temp)
     return quoiListe
 
-def createBaseTrigger(*lists) -> list:
+def createBaseTrigger(lists) -> list:
     """Merges all given lists into one."""
     listing = []
     for liste in lists:
@@ -124,22 +127,29 @@ if __name__ == '__main__':
     --
     PSEUDO is the PSEUDO of the account you want to listen to snipe.
     """
-    errorMessage = "Error happens!" # error message
+    errorMessage = "Une erreur survient !" # error message
 
     # words to detect
-    quoiBase = ["quoi", "koi", "quoient", "q u o i"]
-    ouiBase = ["oui", "ui"]
-    nonBase = ["non", "nn"]
-    universalBase = createBaseTrigger(quoiBase, ouiBase, nonBase)
+    base = {
+        "quoi": ["quoi", "koi", "quoient", "q u o i"],
+        "oui": ["oui", "ui"],
+        "non": ["non", "nn"]
+    }
+    universalBase = createBaseTrigger(list(base.values()))
 
     # creation of the list with all alternatives (upper/lower case)
     triggerWords = permute(universalBase)
 
     # creation of answers
-    feur = createBaseAnswers("feur")
-    feur.extend(["https://twitter.com/shukuzi62/status/1422611919538724868/video/1", "feur (-isson)", "https://twitter.com/antoinelae/status/1422943594403581957/video/1"]) # add a message in addition to the default answers
-    stiti = createBaseAnswers("stiti")
-    bril = createBaseAnswers("bril")
+    answers = {
+        "quoi": createBaseAnswers("feur") + [
+            "https://twitter.com/shukuzi62/status/1422611919538724868/video/1",
+            "feur (-isson)",
+            "https://twitter.com/antoinelae/status/1422943594403581957/video/1"
+        ],
+        "oui": createBaseAnswers("stiti"),
+        "non": createBaseAnswers("bril")
+    }
     
     # loading environment variables and launching the bot
     keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS"])
