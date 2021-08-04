@@ -34,7 +34,7 @@ class Listener(StreamListener):
         if status._json["user"]["id"] in self.listOfFriendsID: # verification of the author of the tweet
             if seniority(status._json["created_at"]): # verification of the age of the tweet
                 # recovery of the last "usable" word of the tweet
-                tweetText = sub(r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+|\.+", "", status._json["text"].lower())
+                tweetText = sub(r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+|\.+|(?<=na)a+(?<!n)", "", status._json["text"].lower())
                 lastWord = tweetText.split()[-1:][0]
                 print(f"Tweet trouvé (dernier mot: \"{lastWord}\")...", end = " ")
                 if lastWord in universalBase: # check if the last word found is a supported word
