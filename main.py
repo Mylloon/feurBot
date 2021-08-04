@@ -33,7 +33,7 @@ class Listener(StreamListener):
         """Answer to tweets."""
         if status._json["user"]["id"] in self.listOfFriendsID:
             if seniority(status._json["created_at"]):
-                tweetText = sub(r'https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~', '', sub(r'(?<=ui)i+', '', status._json["text"].lower()))
+                tweetText = sub(r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+", "", status._json["text"].lower())
                 lastWord = tweetText.split()[-1:][0].lower()
                 if lastWord in universalBase:
                     if lastWord in quoiBase:
