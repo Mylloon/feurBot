@@ -158,7 +158,8 @@ if __name__ == '__main__':
         "quoi": createBaseAnswers("feur") + [
             "https://twitter.com/shukuzi62/status/1422611919538724868/video/1",
             "feur (-isson)",
-            "https://twitter.com/antoinelae/status/1422943594403581957/video/1"
+            "https://twitter.com/antoinelae/status/1422943594403581957/video/1",
+            "feur (-issonictalopediatreuil)"
         ],
         "oui": createBaseAnswers("stiti"),
         "non": createBaseAnswers("bril"),
