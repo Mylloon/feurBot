@@ -130,17 +130,13 @@ if __name__ == '__main__':
     """
     errorMessage = "Une erreur survient !" # error message
 
-    # words to detect
+    # words to detect in lowercase
     base = {
-        "quoi": ["quoi", "koi", "quoient", "q u o i"],
+        "quoi": ["quoi", "koi", "quoient"],
         "oui": ["oui", "ui"],
         "non": ["non", "nn"],
         "nan": ["nan"]
     }
-    universalBase = createBaseTrigger(list(base.values()))
-
-    # creation of the list with all alternatives (upper/lower case)
-    triggerWords = permute(universalBase)
 
     # creation of answers
     answers = {
@@ -153,7 +149,13 @@ if __name__ == '__main__':
         "non": createBaseAnswers("bril"),
         "nan": createBaseAnswers("cy")
     }
-    
+
+    # creation of a list of all the words (only lowercase)
+    universalBase = createBaseTrigger(list(base.values()))
+
+    # creation of a list of all the words (upper and lower case)
+    triggerWords = permute(universalBase)
+
     # loading environment variables and launching the bot
     keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS"])
     main(keys["TOKEN"], keys["TOKEN_SECRET"], keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"], keys["PSEUDOS"])
