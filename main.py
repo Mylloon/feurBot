@@ -30,8 +30,8 @@ class Listener(StreamListener):
     def on_status(self, status):
         """Answer to tweets."""
         if seniority(status._json["created_at"]):
-            tweetText = sub(r'https?:\/\/\S+| +?\?|\?| +?\!| ?\!', '', status._json["text"])
-            if tweetText.endswith(tuple(quoi)):
+            tweetText = sub(r'https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~', '', status._json["text"])
+            if tweetText.endswith(tuple(triggerWords)):
                 if status._json["user"]["id"] in self.listOfFriendsID:
                     try:
                         self.api.update_status(status = choice(feur), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
@@ -83,7 +83,7 @@ def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSec
     stream = Stream(auth = api.auth, listener = listener)
 
     print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(users)}...")
-    stream.filter(track = quoi, languages = ["fr"], is_async = True)
+    stream.filter(track = triggerWords, languages = ["fr"], is_async = True)
 
 if __name__ == '__main__':
     """
@@ -94,7 +94,8 @@ if __name__ == '__main__':
     --
     PSEUDO is the PSEUDO of the account you want to listen to snipe.
     """
-    quoi = permute(["quoi", "koi"])
+    quoiBase = ["quoi", "koi"]
+    triggerWords = permute(quoiBase)
     feur = ["feur", "(feur)", "FEUR", "feur lol", "https://twitter.com/shukuzi62/status/1422611919538724868/video/1"]
     keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS"])
     main(keys["TOKEN"], keys["TOKEN_SECRET"], keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"], keys["PSEUDOS"])
