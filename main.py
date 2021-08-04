@@ -6,8 +6,8 @@ from random import choice
 from datetime import datetime
 from pytz import timezone
 
-def load(variables):
-    """Load env variables."""
+def load(variables) -> dict:
+    """Load environment variables."""
     keys = {}
     load_dotenv() # load .env file
     for var in variables:
@@ -38,21 +38,23 @@ class Listener(StreamListener):
                         print(f"{status._json['user']['screen_name']} est passé au coiffeur !")
                     except Exception as error:
                         print(f"Error happens! {error}")
-                        pass
 
-def getFriendsID(api, users: list):
+def getFriendsID(api, users: list) -> list:
+    """Get all friends of choosen users."""
     liste = []
     for user in users:
         liste.extend(api.friends_ids(user))
     return list(set(liste))
 
-def seniority(date: str):
+def seniority(date: str) -> bool:
+    """Return True only if the given string date is less than one day old."""
     datetimeObject = datetime.strptime(date, '%a %b %d %H:%M:%S +0000 %Y') # Convert String format to datetime format
     datetimeObject = datetimeObject.replace(tzinfo = timezone('UTC')) # Twitter give us an UTC time
     age = datetime.now(timezone('UTC')) - datetimeObject # Time now in UTC minus the time we got to get the age of the date
     return False if age.days >= 1 else True # False if older than a day
 
-def permute(array: list):
+def permute(array: list) -> list:
+    """Retrieves all possible combinations for the given list and returns the result as a list."""
     quoiListe = []
 
     for text in array: # all element of the list
@@ -71,6 +73,17 @@ def permute(array: list):
                 temp += i
             quoiListe.append(temp)
     return quoiListe
+
+def createBaseTrigger(*lists) -> list:
+    """Merges all given lists into one"""
+    listing = []
+    for liste in lists:
+        listing.extend(liste)
+    return list(set(listing))
+
+def createBaseAnswers(word) -> list:
+    """Generates default answers for a given word"""
+    return [word, f"({word})", word.capitalize(), f"{word} lol"]
 
 def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSecret: str, users: list):
     """Main method."""
@@ -94,8 +107,26 @@ if __name__ == '__main__':
     --
     PSEUDO is the PSEUDO of the account you want to listen to snipe.
     """
+    table = { # correspondence table
+        "quoi": "feur",
+        "oui": "stiti",
+        "non": "bril"
+    }
+
+    # words to detect
     quoiBase = ["quoi", "koi"]
-    triggerWords = permute(quoiBase)
-    feur = ["feur", "(feur)", "FEUR", "feur lol", "https://twitter.com/shukuzi62/status/1422611919538724868/video/1"]
+    ouiBase = ["oui", "ui"]
+    nonBase = ["non", "nn"]
+
+    # creation of the list with all alternatives (upper/lower case)
+    triggerWords = permute(createBaseTrigger(quoiBase, ouiBase, nonBase))
+
+    # creation of answers
+    feur = createBaseAnswers("feur")
+    feur.extend(["https://twitter.com/shukuzi62/status/1422611919538724868/video/1"]) # add a message in addition to the default answers
+    stiti = createBaseAnswers("stiti")
+    bril = createBaseAnswers("bril")
+    
+    # loading environment variables and launching the bot
     keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS"])
     main(keys["TOKEN"], keys["TOKEN_SECRET"], keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"], keys["PSEUDOS"])
