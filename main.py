@@ -50,7 +50,7 @@ class Listener(StreamListener):
                         print(f"{status._json['user']['screen_name']} est passé au coiffeur !")
                     except Exception as error:
                         print(f"{errorMessage} {error}")
-    
+
     def do_stuff(self):
         while True:
             self.q.get()
