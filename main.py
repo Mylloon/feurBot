@@ -31,21 +31,19 @@ class Listener(StreamListener):
 
     def on_status(self, status):
         """Answer to tweets."""
-        if status._json["user"]["id"] in self.listOfFriendsID:
-            if seniority(status._json["created_at"]):
+        if status._json["user"]["id"] in self.listOfFriendsID: # verification of the author of the tweet
+            if seniority(status._json["created_at"]): # verification of the age of the tweet
+                # recovery of the last "usable" word of the tweet
                 tweetText = sub(r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+", "", status._json["text"].lower())
                 lastWord = tweetText.split()[-1:][0].lower()
-                if lastWord in universalBase:
+                if lastWord in universalBase: # check if the last word found is a supported word
                     if lastWord in quoiBase:
                         answer = feur
                     elif lastWord in ouiBase:
                         answer = stiti
                     elif lastWord in nonBase:
                         answer = bril
-                    else: # temporary
-                        print(f"{errorMessage} I didn't know how to answer.")
-                        return
-                    try:
+                    try: # send answer
                         self.api.update_status(status = choice(answer), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
                         print(f"{status._json['user']['screen_name']} s'est fait {answer[0]} !")
                     except Exception as error:
@@ -92,14 +90,14 @@ def permute(array: list) -> list:
     return quoiListe
 
 def createBaseTrigger(*lists) -> list:
-    """Merges all given lists into one"""
+    """Merges all given lists into one."""
     listing = []
     for liste in lists:
         listing.extend(liste)
     return list(set(listing))
 
 def createBaseAnswers(word) -> list:
-    """Generates default answers for a given word"""
+    """Generates default answers for a given word."""
     return [word, f"({word})", word.upper(), f"{word} lol"]
 
 def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSecret: str, users: list):
