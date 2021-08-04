@@ -37,7 +37,7 @@ class Listener(StreamListener):
                 regex = r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+|\.+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|…"
                 tweetText = sub(regex, "", status._json["text"].lower())
                 lastWord = tweetText.split()[-1:][0]
-                print(f"Tweet trouvé (dernier mot: \"{lastWord}\")...", end = " ")
+                print(f"Tweet trouvé de {status._json['user']['screen_name']} (dernier mot : \"{lastWord}\")...", end = " ")
                 if lastWord in universalBase: # check if the last word found is a supported word
                     answer = None
                     for mot in base.items():
@@ -53,7 +53,7 @@ class Listener(StreamListener):
                         except Exception as error:
                             print(f"\n{errorMessage} {error}")
                 else:
-                    print("Annulation parce que le dernier mot n'est pas intéressant.")
+                    print("Annulation car le dernier mot n'est pas intéressant.")
 
     def do_stuff(self):
         while True:
