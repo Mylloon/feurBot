@@ -5,6 +5,7 @@ from re import sub
 from random import choice
 from datetime import datetime
 from pytz import timezone
+from queue import Queue
 
 def load(variables) -> dict:
     """Load environment variables."""
@@ -22,8 +23,9 @@ def load(variables) -> dict:
     return keys
 
 class Listener(StreamListener):
-    def __init__(self, api = None, users = None):
+    def __init__(self, api = None, users = None, q = Queue()):
         super(Listener, self).__init__()
+        self.q = q
         self.api = api
         self.listOfFriendsID = getFriendsID(api, users)
 
@@ -48,6 +50,11 @@ class Listener(StreamListener):
                         print(f"{status._json['user']['screen_name']} est passé au coiffeur !")
                     except Exception as error:
                         print(f"{errorMessage} {error}")
+    
+    def do_stuff(self):
+        while True:
+            self.q.get()
+            self.q.task_done()
 
 def getFriendsID(api, users: list) -> list:
     """Get all friends of choosen users."""
