@@ -13,7 +13,13 @@ def load(variables) -> dict:
     load_dotenv() # load .env file
     for var in variables:
         try:
-            res = environ[var]
+            if var == "VERBOSE":
+                try:
+                    res = bool(environ[var])
+                except:
+                    res = False
+            else:
+                res = environ[var]
             if var == "PSEUDOS":
                 res = list(set(res.split(',')) - {""}) # create a list for the channels and remove blank channels and doubles
             keys[var] = res
@@ -42,23 +48,27 @@ class Listener(StreamListener):
                     regex = r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+|\.+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|…"
                     tweetText = sub(regex, "", tweet.lower())
                     lastWord = tweetText.split()[-1:][0]
-                    print(f"Tweet trouvé de {status._json['user']['screen_name']} (dernier mot : \"{lastWord}\")...", end = " ")
+                    if keys["VERBOSE"]:
+                        print(f"Tweet trouvé de {status._json['user']['screen_name']} (dernier mot : \"{lastWord}\")...", end = " ")
                     if lastWord in universalBase: # check if the last word found is a supported word
                         answer = None
                         for mot in base.items():
                             if lastWord in mot[1]:
                                 answer = answers[mot[0]]
                         if answer == None:
-                            print(f"{errorMessage} Aucune réponse trouvée.")
+                            if keys["VERBOSE"]:
+                                print(f"{errorMessage} Aucune réponse trouvée.")
                         else:
-                            print(f"Envoie d'un {answer[0]}...", end = " ")
+                            if keys["VERBOSE"]:
+                                print(f"Envoie d'un {answer[0]}...", end = " ")
                             try: # send answer
                                 self.api.update_status(status = choice(answer), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
                                 print(f"{status._json['user']['screen_name']} s'est fait {answer[0]} !")
                             except Exception as error:
                                 print(f"\n{errorMessage} {error}")
                     else:
-                        print("Annulation car le dernier mot n'est pas intéressant.")
+                        if keys["VERBOSE"]:
+                            print("Annulation car le dernier mot n'est pas intéressant.")
 
     def do_stuff(self):
         while True:
@@ -162,5 +172,5 @@ if __name__ == '__main__':
     triggerWords = permute(universalBase)
 
     # loading environment variables and launching the bot
-    keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS"])
+    keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS", "VERBOSE"])
     main(keys["TOKEN"], keys["TOKEN_SECRET"], keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"], keys["PSEUDOS"])

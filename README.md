@@ -18,6 +18,7 @@ TOKEN_SECRET    | Token d'accès secret disponible dans la section `Authenticati
 CONSUMER_KEY    | Clé API disponible dans la section `Consumer Keys`
 CONSUMER_SECRET | Clé secrète API disponible dans la section `Consumer Keys`
 PSEUDOS         | Pseudos du ou des compte.s que vous voulez écouter pour le snipe (a séparer avec une virgule **sans** espaces)
+VERBOSE         | Affiche plus de messages dans la console [False\|True] (facultatif, par défaut sur False)
 
 Ensuite installe les dépendances avec `pip install -r requirements.txt`.
 
