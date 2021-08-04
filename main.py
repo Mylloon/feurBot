@@ -34,8 +34,8 @@ class Listener(StreamListener):
         if status._json["user"]["id"] in self.listOfFriendsID: # verification of the author of the tweet
             if seniority(status._json["created_at"]): # verification of the age of the tweet
                 # recovery of the last "usable" word of the tweet
-                tweetText = sub(r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+", "", status._json["text"].lower())
-                lastWord = tweetText.split()[-1:][0].lower()
+                tweetText = sub(r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+", "", status._json["text"].lower())
+                lastWord = tweetText.split()[-1:][0]
                 if lastWord in universalBase: # check if the last word found is a supported word
                     if lastWord in quoiBase:
                         answer = feur
@@ -125,7 +125,7 @@ if __name__ == '__main__':
     errorMessage = "Error happens!" # error message
 
     # words to detect
-    quoiBase = ["quoi", "koi"]
+    quoiBase = ["quoi", "koi", "quoient"]
     ouiBase = ["oui", "ui"]
     nonBase = ["non", "nn"]
     universalBase = createBaseTrigger(quoiBase, ouiBase, nonBase)
