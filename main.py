@@ -31,13 +31,23 @@ class Listener(StreamListener):
         """Answer to tweets."""
         if seniority(status._json["created_at"]):
             tweetText = sub(r'https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~', '', status._json["text"])
-            if tweetText.endswith(tuple(triggerWords)):
-                if status._json["user"]["id"] in self.listOfFriendsID:
+            if status._json["user"]["id"] in self.listOfFriendsID:
+                lastWord = tweetText.split()[-1:].lower()
+                if lastWord in universalBase:
                     try:
-                        self.api.update_status(status = choice(feur), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
+                        if lastWord in quoiBase:
+                            answer = feur
+                        elif lastWord in ouiBase:
+                            answer = stiti
+                        elif lastWord in nonBase:
+                            answer = bril
+                        else:
+                            print(f"{errorMessage} I didn't know how to answer.")
+                            return
+                        self.api.update_status(status = choice(answer), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
                         print(f"{status._json['user']['screen_name']} est passé au coiffeur !")
                     except Exception as error:
-                        print(f"Error happens! {error}")
+                        print(f"{errorMessage} {error}")
 
 def getFriendsID(api, users: list) -> list:
     """Get all friends of choosen users."""
@@ -107,19 +117,16 @@ if __name__ == '__main__':
     --
     PSEUDO is the PSEUDO of the account you want to listen to snipe.
     """
-    table = { # correspondence table
-        "quoi": "feur",
-        "oui": "stiti",
-        "non": "bril"
-    }
+    errorMessage = "Error happens!" # error message
 
     # words to detect
     quoiBase = ["quoi", "koi"]
     ouiBase = ["oui", "ui"]
     nonBase = ["non", "nn"]
+    universalBase = createBaseTrigger(quoiBase, ouiBase, nonBase)
 
     # creation of the list with all alternatives (upper/lower case)
-    triggerWords = permute(createBaseTrigger(quoiBase, ouiBase, nonBase))
+    triggerWords = permute(universalBase)
 
     # creation of answers
     feur = createBaseAnswers("feur")
