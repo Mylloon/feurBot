@@ -2,7 +2,7 @@
 
 Bot qui envoie automatiquement des réponses ennuyante quand les personnes que tu suis finissent leur tweet par mot spécial.
 | Mot | Réponse               | ¦ | Mot     | Réponse
-------|-----------------------|---|---------|--
+-----:|:----------------------|:-:|--------:|:-
 quoi  | feur (ou équivalent)  | ¦ | con     | combre (ou équivalent)
 oui   | stiti (ou équivalent) | ¦ | ok      | sur glace (ou équivalent)
 non   | bril (ou équivalent)  | ¦ | ouais   | stern (ou équivalent)
