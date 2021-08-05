@@ -21,7 +21,7 @@ def load(variables) -> dict:
             else:
                 res = environ[var]
             if var == "PSEUDOS":
-                res = list(set(res.split(',')) - {""}) # create a list for the channels and remove blank channels and doubles
+                res = list(set(res.split(",")) - {""}) # create a list for the channels and remove blank channels and doubles
             keys[var] = res
         except KeyError:
             print(f"Veuillez définir la variable d'environnement {var} (fichier .env supporté)")
@@ -50,12 +50,12 @@ class Listener(StreamListener):
         self.listOfFriendsID = getFriendsID(api, users)
     
     def on_connect(self):
-        print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(self.users)} comme timeline...")
+        print(f"Scroll sur Twitter avec les abonnements de @{", @".join(self.users)} comme timeline...")
     
     def on_disconnect(notice):
         notice = notice["disconnect"]
         print(f"Déconnexion (code {notice['code']}).", end = " ")
-        if len(notice['reason']) > 0:
+        if len(notice["reason"]) > 0:
             print(f"Raison : {notice['reason']}")
 
     def on_status(self, status):
@@ -115,9 +115,9 @@ def getFriendsID(api, users: list) -> list:
 
 def seniority(date: str) -> bool:
     """Return True only if the given string date is less than one day old."""
-    datetimeObject = datetime.strptime(date, '%a %b %d %H:%M:%S +0000 %Y') # Convert String format to datetime format
-    datetimeObject = datetimeObject.replace(tzinfo = timezone('UTC')) # Twitter give us an UTC time
-    age = datetime.now(timezone('UTC')) - datetimeObject # Time now in UTC minus the time we got to get the age of the date
+    datetimeObject = datetime.strptime(date, "%a %b %d %H:%M:%S +0000 %Y") # Convert String format to datetime format
+    datetimeObject = datetimeObject.replace(tzinfo = timezone("UTC")) # Twitter give us an UTC time
+    age = datetime.now(timezone("UTC")) - datetimeObject # Time now in UTC minus the time we got to get the age of the date
     return False if age.days >= 1 else True # False if older than a day
 
 def permute(array: list) -> list:
@@ -172,7 +172,7 @@ def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSec
     stream = Stream(auth = api.auth, listener = listener)
     stream.filter(track = triggerWords, languages = ["fr"], stall_warnings = True, is_async = True)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     """
     TOKEN is the Access Token available in the Authentication Tokens section under Access Token and Secret sub-heading.
     TOKEN_SECRET is the Access Token Secret available in the Authentication Tokens section under Access Token and Secret sub-heading.
