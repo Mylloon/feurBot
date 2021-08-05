@@ -49,7 +49,7 @@ class Listener(StreamListener):
         self.api = api
         self.users = users
         self.listOfFriendsID = getFriendsID(api, users)
-    
+
     def on_connect(self):
         print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(self.users)} comme timeline...")
     
