@@ -52,8 +52,11 @@ class Listener(StreamListener):
     def on_connect(self):
         print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(self.users)} comme timeline...")
     
-    def on_disconnect(self, notice):
-        print(f"Déconnexion ({notice['code']}). Raison : {notice['reason']}")
+    def on_disconnect(notice):
+        notice = notice["disconnect"]
+        print(f"Déconnexion (code {notice['code']}).", end = " ")
+        if len(notice['reason']) > 0:
+            print(f"Raison : {notice['reason']}")
 
     def on_status(self, status):
         if status._json["user"]["id"] in self.listOfFriendsID: # verification of the author of the tweet
