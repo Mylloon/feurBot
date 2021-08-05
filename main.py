@@ -83,7 +83,7 @@ class Listener(StreamListener):
                         for mot in base.items():
                             if lastWord in mot[1]:
                                 if mot[0] == "bon":
-                                    if datetime.now().hour in range (7, 17): # between 7am and 5pm
+                                    if datetime.now().hour in range(7, 17): # between 7am and 5pm
                                         answer = answers[mot[0]][0] # jour
                                     else:
                                         answer = answers[mot[0]][1] # soir
