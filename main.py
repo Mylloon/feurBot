@@ -1,12 +1,11 @@
 from dotenv import load_dotenv
 from os import environ
 from tweepy import OAuthHandler, API, StreamListener, Stream
-from re import sub
+from re import sub, findall
 from random import choice
 from datetime import datetime
 from pytz import timezone
 from queue import Queue
-from utils.remove_unicode import emojis
 
 def load(variables) -> dict:
     """Load environment variables."""
@@ -29,26 +28,42 @@ def load(variables) -> dict:
             exit(1)
     return keys
 
+def cleanTweet(tweet: str) -> str:
+    """Remove all unwanted elements from the tweet."""                    
+    tweet =  tweet.lower()                               # convert to lower case
+    tweet = sub(r"(https?:\/\/\S+|www.\S+)", " ", tweet) # remove URLs
+    hashtagMatch = findall(r"#\S+", tweet)      # check all hashtags
+    if len(hashtagMatch) < 3:                   # if less than 3
+        tweet = sub(r"#\S+", " ", tweet)        # remove them
+    tweet = sub(r"@\S+", " ", tweet)                     # remove usernames
+    tweet = sub(r" *?[^\w\s]+", " ", tweet)              # remove everything who is not a letter or a number or a space
+    tweet = sub(r"(?<=ui)i+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|(?<=hei)i+(?<!n)|(?<=si)i+", "", tweet) # remove key smashing in certains words
+    
+    return tweet.strip()
+
 class Listener(StreamListener):
     def __init__(self, api = None, users = None, q = Queue()):
         super(Listener, self).__init__()
         self.q = q
         self.api = api
+        self.users = users
         self.listOfFriendsID = getFriendsID(api, users)
+    
+    def on_connect(self):
+        print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(self.users)} comme timeline...")
+    
+    def on_disconnect(self, notice):
+        print(f"Déconnexion ({notice['code']}). Raison : {notice['reason']}")
 
     def on_status(self, status):
-        """Answer to tweets."""
         if status._json["user"]["id"] in self.listOfFriendsID: # verification of the author of the tweet
             if seniority(status._json["created_at"]): # verification of the age of the tweet
                 if not hasattr(status, "retweeted_status"): # ignore Retweet
-                    try: # retrieve the entire tweet
-                        tweet = status.extended_tweet["full_text"].lower()
-                    except AttributeError:
-                        tweet = status.text.lower()
-                    # recovery of the last "usable" word of the tweet
-                    tweetText = sub(r"https?:\/\/\S+| *\?+| *!+| *,+|-|~|\.+|…|\^+|@\S+| *\'+" + f"|{emojis()}", " ", tweet) # deletion with space
-                    tweetText = sub(r"(?<=ui)i+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|(?<=hei)i+(?<!n)|(?<=si)i+", "", tweetText) # deletion without space
-                    lastWord = tweetText.split()[-1:][0]
+                    if "extended_tweet" in status._json:
+                        tweet = cleanTweet(status.extended_tweet["full_text"])
+                    else:
+                        tweet = cleanTweet(status.text)
+                    lastWord = tweet.split()[-1:][0]
                     if keys["VERBOSE"]:
                         print(f"Tweet trouvé de {status._json['user']['screen_name']} (dernier mot : \"{lastWord}\")...", end = " ")
                     if lastWord in universalBase: # check if the last word found is a supported word
@@ -75,6 +90,16 @@ class Listener(StreamListener):
         while True:
             self.q.get()
             self.q.task_done()
+
+    def on_error(self, status_code):
+        print(f"{errorMessage[:-2]} ({status_code}) !", end = " ")
+        if status_code == 413:
+            print("La liste des mots est trop longue (triggerWords).")
+        elif status_code == 420:
+            print("Déconnecter du flux.")
+        else:
+            print("\n")
+        return False
 
 def getFriendsID(api, users: list) -> list:
     """Get all friends of choosen users."""
@@ -141,8 +166,6 @@ def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSec
 
     listener = Listener(api, users)
     stream = Stream(auth = api.auth, listener = listener)
-
-    print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(users)} comme timeline...")
     stream.filter(track = triggerWords, languages = ["fr"], stall_warnings = True, is_async = True)
 
 if __name__ == '__main__':
