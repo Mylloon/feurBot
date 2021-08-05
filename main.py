@@ -6,6 +6,7 @@ from random import choice
 from datetime import datetime
 from pytz import timezone
 from queue import Queue
+from utils.remove_unicode import emojis
 
 def load(variables) -> dict:
     """Load environment variables."""
@@ -46,6 +47,7 @@ class Listener(StreamListener):
                         tweet = status.text
                     # recovery of the last "usable" word of the tweet
                     regex = r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+|\.+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|…|\^+"
+                    regex += f"|{emojis()}"
                     tweetText = sub(regex, " ", tweet.lower())
                     lastWord = tweetText.split()[-1:][0]
                     if keys["VERBOSE"]:
