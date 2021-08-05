@@ -152,10 +152,10 @@ if __name__ == '__main__':
         "oui": ["oui", "ui"],
         "non": ["non", "nn"],
         "nan": ["nan"],
-        "hein": ["hein"],
+        "hein": ["1"], # + ["hein"],
         "ci": ["ci", "si"],
         "con": ["con"],
-        "ok": ["ok", "okay", "oké", "k"],
+        "ok": ["oké", "k"], # + ["ok", "okay"],
         "ouais": ["ouais", "oué"],
         "comment": ["comment"],
         "mais": ["mais", "mé"]
