@@ -46,7 +46,7 @@ class Listener(StreamListener):
                     except AttributeError:
                         tweet = status.text.lower()
                     # recovery of the last "usable" word of the tweet
-                    tweetText = sub(r"https?:\/\/\S+| *\?+| *!+| *,+|-|~|\.+|…|\^+|@\S+" + f"|{emojis()}", " ", tweet) # deletion with space
+                    tweetText = sub(r"https?:\/\/\S+| *\?+| *!+| *,+|-|~|\.+|…|\^+|@\S+| *\'+" + f"|{emojis()}", " ", tweet) # deletion with space
                     tweetText = sub(r"(?<=ui)i+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|(?<=hei)i+(?<!n)|(?<=si)i+", "", tweetText) # deletion without space
                     lastWord = tweetText.split()[-1:][0]
                     if keys["VERBOSE"]:
