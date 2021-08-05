@@ -18,7 +18,11 @@ fort    | boyard (ou équivalent)
 
 N'hésitez pas à ouvrir un ticket ou faire une merge request pour ajouter des mots/réponses.
 
-Pour le lancer, complète le `.envexample` et renomme le en `.env`.
+## Lancer le Bot
+
+Donner la permission `Read and Write` (ou `Read + Write + Direct Messages` mais aucun DM n'est envoyé) au Bot dans `Settings` puis `App permissions`.
+
+Détails des variables d'environnement :
 | Variable      | Explication et où elle se trouve
 ----------------|-
 TOKEN           | Token d'accès disponible dans la section `Authentication Tokens` sous la sous-rubrique `Access Token and Secret`
@@ -29,6 +33,39 @@ PSEUDOS         | Pseudos du ou des compte.s que vous voulez écouter pour le sn
 WHITELIST       | Pseudos des comptes qui ne seront pas touché par le Bot (facultatif, a séparer avec une virgule **sans** espaces, par défaut la liste est vide)
 VERBOSE         | Affiche plus de messages dans la console [False\|True] (facultatif, par défaut sur False)
 
-Ensuite installe les dépendances avec `pip install -r requirements.txt`.
+### En local
 
-Et enfin  `python3 main.py`.
+Pour le lancer, complètez le `.envexample` et renomme le en `.env`.
+
+Ensuite, installez les dépendances avec `pip install -r requirements.txt`.
+
+Et enfin lancez `python3 main.py`.
+
+### Avec Docker
+
+Avec une ligne de commande :
+```bash
+docker run -d \
+    --name="feurBot" \
+    registry.gitlab.com/mylloon/feurbot:latest \
+    --TOKEN="" \
+    --TOKEN_SECRET="" \
+    --CONSUMER_KEY="" \
+    --CONSUMER_SECRET="" \
+    --PSEUDOS="" \
+```
+Ou avec un `docker-compose.yml` :
+```bash
+version: "2.1"
+services:
+  feurBot:
+    image: registry.gitlab.com/mylloon/feurbot:latest
+    container_name: feurBot
+    environment:
+      - TOKEN=
+      - TOKEN_SECRET=
+      - CONSUMER_KEY=
+      - CONSUMER_SECRET=
+      - PSEUDOS=
+    restart: unless-stopped
+```
