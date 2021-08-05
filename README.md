@@ -46,7 +46,7 @@ docker run -d \
     --TOKEN_SECRET="" \
     --CONSUMER_KEY="" \
     --CONSUMER_SECRET="" \
-    --PSEUDOS="" \
+    --PSEUDOS=""
 ```
 Ou avec un `docker-compose.yml` :
 ```bash
