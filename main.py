@@ -126,20 +126,12 @@ def permute(array: list) -> list:
     quoiListe = []
 
     for text in array: # all element of the list
-        n = len(text)
-        mx = 1 << n # Number of permutations is 2^n
-        text = text.lower() # Converting string to lower case
-
-        for i in range(mx): # Using all subsequences and permuting them
-            combination = [k for k in text]
-            for j in range(n):
-                if (((i >> j) & 1) == 1): # If j-th bit is set, we convert it to upper case
-                    combination[j] = text[j].upper()
-
-            temp = ""
-            for i in combination:
-                temp += i
-            quoiListe.append(temp)
+        if text.lower() not in quoiListe:
+            quoiListe.append(text.lower())
+        if text.upper() not in quoiListe:
+            quoiListe.append(text.upper())
+        if text.capitalize() not in quoiListe:
+            quoiListe.append(text.capitalize())
     return quoiListe
 
 def createBaseTrigger(lists) -> list:
@@ -190,10 +182,10 @@ if __name__ == "__main__":
         "oui": ["oui", "ui"],
         "non": ["non", "nn"],
         "nan": ["nan"],
-        "hein": ["1"], # + ["hein"],
+        "hein": ["hein", "1"],
         "ci": ["ci", "si"],
         "con": ["con"],
-        "ok": ["oké", "k"], # + ["ok", "okay"],
+        "ok": ["ok", "okay", "oké", "k"],
         "ouais": ["ouais", "oué"],
         "comment": ["comment"],
         "mais": ["mais", "mé"]
@@ -226,6 +218,7 @@ if __name__ == "__main__":
 
     # creation of a list of all the words (upper and lower case)
     triggerWords = permute(universalBase)
+    print(len(triggerWords))
 
     # loading environment variables and launching the bot
     keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS", "VERBOSE"])
