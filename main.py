@@ -142,7 +142,7 @@ def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSec
     listener = Listener(api, users)
     stream = Stream(auth = api.auth, listener = listener)
 
-    print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(users)}...")
+    print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(users)} comme timeline...")
     stream.filter(track = triggerWords, languages = ["fr"], stall_warnings = True, is_async = True)
 
 if __name__ == '__main__':
