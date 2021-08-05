@@ -95,7 +95,7 @@ class Listener(StreamListener):
                             except Exception as error:
                                 if error[0]["code"] == 385:
                                     error[0]['message'] = "Tweet supprimé ou auteur en privé/bloqué."
-                                print(f"{errorMessage[:-2]} ({error[0]['code']}) {error[0]['message']}")
+                                print(f"{errorMessage[:-2]} ({error[0]['code']}) ! {error[0]['message']}")
                     else:
                         if keys["VERBOSE"]:
                             print("Annulation car le dernier mot n'est pas intéressant.")
