@@ -47,7 +47,7 @@ class Listener(StreamListener):
                         tweet = status.text.lower()
                     # recovery of the last "usable" word of the tweet
                     tweetText = sub(r"https?:\/\/\S+| *\?+| *!+| *,+|-|~|\.+|…|\^+|@\S+" + f"|{emojis()}", " ", tweet) # deletion with space
-                    tweetText = sub(r"(?<=ui)i+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|(?<=hei)i+(?<!n)", "", tweet) # deletion without space
+                    tweetText = sub(r"(?<=ui)i+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|(?<=hei)i+(?<!n)|(?<=si)i+", "", tweet) # deletion without space
                     lastWord = tweetText.split()[-1:][0]
                     if keys["VERBOSE"]:
                         print(f"Tweet trouvé de {status._json['user']['screen_name']} (dernier mot : \"{lastWord}\")...", end = " ")
@@ -151,20 +151,36 @@ if __name__ == '__main__':
         "quoi": ["quoi", "koi", "quoient"],
         "oui": ["oui", "ui"],
         "non": ["non", "nn"],
-        "nan": ["nan"]
+        "nan": ["nan"],
+        "hein": ["hein"],
+        "ci": ["ci", "si"],
+        "con": ["con"],
+        "ok": ["ok", "okay", "oké", "k"],
+        "ouais": ["ouais", "oué"],
+        "comment": ["comment"],
+        "mais": ["mais", "mé"]
     }
 
     # creation of answers
     answers = {
         "quoi": createBaseAnswers("feur") + [
-            "https://twitter.com/shukuzi62/status/1422611919538724868/video/1",
+            "https://twitter.com/Myshawii/status/1423219640025722880/video/1",
             "feur (-isson)",
-            "https://twitter.com/antoinelae/status/1422943594403581957/video/1",
+            "https://twitter.com/Myshawii/status/1423219684552417281/video/1",
             "feur (-issonictalopediatreuil)"
         ],
         "oui": createBaseAnswers("stiti"),
         "non": createBaseAnswers("bril"),
-        "nan": createBaseAnswers("cy")
+        "nan": createBaseAnswers("cy"),
+        "hein": createBaseAnswers("deux") + [
+            "2"
+        ],
+        "ci": createBaseAnswers("tron"),
+        "con": createBaseAnswers("combre"),
+        "ok": createBaseAnswers("sur glace"),
+        "ouais": createBaseAnswers("stern"),
+        "comment": createBaseAnswers("tateur"),
+        "mais": createBaseAnswers("on")
     }
 
     # creation of a list of all the words (only lowercase)

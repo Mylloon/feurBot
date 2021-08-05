@@ -1,12 +1,19 @@
 # Bot Twitter
 
 Bot qui envoie automatiquement des réponses ennuyante quand les personnes que tu suis finissent leur tweet par mot spécial.
-| Mot | Réponse
-------|-
-quoi  | feur (ou équivalent)
-oui   | stiti (ou équivalent)
-non   | bril (ou équivalent)
-nan   | cy (ou équivalent)
+| Mot   | Réponse
+--------|-
+quoi    | feur (ou équivalent)
+oui     | stiti (ou équivalent)
+non     | bril (ou équivalent)
+nan     | cy (ou équivalent)
+hein    | deux (ou équivalent)
+ci      | tron (ou équivalent)
+con     | combre (ou équivalent)
+ok      | sur glace (ou équivalent)
+ouais   | stern (ou équivalent)
+comment | tateur (ou équivalent)
+mais    | on (ou équivalent)
 
 N'hésitez pas à ouvrir un ticket ou faire une merge request pour ajouter des mots/réponses.
 
