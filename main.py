@@ -42,6 +42,7 @@ def cleanTweet(tweet: str) -> str:
     return tweet.strip()
 
 class Listener(StreamListener):
+    """Watch for tweets that match criteria in real-time."""
     def __init__(self, api = None, users = None, q = Queue()):
         super(Listener, self).__init__()
         self.q = q
