@@ -1,14 +1,14 @@
 # Bot Twitter
 
 Bot qui envoie automatiquement des réponses ennuyante quand les personnes que tu suis finissent leur tweet par mot spécial.
-| Mot | Réponse               | ¦ | Mot     | Réponse
-------|-----------------------|:-:|---------|-
-quoi  | feur (ou équivalent)  | ¦ | con     | combre (ou équivalent)
-oui   | stiti (ou équivalent) | ¦ | ok      | sur glace (ou équivalent)
-non   | bril (ou équivalent)  | ¦ | ouais   | stern (ou équivalent)
-nan   | cy (ou équivalent)    | ¦ | comment | tateur (ou équivalent)
-hein  | deux (ou équivalent)  | ¦ | mais    | on (ou équivalent)
-ci    | tron (ou équivalent)  | ¦ | fort    | boyard (ou équivalent)
+| Mot | Réponse               | ¦ | Mot     | Réponse                   | ¦ | Mot     | Réponse
+------|-----------------------|:-:|---------|---------------------------|:-:|---------|-
+quoi  | feur (ou équivalent)  | ¦ | con     | combre (ou équivalent)    | ¦ | coup    | teau (ou équivalent)
+oui   | stiti (ou équivalent) | ¦ | ok      | sur glace (ou équivalent) | ¦ |
+non   | bril (ou équivalent)  | ¦ | ouais   | stern (ou équivalent)     | ¦ |
+nan   | cy (ou équivalent)    | ¦ | comment | tateur (ou équivalent)    | ¦ |
+hein  | deux (ou équivalent)  | ¦ | mais    | on (ou équivalent)        | ¦ |
+ci    | tron (ou équivalent)  | ¦ | fort    | boyard (ou équivalent)    | ¦ |
 
 N'hésitez pas à ouvrir un ticket ou faire une merge request pour ajouter des mots/réponses.
 
