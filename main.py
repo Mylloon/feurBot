@@ -224,7 +224,9 @@ if __name__ == "__main__":
         "ouais": createBaseAnswers("stern"),
         "comment": createBaseAnswers("tateur"),
         "mais": createBaseAnswers("on"),
-        "fort": createBaseAnswers("boyard")
+        "fort": createBaseAnswers("boyard") + [
+            "boyard (-ennes)"
+        ]
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
