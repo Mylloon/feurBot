@@ -94,9 +94,11 @@ class Listener(StreamListener):
     def on_error(self, status_code):
         print(f"{errorMessage[:-2]} ({status_code}) !", end = " ")
         if status_code == 413:
-            print("La liste des mots est trop longue (triggerWords).")
+            if keys["VERBOSE"]:
+                print("La liste des mots est trop longue (triggerWords).")
         elif status_code == 420:
-            print("Déconnecter du flux.")
+            if keys["VERBOSE"]:
+                print("Déconnecter du flux.")
         else:
             print("\n")
         return False
@@ -161,7 +163,6 @@ def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSec
         except:
             print("Erreur d'authentification.")
             exit(1)
-        
         print(f"@{api.me()._json['screen_name']}.")
 
     listener = Listener(api, users)
