@@ -82,7 +82,13 @@ class Listener(StreamListener):
                         answer = None
                         for mot in base.items():
                             if lastWord in mot[1]:
-                                answer = answers[mot[0]]
+                                if mot[0] == "bon":
+                                    if datetime.now().hour in range (7, 17): # between 7am and 5pm
+                                        answer = answers[mot[0]][0] # jour
+                                    else:
+                                        answer = answers[mot[0]][1] # soir
+                                else:
+                                    answer = answers[mot[0]]
                         if answer == None:
                             if keys["VERBOSE"]:
                                 print(f"{errorMessage} Aucune réponse trouvée.")
@@ -206,7 +212,8 @@ if __name__ == "__main__":
         "mais": ["mais", "mé"],
         "fort": ["fort"],
         "coup": ["coup", "cou"],
-        "ca": ["ca", "ça", "sa"]
+        "ca": ["ca", "ça", "sa"],
+        "bon": ["bon"]
     }
 
     answers = { # creation of answers
@@ -232,7 +239,8 @@ if __name__ == "__main__":
             "boyard (-ennes)"
         ],
         "coup": createBaseAnswers("teau"),
-        "ca": createBaseAnswers("pristi")
+        "ca": createBaseAnswers("pristi"),
+        "bon": [createBaseAnswers("jour"), createBaseAnswers("soir")]
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
