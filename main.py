@@ -13,11 +13,16 @@ def load(variables) -> dict:
     load_dotenv() # load .env file
     for var in variables:
         try:
-            if var == "VERBOSE":
+            if var == "VERBOSE": # check is VERBOSE is set
                 try:
                     res = bool(environ[var])
                 except:
-                    res = False
+                    res = False # if not its False
+            elif var == "WHITELIST": # check if WHITELIST is set
+                try:
+                    res = list(set(environ[var].split(",")) - {""})
+                except:
+                    res = [] # if not its an empty list
             else:
                 res = environ[var]
             if var == "PSEUDOS":
@@ -62,7 +67,7 @@ class Listener(StreamListener):
             print(f"Raison : {notice['reason']}")
 
     def on_status(self, status):
-        if status._json["user"]["id"] in self.listOfFriendsID: # verification of the author of the tweet
+        if status._json["user"]["id"] in self.listOfFriendsID and status._json["user"]["screen_name"] not in keys["WHITELIST"]: # verification of the author of the tweet
             if seniority(status._json["created_at"]): # verification of the age of the tweet
                 if not hasattr(status, "retweeted_status"): # ignore Retweet
                     if "extended_tweet" in status._json:
@@ -119,9 +124,9 @@ def getFriendsID(api, users: list) -> list:
 
 def seniority(date: str) -> bool:
     """Return True only if the given string date is less than one day old."""
-    datetimeObject = datetime.strptime(date, "%a %b %d %H:%M:%S +0000 %Y") # Convert String format to datetime format
+    datetimeObject = datetime.strptime(date, "%a %b %d %H:%M:%S +0000 %Y") # convert String format to datetime format
     datetimeObject = datetimeObject.replace(tzinfo = timezone("UTC")) # Twitter give us an UTC time
-    age = datetime.now(timezone("UTC")) - datetimeObject # Time now in UTC minus the time we got to get the age of the date
+    age = datetime.now(timezone("UTC")) - datetimeObject # time now in UTC minus the time we got to get the age of the date
     return False if age.days >= 1 else True # False if older than a day
 
 def permute(array: list) -> list:
@@ -130,11 +135,11 @@ def permute(array: list) -> list:
 
     for text in array: # all element of the list
         if text.lower() not in quoiListe:
-            quoiListe.append(text.lower())
+            quoiListe.append(text.lower())      # word fully in lowercase
         if text.upper() not in quoiListe:
-            quoiListe.append(text.upper())
+            quoiListe.append(text.upper())      # word fully in uppercase
         if text.capitalize() not in quoiListe:
-            quoiListe.append(text.capitalize())
+            quoiListe.append(text.capitalize()) # word with the first letter in uppercase
     return quoiListe
 
 def createBaseTrigger(lists) -> list:
@@ -163,6 +168,12 @@ def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSec
             print("Erreur d'authentification.")
             exit(1)
         print(f"@{api.me()._json['screen_name']}.")
+    
+    if keys['WHITELIST'] == []:
+        whitelist = "Aucun"
+    else:
+        whitelist = f"@{', @'.join(keys['WHITELIST'])}"
+    print(f"Liste des comptes exclus : {whitelist}.")
 
     listener = Listener(api, users)
     stream = Stream(auth = api.auth, listener = listener)
@@ -179,8 +190,7 @@ if __name__ == "__main__":
     """
     errorMessage = "Une erreur survient !" # error message
 
-    # words to detect in lowercase
-    base = {
+    base = { # words to detect in lowercase
         "quoi": ["quoi", "koi", "quoient"],
         "oui": ["oui", "ui"],
         "non": ["non", "nn"],
@@ -194,8 +204,7 @@ if __name__ == "__main__":
         "mais": ["mais", "mé"]
     }
 
-    # creation of answers
-    answers = {
+    answers = { # creation of answers
         "quoi": createBaseAnswers("feur") + [
             "https://twitter.com/Myshawii/status/1423219640025722880/video/1",
             "feur (-isson)",
@@ -216,12 +225,10 @@ if __name__ == "__main__":
         "mais": createBaseAnswers("on")
     }
 
-    # creation of a list of all the words (only lowercase)
-    universalBase = createBaseTrigger(list(base.values()))
+    universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
 
-    # creation of a list of all the words (upper and lower case)
-    triggerWords = permute(universalBase)
+    triggerWords = permute(universalBase) # creation of a list of all the words (upper and lower case)
 
     # loading environment variables and launching the bot
-    keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS", "VERBOSE"])
+    keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS", "VERBOSE", "WHITELIST"])
     main(keys["TOKEN"], keys["TOKEN_SECRET"], keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"], keys["PSEUDOS"])
