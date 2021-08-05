@@ -35,6 +35,8 @@ def cleanTweet(tweet: str) -> str:
     hashtagMatch = findall(r"#\S+", tweet)      # check all hashtags
     if len(hashtagMatch) < 3:                   # if less than 3
         tweet = sub(r"#\S+", " ", tweet)        # remove them
+    else:
+        return ""                               # too much hashtags, ignoring tweet
     tweet = sub(r"@\S+", " ", tweet)                     # remove usernames
     tweet = sub(r" *?[^\w\s]+", " ", tweet)              # remove everything who is not a letter or a number or a space
     tweet = sub(r"(?<=ui)i+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|(?<=hei)i+(?<!n)|(?<=si)i+", "", tweet) # remove key smashing in certains words
@@ -69,7 +71,8 @@ class Listener(StreamListener):
                         tweet = cleanTweet(status.text)
                     lastWord = tweet.split()[-1:][0]
                     if keys["VERBOSE"]:
-                        print(f"Tweet trouvé de {status._json['user']['screen_name']} (dernier mot : \"{lastWord}\")...", end = " ")
+                        infoLastWord = f"dernier mot : \"{lastWord}\"" if len(lastWord) > 0 else "tweet ignoré car trop de hashtags"
+                        print(f"Tweet trouvé de {status._json['user']['screen_name']} ({infoLastWord})...", end = " ")
                     if lastWord in universalBase: # check if the last word found is a supported word
                         answer = None
                         for mot in base.items():
