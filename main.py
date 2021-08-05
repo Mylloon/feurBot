@@ -175,7 +175,7 @@ def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSec
         whitelist = "Aucun"
     else:
         whitelist = f"@{', @'.join(keys['WHITELIST'])}"
-    print(f"Liste des comptes exclus : {whitelist}.")
+    print(f"Liste des comptes ignorés : {whitelist}.")
 
     listener = Listener(api, users)
     stream = Stream(auth = api.auth, listener = listener)
