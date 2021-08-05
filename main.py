@@ -42,13 +42,12 @@ class Listener(StreamListener):
             if seniority(status._json["created_at"]): # verification of the age of the tweet
                 if not hasattr(status, "retweeted_status"): # ignore Retweet
                     try: # retrieve the entire tweet
-                        tweet = status.extended_tweet["full_text"]
+                        tweet = status.extended_tweet["full_text"].lower()
                     except AttributeError:
-                        tweet = status.text
+                        tweet = status.text.lower()
                     # recovery of the last "usable" word of the tweet
-                    regex = r"https?:\/\/\S+| +?\?|\?| +?\!| ?\!|-|~|(?<=ui)i+|@\S+|\.+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|…|\^+"
-                    regex += f"|{emojis()}"
-                    tweetText = sub(regex, " ", tweet.lower())
+                    tweetText = sub(r"https?:\/\/\S+| *\?+| *!+| *,+|-|~|\.+|…|\^+|@\S+" + f"|{emojis()}", " ", tweet) # deletion with space
+                    tweetText = sub(r"(?<=ui)i+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|(?<=hei)i+(?<!n)", "", tweet) # deletion without space
                     lastWord = tweetText.split()[-1:][0]
                     if keys["VERBOSE"]:
                         print(f"Tweet trouvé de {status._json['user']['screen_name']} (dernier mot : \"{lastWord}\")...", end = " ")
