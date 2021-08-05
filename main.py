@@ -218,7 +218,6 @@ if __name__ == "__main__":
 
     # creation of a list of all the words (upper and lower case)
     triggerWords = permute(universalBase)
-    print(len(triggerWords))
 
     # loading environment variables and launching the bot
     keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS", "VERBOSE"])
