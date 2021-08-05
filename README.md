@@ -14,6 +14,7 @@ ok      | sur glace (ou équivalent)
 ouais   | stern (ou équivalent)
 comment | tateur (ou équivalent)
 mais    | on (ou équivalent)
+fort    | boyard (ou équivalent)
 
 N'hésitez pas à ouvrir un ticket ou faire une merge request pour ajouter des mots/réponses.
 

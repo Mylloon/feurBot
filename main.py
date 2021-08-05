@@ -201,7 +201,8 @@ if __name__ == "__main__":
         "ok": ["ok", "okay", "oké", "k"],
         "ouais": ["ouais", "oué"],
         "comment": ["comment"],
-        "mais": ["mais", "mé"]
+        "mais": ["mais", "mé"],
+        "fort": ["fort"]
     }
 
     answers = { # creation of answers
@@ -222,7 +223,8 @@ if __name__ == "__main__":
         "ok": createBaseAnswers("sur glace"),
         "ouais": createBaseAnswers("stern"),
         "comment": createBaseAnswers("tateur"),
-        "mais": createBaseAnswers("on")
+        "mais": createBaseAnswers("on"),
+        "fort": createBaseAnswers("boyard")
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
