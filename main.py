@@ -129,6 +129,16 @@ def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSec
     
     api = API(auth_handler = auth, wait_on_rate_limit = True)
 
+    if keys["VERBOSE"]:
+        try:
+            api.verify_credentials()
+            print(f"Authentification réussie en tant que", end = " ")
+        except:
+            print("Erreur d'authentification.")
+            exit(1)
+        
+        print(f"@{api.me()._json['screen_name']}.")
+
     listener = Listener(api, users)
     stream = Stream(auth = api.auth, listener = listener)
 
