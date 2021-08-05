@@ -4,7 +4,7 @@ Bot qui envoie automatiquement des réponses ennuyante quand les personnes que t
 | Mot | Réponse               | ¦ | Mot     | Réponse                   | ¦ | Mot     | Réponse
 ------|-----------------------|:-:|---------|---------------------------|:-:|---------|-
 quoi  | feur (ou équivalent)  | ¦ | con     | combre (ou équivalent)    | ¦ | coup    | teau (ou équivalent)
-oui   | stiti (ou équivalent) | ¦ | ok      | sur glace (ou équivalent) | ¦ |
+oui   | stiti (ou équivalent) | ¦ | ok      | sur glace (ou équivalent) | ¦ | ca      | pristi (ou équivalent)
 non   | bril (ou équivalent)  | ¦ | ouais   | stern (ou équivalent)     | ¦ |
 nan   | cy (ou équivalent)    | ¦ | comment | tateur (ou équivalent)    | ¦ |
 hein  | deux (ou équivalent)  | ¦ | mais    | on (ou équivalent)        | ¦ |
