@@ -200,7 +200,7 @@ if __name__ == "__main__":
 
     base = { # words to detect in lowercase
         "quoi": ["quoi", "koi", "quoient"],
-        "oui": ["oui", "ui"],
+        "oui": ["oui", "ui", "wi"],
         "non": ["non", "nn"],
         "nan": ["nan"],
         "hein": ["hein", "1"],
@@ -213,7 +213,8 @@ if __name__ == "__main__":
         "fort": ["fort"],
         "coup": ["coup", "cou"],
         "ca": ["ca", "ça", "sa"],
-        "bon": ["bon"]
+        "bon": ["bon"],
+        "qui": ["qui", "ki"]
     }
 
     answers = { # creation of answers
@@ -240,7 +241,8 @@ if __name__ == "__main__":
         ],
         "coup": createBaseAnswers("teau"),
         "ca": createBaseAnswers("pristi"),
-        "bon": [createBaseAnswers("jour"), createBaseAnswers("soir")]
+        "bon": [createBaseAnswers("jour"), createBaseAnswers("soir")],
+        "qui": createBaseAnswers("wi")
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
