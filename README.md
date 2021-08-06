@@ -1,6 +1,8 @@
 # Bot Twitter
 
 Bot qui envoie automatiquement des réponses ennuyante quand les personnes que tu suis finissent leur tweet par mot spécial.
+
+Certains mots peuvent servir de trigger sans être dans la liste, example : `aussi` n'est pas dans la liste, mais en retirant `aus`, on obtient `si`, qui est dans la liste.
 | Mot | Réponse               | ¦ | Mot     | Réponse                   | ¦ | Mot     | Réponse
 ------|-----------------------|:-:|---------|---------------------------|:-:|---------|-
 quoi  | feur (ou équivalent)  | ¦ | con     | combre (ou équivalent)    | ¦ | coup    | teau (ou équivalent)
