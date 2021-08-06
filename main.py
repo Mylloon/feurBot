@@ -253,4 +253,5 @@ if __name__ == "__main__":
 
     # loading environment variables and launching the bot
     keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS", "VERBOSE", "WHITELIST"])
+    print("") # just a newline
     main(keys["TOKEN"], keys["TOKEN_SECRET"], keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"], keys["PSEUDOS"])
