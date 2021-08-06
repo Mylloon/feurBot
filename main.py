@@ -213,9 +213,12 @@ if __name__ == "__main__":
         "mais": ["mais", "mé"],
         "fort": ["fort"],
         "coup": ["coup", "cou"],
-        "ca": ["ca", "ça", "sa"],
+        "ça": ["ça", "sa"],
         "bon": ["bon"],
-        "qui": ["qui", "ki"]
+        "qui": ["qui", "ki"],
+        "sur": ["sur", "sûr"],
+        "pas": ["pas", "pa"],
+        "ka": ["ka", "kha"]
     }
 
     answers = { # creation of answers
@@ -241,9 +244,12 @@ if __name__ == "__main__":
             "boyard (-ennes)"
         ],
         "coup": createBaseAnswers("teau"),
-        "ca": createBaseAnswers("pristi"),
+        "ça": createBaseAnswers("pristi") + createBaseAnswers("perlipopette"),
         "bon": [createBaseAnswers("jour"), createBaseAnswers("soir")],
-        "qui": createBaseAnswers("wi") + createBaseAnswers("mono")
+        "qui": createBaseAnswers("wi") + createBaseAnswers("mono"),
+        "sur": createBaseAnswers("prise"),
+        "pas": createBaseAnswers("nini"),
+        "ka": createBaseAnswers("pitaine")
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
