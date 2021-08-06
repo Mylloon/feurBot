@@ -226,7 +226,7 @@ if __name__ == "__main__":
             "https://twitter.com/Myshawii/status/1423219640025722880/video/1",
             "feur (-isson)",
             "https://twitter.com/Myshawii/status/1423219684552417281/video/1",
-            "feur (-issonictalopediatreuil)"
+            "feur (-isson -ictalope -diatre -uil)"
         ],
         "oui": createBaseAnswers("stiti"),
         "non": createBaseAnswers("bril"),
@@ -239,7 +239,9 @@ if __name__ == "__main__":
         "ok": createBaseAnswers("sur glace"),
         "ouais": createBaseAnswers("stern"),
         "comment": createBaseAnswers("tateur"),
-        "mais": createBaseAnswers("on"),
+        "mais": createBaseAnswers("on") + [
+            "on (-dulation)"
+        ],
         "fort": createBaseAnswers("boyard") + [
             "boyard (-ennes)"
         ],
