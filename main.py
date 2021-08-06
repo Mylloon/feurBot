@@ -35,15 +35,16 @@ def load(variables) -> dict:
 
 def cleanTweet(tweet: str) -> str:
     """Remove all unwanted elements from the tweet."""                    
-    tweet =  tweet.lower()                               # convert to lower case
-    tweet = sub(r"(https?:\/\/\S+|www.\S+)", " ", tweet) # remove URLs
+    tweet =  tweet.lower()                                  # convert to lower case
+    tweet = sub(r"(https?:\/\/\S+|www.\S+)", " ", tweet)    # remove URLs
     hashtagMatch = findall(r"#\S+", tweet)      # check all hashtags
     if len(hashtagMatch) < 3:                   # if less than 3
         tweet = sub(r"#\S+", " ", tweet)        # remove them
     else:
         return ""                               # too much hashtags, ignoring tweet
-    tweet = sub(r"@\S+", " ", tweet)                     # remove usernames
-    tweet = sub(r" *?[^\w\s]+", " ", tweet)              # remove everything who is not a letter or a number or a space
+    tweet = sub(r"@\S+", " ", tweet)                        # remove usernames
+    tweet = sub(r" *?[^\w\s]+", " ", tweet)                 # remove everything who is not a letter or a number or a space
+    tweet = sub(r"\S+(?=si|ci)", " ", tweet)                 # remove element of the word only if the last syllable can be matched (so more words will be answered without adding them manually)
     tweet = sub(r"(?<=ui)i+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|(?<=hei)i+(?<!n)|(?<=si)i+", "", tweet) # remove key smashing in certains words
     
     return tweet.strip()
@@ -204,7 +205,7 @@ if __name__ == "__main__":
         "non": ["non", "nn"],
         "nan": ["nan"],
         "hein": ["hein", "1"],
-        "ci": ["ci", "si", "aussi"],
+        "ci": ["ci", "si"],
         "con": ["con"],
         "ok": ["ok", "okay", "oké", "k"],
         "ouais": ["ouais", "oué"],
