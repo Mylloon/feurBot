@@ -6,7 +6,7 @@ Bot qui envoie automatiquement des réponses ennuyante quand les personnes que t
 quoi  | feur (ou équivalent)  | ¦ | con     | combre (ou équivalent)    | ¦ | coup    | teau (ou équivalent)
 oui   | stiti (ou équivalent) | ¦ | ok      | sur glace (ou équivalent) | ¦ | ca      | pristi (ou équivalent)
 non   | bril (ou équivalent)  | ¦ | ouais   | stern (ou équivalent)     | ¦ | bon     | jour/soir (ou équivalent, dépend de l'heure)
-nan   | cy (ou équivalent)    | ¦ | comment | tateur (ou équivalent)    | ¦ | qui     | wi (ou équivalent)
+nan   | cy (ou équivalent)    | ¦ | comment | tateur (ou équivalent)    | ¦ | qui     | wi/mono (ou équivalent)
 hein  | deux (ou équivalent)  | ¦ | mais    | on (ou équivalent)        | ¦ |
 ci    | tron (ou équivalent)  | ¦ | fort    | boyard (ou équivalent)    | ¦ |
 

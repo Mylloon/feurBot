@@ -242,7 +242,7 @@ if __name__ == "__main__":
         "coup": createBaseAnswers("teau"),
         "ca": createBaseAnswers("pristi"),
         "bon": [createBaseAnswers("jour"), createBaseAnswers("soir")],
-        "qui": createBaseAnswers("wi")
+        "qui": createBaseAnswers("wi") + createBaseAnswers("mono")
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
