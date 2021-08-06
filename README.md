@@ -1,8 +1,8 @@
 # Bot Twitter
 
-Bot qui envoie automatiquement des réponses ennuyante quand les personnes que tu suis finissent leur tweet par mot spécial.
+Bot qui envoie automatiquement des réponses ennuyantes quand les personnes que tu suis finissent leur tweet par un mot spécial.
 
-Certains mots peuvent servir de trigger sans être dans la liste, example : `aussi` n'est pas dans la liste, mais en retirant `aus`, on obtient `si`, qui est dans la liste.
+Certains mots peuvent servir de "trigger" sans être dans la liste, example : `aussi` n'est pas dans la liste, mais en retirant `aus`, on obtient `si`, qui est dans la liste.
 | Mot | Réponse               | ¦ | Mot     | Réponse                   | ¦ | Mot     | Réponse
 ------|-----------------------|:-:|---------|---------------------------|:-:|---------|-
 quoi  | feur (ou équivalent)  | ¦ | con     | combre (ou équivalent)    | ¦ | coup    | teau (ou équivalent)
@@ -12,11 +12,11 @@ nan   | cy (ou équivalent)    | ¦ | comment | tateur (ou équivalent)    | ¦ 
 hein  | deux (ou équivalent)  | ¦ | mais    | on (ou équivalent)        | ¦ |
 ci    | tron (ou équivalent)  | ¦ | fort    | boyard (ou équivalent)    | ¦ |
 
-N'hésitez pas à ouvrir un ticket ou faire une merge request pour ajouter des mots/réponses.
+N'hésitez pas à ouvrir un ticket ou faire une merge-request pour contribuer au projet.
 
 ## Lancer le Bot
 
-Donner la permission `Read and Write` (ou `Read + Write + Direct Messages` mais aucun DM n'est envoyé) au Bot dans `Settings` puis `App permissions`.
+Donner la permission `Read and Write` (ou `Read + Write + Direct Messages` mais aucun DM n'est envoyé) au bot dans `Settings` puis `App permissions`.
 
 Détails des variables d'environnement :
 | Variable      | Explication et où elle se trouve
