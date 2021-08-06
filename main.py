@@ -100,9 +100,10 @@ class Listener(StreamListener):
                                 self.api.update_status(status = choice(answer), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
                                 print(f"{status._json['user']['screen_name']} s'est fait {answer[0]} !")
                             except Exception as error:
-                                if error.message[0]["code"] == 385:
-                                    error.message[0]['message'] = "Tweet supprimé ou auteur en privé/bloqué."
-                                print(f"{errorMessage[:-2]} ({error[0]['code']}) ! {error[0]['message']}")
+                                print(error.response) # debug
+                                if error.response.code == 385:
+                                    error.response.text = "Tweet supprimé ou auteur en privé/bloqué."
+                                print(f"{errorMessage[:-2]} ({error.response.code}) ! {error.response.text}")
                     else:
                         if keys["VERBOSE"]:
                             print("Annulation car le dernier mot n'est pas intéressant.")
