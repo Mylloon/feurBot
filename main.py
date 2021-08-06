@@ -204,7 +204,7 @@ if __name__ == "__main__":
         "non": ["non", "nn"],
         "nan": ["nan"],
         "hein": ["hein", "1"],
-        "ci": ["ci", "si"],
+        "ci": ["ci", "si", "aussi"],
         "con": ["con"],
         "ok": ["ok", "okay", "oké", "k"],
         "ouais": ["ouais", "oué"],
