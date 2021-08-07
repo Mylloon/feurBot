@@ -3,14 +3,14 @@
 Bot qui envoie automatiquement des réponses ennuyantes quand les personnes que tu suis finissent leur tweet par un mot spécial.
 
 Certains mots peuvent servir de "trigger" sans être dans la liste, example : `aussi` n'est pas dans la liste, mais en retirant `aus`, on obtient `si`, qui est dans la liste.
-| Mot | Réponse               | ¦ | Mot     | Réponse                   | ¦ | Mot     | Réponse
-------|-----------------------|:-:|---------|---------------------------|:-:|---------|-
-quoi  | feur (ou équivalent)  | ¦ | con     | combre (ou équivalent)    | ¦ | coup    | teau (ou équivalent)
-oui   | stiti (ou équivalent) | ¦ | ok      | sur glace (ou équivalent) | ¦ | ca      | pristi (ou équivalent)
-non   | bril (ou équivalent)  | ¦ | ouais   | stern (ou équivalent)     | ¦ | bon     | jour/soir (ou équivalent, dépend de l'heure)
-nan   | cy (ou équivalent)    | ¦ | comment | tateur (ou équivalent)    | ¦ | qui     | wi/mono (ou équivalent)
-hein  | deux (ou équivalent)  | ¦ | mais    | on (ou équivalent)        | ¦ |
-ci    | tron (ou équivalent)  | ¦ | fort    | boyard (ou équivalent)    | ¦ |
+| Mot | Réponse | ¦ | Mot     | Réponse   | ¦ | Mot  | Réponse                       | ¦ | Mot  | Réponse                       
+------|---------|:-:|---------|-----------|:-:|------|-------------------------------|:-:|------|-
+quoi  | feur    | ¦ | con     | combre    | ¦ | coup | teau                          | ¦ | ka   | pitaine                        
+oui   | stiti   | ¦ | ok      | sur glace | ¦ | ca   | pristi                        | ¦ | fais | rtile
+non   | bril    | ¦ | ouais   | stern     | ¦ | bon  | jour/soir (dépend de l'heure) | ¦ |
+nan   | cy      | ¦ | comment | tateur    | ¦ | qui  | wi/mono                       | ¦ |
+hein  | deux    | ¦ | mais    | on        | ¦ | sur  | prise                         | ¦ |
+ci    | tron    | ¦ | fort    | boyard    | ¦ | pas  | nini                          | ¦ |
 
 N'hésitez pas à ouvrir un ticket ou faire une merge-request pour contribuer au projet.
 
