@@ -6,6 +6,7 @@ from random import choice
 from datetime import datetime
 from pytz import timezone
 from queue import Queue
+from json import loads
 
 def load(variables) -> dict:
     """Load environment variables."""
@@ -100,9 +101,10 @@ class Listener(StreamListener):
                                 self.api.update_status(status = choice(answer), in_reply_to_status_id = status._json["id"], auto_populate_reply_metadata = True)
                                 print(f"{status._json['user']['screen_name']} s'est fait {answer[0]} !")
                             except Exception as error:
-                                if error.code == 385:
-                                    error.message = "Tweet supprimé ou auteur en privé/bloqué."
-                                print(f"{errorMessage[:-2]} ({error.code}) ! {error.message}")
+                                error = loads(error.response.text)["errors"][0]
+                                if error["code"] == 385:
+                                    error["message"] = "Tweet supprimé ou auteur en privé/bloqué."
+                                print(f"{errorMessage[:-2]} ({error['code']}) ! {error['message']}")
                     else:
                         if keys["VERBOSE"]:
                             print("Annulation car le dernier mot n'est pas intéressant.")
