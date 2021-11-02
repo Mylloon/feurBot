@@ -35,7 +35,7 @@ def load(variables) -> dict:
     return keys
 
 def cleanTweet(tweet: str) -> str:
-    """Remove all unwanted elements from the tweet."""                    
+    """Remove all unwanted elements from the tweet."""
     tweet =  tweet.lower()                                  # convert to lower case
     tweet = sub(r"(https?:\/\/\S+|www.\S+)", " ", tweet)    # remove URLs
     hashtagMatch = findall(r"#\S+", tweet)      # check all hashtags
@@ -47,7 +47,7 @@ def cleanTweet(tweet: str) -> str:
     tweet = sub(r" *?[^\w\s]+", " ", tweet)                 # remove everything who is not a letter or a number or a space
     tweet = sub(r"\S+(?=si|ci)", " ", tweet)                 # remove element of the word only if the last syllable can be matched (so more words will be answered without adding them manually)
     tweet = sub(r"(?<=ui)i+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|(?<=hei)i+(?<!n)|(?<=si)i+", "", tweet) # remove key smashing in certains words
-    
+
     return tweet.strip()
 
 class Listener(StreamListener):
@@ -61,7 +61,7 @@ class Listener(StreamListener):
 
     def on_connect(self):
         print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(self.users)} comme timeline...")
-    
+
     def on_disconnect(notice):
         notice = notice["disconnect"]
         print(f"Déconnexion (code {notice['code']}).", end = " ")
@@ -168,7 +168,7 @@ def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSec
     """Main method."""
     auth = OAuthHandler(consumerKey, consumerSecret)
     auth.set_access_token(accessToken, accessTokenSecret)
-    
+
     api = API(auth_handler = auth, wait_on_rate_limit = True)
 
     if keys["VERBOSE"]:
@@ -179,7 +179,7 @@ def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSec
             print("Erreur d'authentification.")
             exit(1)
         print(f"@{api.me()._json['screen_name']}.")
-    
+
     if keys['WHITELIST'] == []:
         whitelist = "Aucun"
     else:
@@ -229,7 +229,8 @@ if __name__ == "__main__":
             "https://twitter.com/Myshawii/status/1423219640025722880/video/1",
             "feur (-isson)",
             "https://twitter.com/Myshawii/status/1423219684552417281/video/1",
-            "feur (-isson -ictalope -diatre -uil)"
+            "feur (-isson -ictalope -diatre -uil)",
+            "https://twitter.com/Myshawii/status/1455469162202075138/video/1"
         ],
         "oui": createBaseAnswers("stiti"),
         "non": createBaseAnswers("bril"),
