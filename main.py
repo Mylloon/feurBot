@@ -233,7 +233,7 @@ if __name__ == "__main__":
             "feur (-isson -ictalope -diatre -uil)",
             "https://twitter.com/Myshawii/status/1455469162202075138/video/1"
         ],
-        "oui": createBaseAnswers("stiti"),
+        "oui": createBaseAnswers("stiti") + createBaseAnswers("fi"),
         "non": createBaseAnswers("bril"),
         "nan": createBaseAnswers("cy"),
         "hein": createBaseAnswers("deux") + [

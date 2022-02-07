@@ -3,14 +3,14 @@
 Bot qui envoie automatiquement des réponses ennuyantes quand les personnes que tu suis finissent leur tweet par un mot spécial.
 
 Certains mots peuvent servir de "trigger" sans être dans la liste, example : `aussi` n'est pas dans la liste, mais en retirant `aus`, on obtient `si`, qui est dans la liste.
-| Mot | Réponse | ¦ | Mot     | Réponse   | ¦ | Mot  | Réponse                       | ¦ | Mot                     | Réponse
-------|---------|:-:|---------|-----------|:-:|------|-------------------------------|:-:|-------------------------|-
-quoi  | feur    | ¦ | con     | combre    | ¦ | coup | teau                          | ¦ | ka                      | pitaine
-oui   | stiti   | ¦ | ok      | sur glace | ¦ | ca   | pristi                        | ¦ | fais                    | rtile
-non   | bril    | ¦ | ouais   | stern     | ¦ | bon  | jour/soir (dépend de l'heure) | ¦ | tant (ou autre syntaxe) | gente
-nan   | cy      | ¦ | comment | tateur    | ¦ | qui  | wi/mono                       | ¦ |
-hein  | deux    | ¦ | mais    | on        | ¦ | sur  | prise                         | ¦ |
-ci    | tron    | ¦ | fort    | boyard    | ¦ | pas  | nini                          | ¦ |
+| Mot | Réponse    | ¦ | Mot     | Réponse   | ¦ | Mot  | Réponse                       | ¦ | Mot                     | Réponse
+------|---------   |:-:|---------|-----------|:-:|------|-------------------------------|:-:|-------------------------|-
+quoi  | feur       | ¦ | con     | combre    | ¦ | coup | teau                          | ¦ | ka                      | pitaine
+oui   | stiti/fi   | ¦ | ok      | sur glace | ¦ | ca   | pristi                        | ¦ | fais                    | rtile
+non   | bril       | ¦ | ouais   | stern     | ¦ | bon  | jour/soir (dépend de l'heure) | ¦ | tant (ou autre syntaxe) | gente
+nan   | cy         | ¦ | comment | tateur    | ¦ | qui  | wi/mono                       | ¦ |
+hein  | deux       | ¦ | mais    | on        | ¦ | sur  | prise                         | ¦ |
+ci    | tron       | ¦ | fort    | boyard    | ¦ | pas  | nini                          | ¦ |
 
 N'hésitez pas à ouvrir un ticket ou faire une merge-request pour contribuer au projet.
 
