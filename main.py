@@ -38,14 +38,14 @@ def cleanTweet(tweet: str) -> str:
     """Remove all unwanted elements from the tweet."""
     tweet =  tweet.lower()                                  # convert to lower case
     tweet = sub(r"(https?:\/\/\S+|www.\S+)", " ", tweet)    # remove URLs
-    hashtagMatch = findall(r"#\S+", tweet)      # check all hashtags
-    if len(hashtagMatch) < 3:                   # if less than 3
-        tweet = sub(r"#\S+", " ", tweet)        # remove them
+    hashtagMatch = findall(r"#\S+", tweet)                  # check all hashtags
+    if len(hashtagMatch) < 3:                               # if less than 3
+        tweet = sub(r"#\S+", " ", tweet)                    # remove them
     else:
-        return ""                               # too much hashtags, ignoring tweet
+        return ""                                           # too much hashtags, ignoring tweet
     tweet = sub(r"@\S+", " ", tweet)                        # remove usernames
     tweet = sub(r" *?[^\w\s]+", " ", tweet)                 # remove everything who is not a letter or a number or a space
-    tweet = sub(r"\S+(?=si|ci)", " ", tweet)                 # remove element of the word only if the last syllable can be matched (so more words will be answered without adding them manually)
+    tweet = sub(r"\S+(?=si|ci)", " ", tweet)                # remove element of the word only if the last syllable can be matched (so more words will be answered without adding them manually)
     tweet = sub(r"(?<=ui)i+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|(?<=hei)i+(?<!n)|(?<=si)i+", "", tweet) # remove key smashing in certains words
 
     return tweet.strip()
@@ -136,9 +136,9 @@ def getFriendsID(api, users: list) -> list:
 def seniority(date: str) -> bool:
     """Return True only if the given string date is less than one day old."""
     datetimeObject = datetime.strptime(date, "%a %b %d %H:%M:%S +0000 %Y") # convert String format to datetime format
-    datetimeObject = datetimeObject.replace(tzinfo = timezone("UTC")) # Twitter give us an UTC time
-    age = datetime.now(timezone("UTC")) - datetimeObject # time now in UTC minus the time we got to get the age of the date
-    return False if age.days >= 1 else True # False if older than a day
+    datetimeObject = datetimeObject.replace(tzinfo = timezone("UTC"))      # Twitter give us an UTC time
+    age = datetime.now(timezone("UTC")) - datetimeObject                   # time now in UTC minus the time we got to get the age of the date
+    return False if age.days >= 1 else True                                # False if older than a day
 
 def permute(array: list) -> list:
     """Retrieves all possible combinations for the given list and returns the result as a list."""
@@ -265,7 +265,7 @@ if __name__ == "__main__":
 
     triggerWords = permute(universalBase) # creation of a list of all the words (upper and lower case)
 
-    # loading environment variables and launching the bot
+    # Loading environment variables and launching the bot
     keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS", "VERBOSE", "WHITELIST"])
     print("") # just a newline
     main(keys["TOKEN"], keys["TOKEN_SECRET"], keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"], keys["PSEUDOS"])
