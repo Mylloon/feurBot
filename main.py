@@ -222,7 +222,10 @@ if __name__ == "__main__":
         "pas": ["pas", "pa"],
         "ka": ["ka", "kha"],
         "fais": ["fais", "fait"],
-        "tant": ["tant", "temps", "tend", "tends"]
+        "tant": ["tant", "temps", "tend", "tends"],
+        "et": ["et"],
+        "la": ["la", "là"],
+        "tki": ["tki"]
     }
 
     answers = { # creation of answers
@@ -232,18 +235,18 @@ if __name__ == "__main__":
             "https://twitter.com/Myshawii/status/1423219684552417281/video/1",
             "feur (-isson -ictalope -diatre -uil)",
             "https://twitter.com/Myshawii/status/1455469162202075138/video/1"
-        ],
+        ] + createBaseAnswers("feuse"),
         "oui": createBaseAnswers("stiti") + createBaseAnswers("fi"),
         "non": createBaseAnswers("bril"),
         "nan": createBaseAnswers("cy"),
         "hein": createBaseAnswers("deux") + [
             "2"
         ],
-        "ci": createBaseAnswers("tron"),
+        "ci": createBaseAnswers("tron") + createBaseAnswers("prine"),
         "con": createBaseAnswers("combre"),
         "ok": createBaseAnswers("sur glace"),
         "ouais": createBaseAnswers("stern"),
-        "comment": createBaseAnswers("tateur"),
+        "comment": createBaseAnswers("tateur") + createBaseAnswers("trice") + createBaseAnswers("dant Cousteau"),
         "mais": createBaseAnswers("on") + [
             "on (-dulation)"
         ],
@@ -256,9 +259,12 @@ if __name__ == "__main__":
         "qui": createBaseAnswers("wi") + createBaseAnswers("mono"),
         "sur": createBaseAnswers("prise"),
         "pas": createBaseAnswers("nini"),
-        "ka": createBaseAnswers("pitaine"),
+        "ka": createBaseAnswers("pitaine") + createBaseAnswers("pitulation"),
         "fais": createBaseAnswers("rtile"),
-        "tant": createBaseAnswers("gente")
+        "tant": createBaseAnswers("gente"),
+        "et": createBaseAnswers("eint") + createBaseAnswers("ain"),
+        "la": createBaseAnswers("vabo") + createBaseAnswers("vande"),
+        "tki": createBaseAnswers("la")
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
