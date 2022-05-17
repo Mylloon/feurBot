@@ -206,7 +206,7 @@ if __name__ == "__main__":
         "oui": ["oui", "ui", "wi"],
         "non": ["non", "nn"],
         "nan": ["nan"],
-        "hein": ["hein", "1"],
+        "hein": ["hein", "1", "un"],
         "ci": ["ci", "si"],
         "con": ["con"],
         "ok": ["ok", "okay", "oké", "k"],
@@ -239,7 +239,7 @@ if __name__ == "__main__":
         "oui": createBaseAnswers("stiti") + createBaseAnswers("fi"),
         "non": createBaseAnswers("bril"),
         "nan": createBaseAnswers("cy"),
-        "hein": createBaseAnswers("deux") + [
+        "hein": createBaseAnswers("deux") + createBaseAnswers("bécile") + [
             "2"
         ],
         "ci": createBaseAnswers("tron") + createBaseAnswers("prine"),
