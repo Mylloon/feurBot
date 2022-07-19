@@ -227,7 +227,9 @@ if __name__ == "__main__":
         "la": ["la", "là"],
         "tki": ["tki"],
         "moi": ["moi", "mwa"],
-        "toi": ["toi", "toit"]
+        "toi": ["toi", "toit"],
+        "top": ["top"],
+        "jour": ["jour", "bonjour"]
     }
 
     answers = { # creation of answers
@@ -268,7 +270,9 @@ if __name__ == "__main__":
         "la": createBaseAnswers("vabo") + createBaseAnswers("vande"),
         "tki": createBaseAnswers("la"),
         "moi": createBaseAnswers("tié") + createBaseAnswers("sson"),
-        "toi": createBaseAnswers("lette")
+        "toi": createBaseAnswers("lette"),
+        "top": createBaseAnswers("inambour"),
+        "jour": createBaseAnswers("nal")
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words

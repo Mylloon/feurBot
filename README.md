@@ -3,12 +3,12 @@
 Bot qui envoie automatiquement des réponses ennuyantes quand les personnes que tu suis finissent leur tweet par un mot spécial.
 
 Certains mots peuvent servir de "trigger" sans être dans la liste, example : `aussi` n'est pas dans la liste, mais en retirant `aus`, on obtient `si`, qui est dans la liste.
-| Mot | Réponse    | ¦ | Mot     | Réponse   | ¦ | Mot  | Réponse                       | ¦ | Mot                     | Réponse    | ¦ | Mot | Réponse
-------|---------   |:-:|---------|-----------|:-:|------|-------------------------------|:-:|-------------------------|------------|:-:|-----|-
-quoi  | feur       | ¦ | con     | combre    | ¦ | coup | teau                          | ¦ | ka                      | pitaine    | ¦ | moi | tié/sson
-oui   | stiti/fi   | ¦ | ok      | sur glace | ¦ | ca   | pristi                        | ¦ | fais                    | rtile      | ¦ | toi | lette
-non   | bril       | ¦ | ouais   | stern     | ¦ | bon  | jour/soir (dépend de l'heure) | ¦ | tant (ou autre syntaxe) | gente      | ¦ |
-nan   | cy         | ¦ | comment | tateur    | ¦ | qui  | wi/mono                       | ¦ | et                      | eint/ain   | ¦ |
+| Mot | Réponse    | ¦ | Mot     | Réponse   | ¦ | Mot  | Réponse                       | ¦ | Mot                     | Réponse    | ¦ | Mot  | Réponse
+------|---------   |:-:|---------|-----------|:-:|------|-------------------------------|:-:|-------------------------|------------|:-:|------|-
+quoi  | feur       | ¦ | con     | combre    | ¦ | coup | teau                          | ¦ | ka                      | pitaine    | ¦ | moi  | tié/sson
+oui   | stiti/fi   | ¦ | ok      | sur glace | ¦ | ca   | pristi                        | ¦ | fais                    | rtile      | ¦ | toi  | lette
+non   | bril       | ¦ | ouais   | stern     | ¦ | bon  | jour/soir (dépend de l'heure) | ¦ | tant (ou autre syntaxe) | gente      | ¦ | top  | inambour
+nan   | cy         | ¦ | comment | tateur    | ¦ | qui  | wi/mono                       | ¦ | et                      | eint/ain   | ¦ | jour | nal
 hein  | deux       | ¦ | mais    | on        | ¦ | sur  | prise                         | ¦ | la                      | vabo/vande | ¦ |
 ci    | tron       | ¦ | fort    | boyard    | ¦ | pas  | nini                          | ¦ | tki                     | la         | ¦ |
 
