@@ -1,3 +1,4 @@
+from venv import create
 from dotenv import load_dotenv
 from os import environ
 from tweepy import OAuthHandler, API, StreamListener, Stream
@@ -229,7 +230,9 @@ if __name__ == "__main__":
         "moi": ["moi", "mwa"],
         "toi": ["toi", "toit"],
         "top": ["top"],
-        "jour": ["jour", "bonjour"]
+        "jour": ["jour", "bonjour"],
+        "ya": ["ya", "y'a"],
+        "yo": ["yo"]
     }
 
     answers = { # creation of answers
@@ -272,7 +275,9 @@ if __name__ == "__main__":
         "moi": createBaseAnswers("tié") + createBaseAnswers("sson"),
         "toi": createBaseAnswers("lette"),
         "top": createBaseAnswers("inambour"),
-        "jour": createBaseAnswers("nal")
+        "jour": createBaseAnswers("nal"),
+        "ya": createBaseAnswers("hourt"),
+        "yo": createBaseAnswers("ghourt") + createBaseAnswers("yo")
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
