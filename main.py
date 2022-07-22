@@ -250,10 +250,10 @@ if __name__ == "__main__":
             "2"
         ],
         "ci": createBaseAnswers("tron") + createBaseAnswers("prine"),
-        "con": createBaseAnswers("combre"),
+        "con": createBaseAnswers("combre") + createBaseAnswers("gelé") + createBaseAnswers("pas"),
         "ok": createBaseAnswers("sur glace"),
         "ouais": createBaseAnswers("stern"),
-        "comment": createBaseAnswers("tateur") + createBaseAnswers("trice") + createBaseAnswers("dant Cousteau"),
+        "comment": createBaseAnswers("tateur") + createBaseAnswers("tatrice") + createBaseAnswers("dant Cousteau"),
         "mais": createBaseAnswers("on") + [
             "on (-dulation)"
         ],
@@ -268,12 +268,12 @@ if __name__ == "__main__":
         "pas": createBaseAnswers("nini"),
         "ka": createBaseAnswers("pitaine") + createBaseAnswers("pitulation"),
         "fais": createBaseAnswers("rtile"),
-        "tant": createBaseAnswers("gente"),
+        "tant": createBaseAnswers("gente") + createBaseAnswers("tation"),
         "et": createBaseAnswers("eint") + createBaseAnswers("ain"),
         "la": createBaseAnswers("vabo") + createBaseAnswers("vande"),
         "tki": createBaseAnswers("la"),
-        "moi": createBaseAnswers("tié") + createBaseAnswers("sson"),
-        "toi": createBaseAnswers("lette"),
+        "moi": createBaseAnswers("tié") + createBaseAnswers("sson") + createBaseAnswers("sissure") + createBaseAnswers("si"),
+        "toi": createBaseAnswers("lette") + createBaseAnswers("ture"),
         "top": createBaseAnswers("inambour"),
         "jour": createBaseAnswers("nal"),
         "ya": createBaseAnswers("hourt"),
