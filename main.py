@@ -273,7 +273,7 @@ if __name__ == "__main__":
         "et": createBaseAnswers("eint") + createBaseAnswers("ain"),
         "la": createBaseAnswers("vabo") + createBaseAnswers("vande"),
         "tki": createBaseAnswers("la"),
-        "moi": createBaseAnswers("tié") + createBaseAnswers("sson") + createBaseAnswers("sissure") + createBaseAnswers("si"),
+        "moi": createBaseAnswers("tié") + createBaseAnswers("sson") + createBaseAnswers("sissure"),
         "toi": createBaseAnswers("lette") + createBaseAnswers("ture"),
         "top": createBaseAnswers("inambour"),
         "jour": createBaseAnswers("nal"),
