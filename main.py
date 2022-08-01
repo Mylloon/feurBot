@@ -1,4 +1,3 @@
-from venv import create
 from dotenv import load_dotenv
 from os import environ
 from tweepy import OAuthHandler, API, StreamListener, Stream
