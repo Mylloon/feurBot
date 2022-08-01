@@ -242,7 +242,8 @@ if __name__ == "__main__":
             "https://twitter.com/Myshawii/status/1423219684552417281/video/1",
             "feur (-isson -ictalope -diatre -uil)",
             "https://twitter.com/Myshawii/status/1455469162202075138/video/1",
-            "https://twitter.com/Myshawii/status/1552026689101860865/video/1"
+            "https://twitter.com/Myshawii/status/1552026689101860865/video/1",
+            "https://twitter.com/Myshawii/status/1553112547678720001/photo/1"
         ] + createBaseAnswers("feuse"),
         "oui": createBaseAnswers("stiti") + createBaseAnswers("fi"),
         "non": createBaseAnswers("bril"),
