@@ -10,7 +10,7 @@ oui   | stiti/fi   | ¦ | ok      | sur glace | ¦ | ca   | pristi              
 non   | bril       | ¦ | ouais   | stern     | ¦ | bon  | jour/soir (dépend de l'heure) | ¦ | tant (ou autre syntaxe) | gente      | ¦ | top   | inambour
 nan   | cy         | ¦ | comment | tateur    | ¦ | qui  | wi/mono                       | ¦ | et                      | eint/ain   | ¦ | jour  | nal
 hein  | deux       | ¦ | mais    | on        | ¦ | sur  | prise                         | ¦ | la                      | vabo/vande | ¦ | ya/yo | hourt/yo
-ci    | tron       | ¦ | fort    | boyard    | ¦ | pas  | nini                          | ¦ | tki                     | la         | ¦ |
+ci    | tron       | ¦ | fort    | boyard    | ¦ | pas  | nini/steur                    | ¦ | tki                     | la         | ¦ |
 
 N'hésitez pas à ouvrir un ticket ou faire une merge-request pour contribuer au projet.
 

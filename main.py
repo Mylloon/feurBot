@@ -266,7 +266,7 @@ if __name__ == "__main__":
         "bon": [createBaseAnswers("jour"), createBaseAnswers("soir")],
         "qui": createBaseAnswers("wi") + createBaseAnswers("mono"),
         "sur": createBaseAnswers("prise"),
-        "pas": createBaseAnswers("nini"),
+        "pas": createBaseAnswers("nini") + createBaseAnswers("steur"),
         "ka": createBaseAnswers("pitaine") + createBaseAnswers("pitulation"),
         "fais": createBaseAnswers("rtile"),
         "tant": createBaseAnswers("gente") + createBaseAnswers("tation"),
