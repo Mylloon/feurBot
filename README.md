@@ -3,10 +3,10 @@
 Bot qui envoie automatiquement des réponses ennuyantes quand les personnes que tu suis finissent leur tweet par un mot spécial.
 
 Certains mots peuvent servir de "trigger" sans être dans la liste, example : `aussi` n'est pas dans la liste, mais en retirant `aus`, on obtient `si`, qui est dans la liste.
-| Mot | Réponse    | ¦ | Mot     | Réponse   | ¦ | Mot  | Réponse                       | ¦ | Mot                     | Réponse    | ¦ | Mot   | Réponse           | ¦ | Mot | Réponse
-------|---------   |:-:|---------|-----------|:-:|------|-------------------------------|:-:|-------------------------|------------|:-:|-------|------------------ |:-:|-----|-
-quoi  | feur       | ¦ | con     | combre    | ¦ | coup | teau                          | ¦ | ka                      | pitaine    | ¦ | moi   | tié/sson/sissure  | ¦ | ni  | cotine
-oui   | stiti/fi   | ¦ | ok      | sur glace | ¦ | ça   | pristi/perlipopette/von       | ¦ | fais                    | rtile      | ¦ | toi   | lette/ture        | ¦ |
+| Mot | Réponse    | ¦ | Mot     | Réponse   | ¦ | Mot  | Réponse                       | ¦ | Mot                     | Réponse    | ¦ | Mot   | Réponse           | ¦ | Mot   | Réponse
+------|---------   |:-:|---------|-----------|:-:|------|-------------------------------|:-:|-------------------------|------------|:-:|-------|------------------ |:-:|-------|-
+quoi  | feur       | ¦ | con     | combre    | ¦ | coup | teau                          | ¦ | ka                      | pitaine    | ¦ | moi   | tié/sson/sissure  | ¦ | ni    | cotine
+oui   | stiti/fi   | ¦ | ok      | sur glace | ¦ | ça   | pristi/perlipopette/von       | ¦ | fais                    | rtile      | ¦ | toi   | lette/ture        | ¦ | quand | dide/tal/didat
 non   | bril       | ¦ | ouais   | stern     | ¦ | bon  | jour/soir (dépend de l'heure) | ¦ | tant (ou autre syntaxe) | gente      | ¦ | top   | inambour          | ¦ |
 nan   | cy         | ¦ | comment | tateur    | ¦ | qui  | wi/mono                       | ¦ | et                      | eint/ain   | ¦ | jour  | nal               | ¦ |
 hein  | deux       | ¦ | mais    | on        | ¦ | sur  | prise                         | ¦ | la                      | vabo/vande | ¦ | ya/yo | hourt/yo          | ¦ |

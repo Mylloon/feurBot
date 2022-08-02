@@ -233,7 +233,8 @@ if __name__ == "__main__":
         "ya": ["ya", "y'a"],
         "yo": ["yo"],
         "ni": ["ni"],
-        "re": ["re", "reu", "reuh"]
+        "re": ["re", "reu", "reuh"],
+        "quand": ["quand", "kan", "qand", "quan"]
     }
 
     answers = { # creation of answers
@@ -282,7 +283,8 @@ if __name__ == "__main__":
         "ya": createBaseAnswers("hourt"),
         "yo": createBaseAnswers("ghourt") + createBaseAnswers("yo"),
         "ni": createBaseAnswers("cotine"),
-        "re": createBaseAnswers("pas") + createBaseAnswers("veil") + createBaseAnswers("tourne")
+        "re": createBaseAnswers("pas") + createBaseAnswers("veil") + createBaseAnswers("tourne"),
+        "quand": createBaseAnswers("dide") + createBaseAnswers("tal") + createBaseAnswers("didat")
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
