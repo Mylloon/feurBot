@@ -231,7 +231,9 @@ if __name__ == "__main__":
         "top": ["top"],
         "jour": ["jour", "bonjour"],
         "ya": ["ya", "y'a"],
-        "yo": ["yo"]
+        "yo": ["yo"],
+        "ni": ["ni"],
+        "re": ["re", "reu", "reuh"]
     }
 
     answers = { # creation of answers
@@ -278,7 +280,9 @@ if __name__ == "__main__":
         "top": createBaseAnswers("inambour"),
         "jour": createBaseAnswers("nal"),
         "ya": createBaseAnswers("hourt"),
-        "yo": createBaseAnswers("ghourt") + createBaseAnswers("yo")
+        "yo": createBaseAnswers("ghourt") + createBaseAnswers("yo"),
+        "ni": createBaseAnswers("cotine"),
+        "re": createBaseAnswers("pas") + createBaseAnswers("veil") + createBaseAnswers("tourne")
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
