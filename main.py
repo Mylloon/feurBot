@@ -262,7 +262,7 @@ if __name__ == "__main__":
             "boyard (-ennes)"
         ],
         "coup": createBaseAnswers("teau"),
-        "ça": createBaseAnswers("pristi") + createBaseAnswers("perlipopette"),
+        "ça": createBaseAnswers("pristi") + createBaseAnswers("perlipopette") + createBaseAnswers("von"),
         "bon": [createBaseAnswers("jour"), createBaseAnswers("soir")],
         "qui": createBaseAnswers("wi") + createBaseAnswers("mono"),
         "sur": createBaseAnswers("prise"),
