@@ -1,4 +1,4 @@
-# Bot Twitter
+# [Bot Twitter](https://twitter.com/Myshawii)
 
 Bot qui envoie automatiquement des réponses ennuyantes quand les personnes que tu suis finissent leur tweet par un mot spécial.
 
