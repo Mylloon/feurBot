@@ -238,53 +238,117 @@ if __name__ == "__main__":
     }
 
     answers = { # creation of answers
-        "quoi": createBaseAnswers("feur") + [
-            "https://twitter.com/Myshawii/status/1423219640025722880/video/1",
-            "feur (-isson)",
-            "https://twitter.com/Myshawii/status/1423219684552417281/video/1",
-            "feur (-isson -ictalope -diatre -uil)",
-            "https://twitter.com/Myshawii/status/1455469162202075138/video/1",
-            "https://twitter.com/Myshawii/status/1552026689101860865/video/1",
-            "https://twitter.com/Myshawii/status/1553112547678720001/photo/1"
-        ] + createBaseAnswers("feuse"),
-        "oui": createBaseAnswers("stiti") + createBaseAnswers("fi"),
+        "quoi": createBaseAnswers("feur")
+              + createBaseAnswers("feuse")
+              + [
+                    "https://twitter.com/Myshawii/status/1423219640025722880/video/1",
+                    "feur (-isson)",
+                    "https://twitter.com/Myshawii/status/1423219684552417281/video/1",
+                    "feur (-isson -ictalope -diatre -uil)",
+                    "https://twitter.com/Myshawii/status/1455469162202075138/video/1",
+                    "https://twitter.com/Myshawii/status/1552026689101860865/video/1",
+                    "https://twitter.com/Myshawii/status/1553112547678720001/photo/1"
+              ],
+
+        "oui": createBaseAnswers("stiti")
+             + createBaseAnswers("fi"),
+
         "non": createBaseAnswers("bril"),
+
         "nan": createBaseAnswers("cy"),
-        "hein": createBaseAnswers("deux") + createBaseAnswers("bécile") + [
-            "2"
-        ],
-        "ci": createBaseAnswers("tron") + createBaseAnswers("prine"),
-        "con": createBaseAnswers("combre") + createBaseAnswers("gelé") + createBaseAnswers("pas"),
+
+        "hein": createBaseAnswers("deux")
+              + createBaseAnswers("bécile")
+              + [
+                    "2"
+                ],
+
+        "ci": createBaseAnswers("tron")
+            + createBaseAnswers("prine"),
+
+        "con": createBaseAnswers("combre")
+             + createBaseAnswers("gelé")
+             + createBaseAnswers("pas"),
+
         "ok": createBaseAnswers("sur glace"),
+
         "ouais": createBaseAnswers("stern"),
-        "comment": createBaseAnswers("tateur") + createBaseAnswers("tatrice") + createBaseAnswers("dant Cousteau"),
+
+        "comment": createBaseAnswers("tateur")
+                 + createBaseAnswers("tatrice")
+                 + createBaseAnswers("dant Cousteau"),
+
         "mais": createBaseAnswers("on") + [
             "on (-dulation)"
         ],
+
         "fort": createBaseAnswers("boyard") + [
             "boyard (-ennes)"
         ],
+
         "coup": createBaseAnswers("teau"),
-        "ça": createBaseAnswers("pristi") + createBaseAnswers("perlipopette") + createBaseAnswers("von"),
-        "bon": [createBaseAnswers("jour"), createBaseAnswers("soir")],
-        "qui": createBaseAnswers("wi") + createBaseAnswers("mono"),
+
+        "ça": createBaseAnswers("pristi")
+            + createBaseAnswers("perlipopette")
+            + createBaseAnswers("von"),
+
+        "bon": [
+            createBaseAnswers("jour"),
+            createBaseAnswers("soir")
+        ],
+
+        "qui": createBaseAnswers("wi")
+             + createBaseAnswers("mono"),
+
         "sur": createBaseAnswers("prise"),
-        "pas": createBaseAnswers("nini") + createBaseAnswers("steur"),
-        "ka": createBaseAnswers("pitaine") + createBaseAnswers("pitulation"),
+
+        "pas": createBaseAnswers("nini")
+             + createBaseAnswers("steur")
+             + createBaseAnswers("trimoine")
+             + createBaseAnswers("té")
+             + createBaseAnswers("stis"),
+
+        "ka": createBaseAnswers("pitaine")
+            + createBaseAnswers("pitulation"),
+
         "fais": createBaseAnswers("rtile"),
-        "tant": createBaseAnswers("gente") + createBaseAnswers("tation"),
-        "et": createBaseAnswers("eint") + createBaseAnswers("ain"),
-        "la": createBaseAnswers("vabo") + createBaseAnswers("vande"),
+
+        "tant": createBaseAnswers("gente")
+              + createBaseAnswers("tation"),
+
+        "et": createBaseAnswers("eint")
+            + createBaseAnswers("ain"),
+
+        "la": createBaseAnswers("vabo")
+            + createBaseAnswers("vande"),
+
         "tki": createBaseAnswers("la"),
-        "moi": createBaseAnswers("tié") + createBaseAnswers("sson") + createBaseAnswers("sissure"),
-        "toi": createBaseAnswers("lette") + createBaseAnswers("ture"),
+
+        "moi": createBaseAnswers("tié")
+             + createBaseAnswers("sson")
+             + createBaseAnswers("sissure"),
+
+        "toi": createBaseAnswers("lette")
+             + createBaseAnswers("ture"),
+
         "top": createBaseAnswers("inambour"),
+
         "jour": createBaseAnswers("nal"),
+
         "ya": createBaseAnswers("hourt"),
-        "yo": createBaseAnswers("ghourt") + createBaseAnswers("yo"),
+
+        "yo": createBaseAnswers("ghourt")
+            + createBaseAnswers("yo"),
+
         "ni": createBaseAnswers("cotine"),
-        "re": createBaseAnswers("pas") + createBaseAnswers("veil") + createBaseAnswers("tourne"),
-        "quand": createBaseAnswers("dide") + createBaseAnswers("tal") + createBaseAnswers("didat")
+
+        "re": createBaseAnswers("pas")
+            + createBaseAnswers("veil")
+            + createBaseAnswers("tourne"),
+
+        "quand": createBaseAnswers("dide")
+               + createBaseAnswers("tal")
+               + createBaseAnswers("didat")
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
