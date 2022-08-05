@@ -62,11 +62,11 @@ class Listener(StreamListener):
         self.q = q
         self.api = api
         self.accounts = users
-        self.users = users + forcelist
-        self.listOfFriendsID = getFriendsID(api, users)
+        self.forcelist = forcelist
+        self.listOfFriendsID = getFriendsID(api, users) + forcelist
 
     def on_connect(self):
-        print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(self.accounts)} comme timeline...")
+        print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(self.accounts)} comme timeline et ces comptes : @{', @'.join(self.forcelist)}...")
 
     def on_disconnect(notice):
         notice = notice["disconnect"]
