@@ -24,6 +24,11 @@ def load(variables) -> dict:
                     res = list(set(environ[var].split(",")) - {""})
                 except:
                     res = [] # if not its an empty list
+            elif var == "FORCELIST": # check if FORCELIST is set
+                try:
+                    res = list(set(environ[var].split(",")) - {""})
+                except:
+                    res = [] # if not its an empty list
             else:
                 res = environ[var]
             if var == "PSEUDOS":
@@ -164,10 +169,10 @@ def createBaseAnswers(word) -> list:
     """Generates default answers for a given word."""
     return [word, f"({word})", word.upper(), f"{word} lol"]
 
-def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSecret: str, users: list):
-    """Main method."""
-    auth = OAuthHandler(consumerKey, consumerSecret)
-    auth.set_access_token(accessToken, accessTokenSecret)
+def start():
+    """Start the bot."""
+    auth = OAuthHandler(keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"])
+    auth.set_access_token(keys["TOKEN"], keys["TOKEN_SECRET"])
 
     api = API(auth_handler = auth, wait_on_rate_limit = True)
 
@@ -186,7 +191,7 @@ def main(accessToken: str, accessTokenSecret: str, consumerKey: str, consumerSec
         whitelist = f"@{', @'.join(keys['WHITELIST'])}"
     print(f"Liste des comptes ignorés : {whitelist}.")
 
-    listener = Listener(api, users)
+    listener = Listener(api, keys["PSEUDOS"] + keys["FORCELIST"])
     stream = Stream(auth = api.auth, listener = listener)
     stream.filter(track = triggerWords, languages = ["fr"], stall_warnings = True, is_async = True)
 
@@ -366,6 +371,6 @@ if __name__ == "__main__":
     triggerWords = permute(universalBase) # creation of a list of all the words (upper and lower case)
 
     # Loading environment variables and launching the bot
-    keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS", "VERBOSE", "WHITELIST"])
+    keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS", "VERBOSE", "WHITELIST", "FORCELIST"])
     print("") # just a newline
-    main(keys["TOKEN"], keys["TOKEN_SECRET"], keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"], keys["PSEUDOS"])
+    start()
