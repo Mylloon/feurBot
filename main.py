@@ -236,6 +236,7 @@ if __name__ == "__main__":
         "re": ["re", "reu", "reuh"],
         "quand": ["quand", "kan", "qand", "quan"],
         "sol": ["sol"],
+        "vois": ["vois", "voit", "voie", "voi"],
     }
 
     answers = { # creation of answers
@@ -355,7 +356,9 @@ if __name__ == "__main__":
                + createBaseAnswers("tal")
                + createBaseAnswers("didat"),
 
-        "sol": createBaseAnswers('itaire'),
+        "sol": createBaseAnswers("itaire"),
+
+        "vois": createBaseAnswers("ture"),
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words

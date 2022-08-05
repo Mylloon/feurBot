@@ -7,8 +7,8 @@ Certains mots peuvent servir de "trigger" sans être dans la liste, example : `a
 ------|---------   |:-:|---------|-----------|:-:|------|-------------------------------|:-:|-------------------------|------------|:-:|-------|------------------ |:-:|-------|-
 quoi  | feur       | ¦ | con     | combre    | ¦ | coup | teau                          | ¦ | ka                      | pitaine    | ¦ | moi   | tié/sson/sissure  | ¦ | ni    | cotine
 oui   | stiti/fi   | ¦ | ok      | sur glace | ¦ | ça   | pristi/perlipopette/von       | ¦ | fais                    | rtile      | ¦ | toi   | lette/ture        | ¦ | quand | dide/tal/didat
-non   | bril       | ¦ | ouais   | stern     | ¦ | bon  | jour/soir (dépend de l'heure) | ¦ | tant (ou autre syntaxe) | gente      | ¦ | top   | inambour          | ¦ |
-nan   | cy         | ¦ | comment | tateur    | ¦ | qui  | wi/mono                       | ¦ | et                      | eint/ain   | ¦ | jour  | nal               | ¦ |
+non   | bril       | ¦ | ouais   | stern     | ¦ | bon  | jour/soir (dépend de l'heure) | ¦ | tant (ou autre syntaxe) | gente      | ¦ | top   | inambour          | ¦ | sol   | itaire
+nan   | cy         | ¦ | comment | tateur    | ¦ | qui  | wi/mono                       | ¦ | et                      | eint/ain   | ¦ | jour  | nal               | ¦ | vois  | ture
 hein  | deux       | ¦ | mais    | on        | ¦ | sur  | prise                         | ¦ | la                      | vabo/vande | ¦ | ya/yo | hourt/yo          | ¦ |
 ci    | tron       | ¦ | fort    | boyard    | ¦ | pas  | nini/steur                    | ¦ | tki                     | la         | ¦ | re    | pas/veil/tourne   | ¦ |
 
