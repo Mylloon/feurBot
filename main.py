@@ -63,7 +63,7 @@ class Listener(StreamListener):
         self.api = api
         self.accounts = users
         self.forcelist = forcelist
-        self.listOfFriendsID = getFriendsID(api, users) + forcelist
+        self.listOfFriendsID = getFriendsID(api, users) + getIDs(api, forcelist)
 
     def on_connect(self):
         print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(self.accounts)} comme timeline et ces comptes : @{', @'.join(self.forcelist)}...")
@@ -137,6 +137,13 @@ def getFriendsID(api, users: list) -> list:
     liste = []
     for user in users:
         liste.extend(api.friends_ids(user))
+    return list(set(liste))
+
+def getIDs(api, users: list) -> list:
+    """Get all the ID of users"""
+    liste = []
+    for user in users:
+        liste.append(api.get_user(user)._json["id"])
     return list(set(liste))
 
 def seniority(date: str) -> bool:
