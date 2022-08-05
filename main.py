@@ -7,7 +7,6 @@ from datetime import datetime
 from pytz import timezone
 from queue import Queue
 from json import loads
-from itertools import product
 
 def load(variables) -> dict:
     """Load environment variables"""
@@ -163,7 +162,7 @@ class Listener(StreamListener):
             print("\n")
         return False
 
-def getFriendsID(api: API, users: list) -> list:
+def getFriendsID(api: API, users: list[str]) -> list:
     """Get all friends of choosen users"""
     liste = []
     # Get IDs of the user's friends
@@ -171,7 +170,7 @@ def getFriendsID(api: API, users: list) -> list:
         liste.extend(api.friends_ids(user))
     return list(set(liste))
 
-def getIDs(api: API, users: list) -> list:
+def getIDs(api: API, users: list[str]) -> list:
     """Get all the ID of users"""
     liste = []
     # Get IDs of the users
@@ -190,22 +189,37 @@ def seniority(date: str) -> bool:
     # False if older than a day, else True
     return False if age.days >= 1 else True
 
-def generateWords(array: list) -> list:
+def generateWords(array: list[str]) -> list:
     """
     Retrieves all possible combinations for the given list and returns the result as a list
 
-    This is used for the filter in the stream (before calling the Listener)
+    This is used for the filter in the stream (before calling the Listener::on_status)
     """
     quoiListe = []
 
     for text in array:
         # Add all combinations
         # Example for 'oui': ['OUI', 'OUi', 'OuI', 'Oui', 'oUI', 'oUi', 'ouI', 'oui']
-        quoiListe.extend(list(map(''.join, product(*zip(text.upper(), text.lower())))))
+        #
+        # -> Depends on: from itertools import product
+        # -> Problem : Create a too long list (+1000 words, max is 400)
+        # -> Cf. https://developer.twitter.com/en/docs/twitter-api/v1/tweets/filter-realtime/overview
+        #
+        # quoiListe.extend(list(map(''.join, product(*zip(text.upper(), text.lower())))))
+
+        if text.lower() not in quoiListe:
+            # Word in lowercase
+            quoiListe.append(text.lower())
+        if text.upper() not in quoiListe:
+            # Word in uppercase
+            quoiListe.append(text.upper())
+        if text.capitalize() not in quoiListe:
+            # Word capitalized
+            quoiListe.append(text.capitalize())
 
     return quoiListe
 
-def createBaseTrigger(lists: list) -> list:
+def createBaseTrigger(lists: list[list]) -> list:
     """Merges all given lists into one"""
     listing = []
     for liste in lists:
