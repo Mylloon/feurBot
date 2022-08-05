@@ -57,15 +57,16 @@ def cleanTweet(tweet: str) -> str:
 
 class Listener(StreamListener):
     """Watch for tweets that match criteria in real-time."""
-    def __init__(self, api = None, users = None, q = Queue()):
+    def __init__(self, api = None, users = None, forcelist = None, q = Queue()):
         super(Listener, self).__init__()
         self.q = q
         self.api = api
-        self.users = users
+        self.accounts = users
+        self.users = users + forcelist
         self.listOfFriendsID = getFriendsID(api, users)
 
     def on_connect(self):
-        print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(self.users)} comme timeline...")
+        print(f"Scroll sur Twitter avec les abonnements de @{', @'.join(self.accounts)} comme timeline...")
 
     def on_disconnect(notice):
         notice = notice["disconnect"]
@@ -191,7 +192,7 @@ def start():
         whitelist = f"@{', @'.join(keys['WHITELIST'])}"
     print(f"Liste des comptes ignorés : {whitelist}.")
 
-    listener = Listener(api, keys["PSEUDOS"] + keys["FORCELIST"])
+    listener = Listener(api, keys["PSEUDOS"], keys["FORCELIST"])
     stream = Stream(auth = api.auth, listener = listener)
     stream.filter(track = triggerWords, languages = ["fr"], stall_warnings = True, is_async = True)
 
