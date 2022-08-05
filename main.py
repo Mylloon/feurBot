@@ -234,7 +234,8 @@ if __name__ == "__main__":
         "yo": ["yo"],
         "ni": ["ni"],
         "re": ["re", "reu", "reuh"],
-        "quand": ["quand", "kan", "qand", "quan"]
+        "quand": ["quand", "kan", "qand", "quan"],
+        "sol": ["sol"],
     }
 
     answers = { # creation of answers
@@ -242,9 +243,8 @@ if __name__ == "__main__":
               + createBaseAnswers("feuse")
               + [
                     "https://twitter.com/Myshawii/status/1423219640025722880/video/1",
-                    "feur (-isson)",
                     "https://twitter.com/Myshawii/status/1423219684552417281/video/1",
-                    "feur (-isson -ictalope -diatre -uil)",
+                    f"{createBaseAnswers('feur')} (-isson -ictalope -diatre -uil)",
                     "https://twitter.com/Myshawii/status/1455469162202075138/video/1",
                     "https://twitter.com/Myshawii/status/1552026689101860865/video/1",
                     "https://twitter.com/Myshawii/status/1553112547678720001/photo/1"
@@ -278,19 +278,24 @@ if __name__ == "__main__":
                  + createBaseAnswers("tatrice")
                  + createBaseAnswers("dant Cousteau"),
 
-        "mais": createBaseAnswers("on") + [
-            "on (-dulation)"
-        ],
+        "mais": createBaseAnswers("on")
+                + [
+                    f"{createBaseAnswers('on')} (-dulation)"
+                ],
 
-        "fort": createBaseAnswers("boyard") + [
-            "boyard (-ennes)"
-        ],
+        "fort": createBaseAnswers("boyard")
+                + [
+                    f"{createBaseAnswers('boyard')} (-ennes)"
+                ],
 
         "coup": createBaseAnswers("teau"),
 
-        "ça": createBaseAnswers("pristi")
-            + createBaseAnswers("perlipopette")
-            + createBaseAnswers("von"),
+        "ça": createBaseAnswers("perlipopette")
+            + createBaseAnswers("von")
+            + createBaseAnswers("pristi")
+            + [
+                f"{createBaseAnswers('pristi')} (-gnasse)"
+            ],
 
         "bon": [
             createBaseAnswers("jour"),
@@ -348,7 +353,9 @@ if __name__ == "__main__":
 
         "quand": createBaseAnswers("dide")
                + createBaseAnswers("tal")
-               + createBaseAnswers("didat")
+               + createBaseAnswers("didat"),
+
+        "sol": createBaseAnswers('itaire'),
     }
 
     universalBase = createBaseTrigger(list(base.values())) # creation of a list of all the words
