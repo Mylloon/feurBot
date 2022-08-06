@@ -331,7 +331,7 @@ if __name__ == "__main__":
               + [
                     "https://twitter.com/Myshawii/status/1423219640025722880/video/1",
                     "https://twitter.com/Myshawii/status/1423219684552417281/video/1",
-                    f"{createBaseAnswers('feur')} (-isson -ictalope -diatre -uil)",
+                    "feur (-isson -ictalope -diatre -uil)",
                     "https://twitter.com/Myshawii/status/1455469162202075138/video/1",
                     "https://twitter.com/Myshawii/status/1552026689101860865/video/1",
                     "https://twitter.com/Myshawii/status/1553112547678720001/photo/1"
@@ -367,12 +367,12 @@ if __name__ == "__main__":
 
         "mais": createBaseAnswers("on")
                 + [
-                    f"{createBaseAnswers('on')} (-dulation)"
+                    "on (-dulation)"
                 ],
 
         "fort": createBaseAnswers("boyard")
                 + [
-                    f"{createBaseAnswers('boyard')} (-ennes)"
+                    "boyard (-ennes)"
                 ],
 
         "coup": createBaseAnswers("teau"),
@@ -381,7 +381,7 @@ if __name__ == "__main__":
             + createBaseAnswers("von")
             + createBaseAnswers("pristi")
             + [
-                f"{createBaseAnswers('pristi')} (-gnasse)"
+                "pristi (-gnasse)"
             ],
 
         "bon": [
