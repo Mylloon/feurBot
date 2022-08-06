@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from os import environ
-from tweepy import OAuthHandler, API, StreamListener, Stream
+from tweepy import OAuth1UserHandler, API, Stream
 from re import sub, findall
 from random import choice
 from datetime import datetime
@@ -68,10 +68,20 @@ def cleanTweet(tweet: str) -> str:
 
     return tweet.strip()
 
-class Listener(StreamListener):
+class Listener(Stream):
     """Watch for tweets that match criteria in real-time"""
-    def __init__(self, api: API = None, users: list = None, forcelist: list = None, q = Queue()):
-        super(Listener, self).__init__()
+    def __init__(
+        self,
+        consumer_key,
+        consumer_secret,
+        access_token,
+        access_token_secret,
+        api: API = None,
+        users: list = None,
+        forcelist: list = None,
+        q = Queue()
+    ):
+        super(Listener, self).__init__(consumer_key, consumer_secret, access_token, access_token_secret)
         self.q = q
         self.api = api
         self.accounts = [users, forcelist]
@@ -84,7 +94,7 @@ class Listener(StreamListener):
             forcelist = f"@{', @'.join(self.accounts[1])}"
         print(f"Début du scroll sur Twitter avec les abonnements de @{', @'.join(self.accounts[0])} et ces comptes en plus : {forcelist} comme timeline...")
 
-    def on_disconnect(notice):
+    def on_disconnect_message(notice):
         notice = notice["disconnect"]
         print(f"Déconnexion (code {notice['code']}).", end = " ")
         if len(notice["reason"]) > 0:
@@ -150,7 +160,7 @@ class Listener(StreamListener):
             self.q.get()
             self.q.task_done()
 
-    def on_error(self, status_code):
+    def on_request_error(self, status_code):
         print(f"{errorMessage[:-2]} ({status_code}) !", end = " ")
         if status_code == 413:
             if keys["VERBOSE"]:
@@ -167,7 +177,7 @@ def getFriendsID(api: API, users: list[str]) -> list:
     liste = []
     # Get IDs of the user's friends
     for user in users:
-        liste.extend(api.friends_ids(user))
+        liste.extend(api.get_friend_ids(screen_name=user))
     return list(set(liste))
 
 def getIDs(api: API, users: list[str]) -> list:
@@ -175,7 +185,7 @@ def getIDs(api: API, users: list[str]) -> list:
     liste = []
     # Get IDs of the users
     for user in users:
-        liste.append(api.get_user(user)._json["id"])
+        liste.append(api.get_user(screen_name=user)._json["id"])
     return list(set(liste))
 
 def seniority(date: str) -> bool:
@@ -232,10 +242,10 @@ def createBaseAnswers(word: str) -> list:
 
 def start():
     """Start the bot"""
-    auth = OAuthHandler(keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"])
+    auth = OAuth1UserHandler(keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"])
     auth.set_access_token(keys["TOKEN"], keys["TOKEN_SECRET"])
 
-    api = API(auth_handler = auth, wait_on_rate_limit = True)
+    api = API(auth)
 
     if keys["VERBOSE"]:
         try:
@@ -244,7 +254,7 @@ def start():
         except:
             print("Erreur d'authentification.")
             exit(1)
-        print(f"@{api.me()._json['screen_name']}.")
+        print(f"@{api.verify_credentials().screen_name}.")
 
     if keys['WHITELIST'] == []:
         whitelist = "Aucun"
@@ -252,9 +262,16 @@ def start():
         whitelist = f"@{', @'.join(keys['WHITELIST'])}"
     print(f"Liste des comptes ignorés : {whitelist}.")
 
-    listener = Listener(api, keys["PSEUDOS"], keys["FORCELIST"])
-    stream = Stream(auth = api.auth, listener = listener)
-    stream.filter(track = triggerWords, languages = ["fr"], stall_warnings = True, is_async = True)
+    stream = Listener(
+        consumer_key=keys["CONSUMER_KEY"],
+        consumer_secret=keys["CONSUMER_SECRET"],
+        access_token=keys["TOKEN"],
+        access_token_secret=keys["TOKEN_SECRET"],
+        api=api,
+        users=keys["PSEUDOS"],
+        forcelist=keys["FORCELIST"]
+    )
+    stream.filter(track = triggerWords, languages = ["fr"], stall_warnings = True, threaded = True)
 
 if __name__ == "__main__":
     """
