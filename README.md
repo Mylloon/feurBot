@@ -32,19 +32,20 @@ FORCELIST       | Force le bot à écouter certains comptes (séparer les compte
 
 ### En local
 
-Pour le lancer, complètez le `.envexample` et renomme le en `.env`.
+Pour le lancer, renommez le `.envexample` en `.env` et complètez-le.
 
 Ensuite, installez les dépendances avec `pip install -r requirements.txt`.
 
-Et enfin lancez `python3 main.py`.
+Et enfin lancez le bot avec `python3 main.py`.
 
 ### Avec Docker
 
 Avec une ligne de commande :
 ```bash
+docker build https://git.kennel.ml/Anri/feurBot.git#main --tag feurbot:main && \
 docker run -d \
     --name="feurBot" \
-    registry.gitlab.com/mylloon/feurbot:latest \
+    feurbot:main \
     --TOKEN="" \
     --TOKEN_SECRET="" \
     --CONSUMER_KEY="" \
@@ -55,8 +56,8 @@ Ou avec un `docker-compose.yml` :
 ```bash
 version: "2.1"
 services:
-  feurBot:
-    image: registry.gitlab.com/mylloon/feurbot:latest
+  feurbot:
+    build: https://git.kennel.ml/Anri/feurBot.git#main
     container_name: feurBot
     environment:
       - TOKEN=
