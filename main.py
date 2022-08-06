@@ -121,7 +121,14 @@ class Listener(Stream):
                     # Check if the last word found is a supported word
                     if lastWord in universalBase:
                         answer = None
-                        # Fetch an adequate response
+
+                        # Check repetition
+                        repetition = findall(r"di(\S+)", lastWord)
+                        if(len(repetition) > 0):
+                            # We need to repeat something...
+                            answer = repeater(repetition[0])
+
+                        # Fetch an other adequate (better) response
                         for mot in base.items():
                             if lastWord in mot[1]:
                                 # Handle specific case
@@ -132,6 +139,7 @@ class Listener(Stream):
                                     else:
                                         answer = answers[mot[0]][1] # soir
                                 else:
+                                    # Normal answer
                                     answer = answers[mot[0]]
                         if answer == None:
                             if keys["VERBOSE"]:
@@ -171,6 +179,18 @@ class Listener(Stream):
         else:
             print("\n")
         return False
+
+def repeater(word: str) -> str:
+    """Formating a word who need to be repeated"""
+    # Remove first letter if the first letter is a "S" or a "T"
+    # Explanation: Trigger word for the repeater is "di" and sometimes it is
+    # "dis", sometimes its "dit", that's why we need to remove this 2 letters
+    # from the final answer
+    if word[0] == 's' or word[0] == 't':
+        word = word[1:]
+
+    # Random format from the base answer
+    return createBaseAnswers(word)
 
 def getFriendsID(api: API, users: list[str]) -> list:
     """Get all friends of choosen users"""
