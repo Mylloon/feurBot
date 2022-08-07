@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from os import environ
-from tweepy import StreamingClient, Client, StreamRule
+from tweepy import StreamingClient, Client, StreamRule, Tweet
 from re import sub, findall
 from random import choice
 from datetime import datetime
@@ -83,13 +83,13 @@ class Listener(StreamingClient):
     def on_connect(self):
         print(f"Début du scroll sur Twitter...")
 
-    def on_disconnect_message(notice):
+    def on_exception():
         notice = notice["disconnect"]
-        print(f"Déconnexion (code {notice['code']}).", end = " ")
+        print(f"Erreur (code {notice['code']}).", end = " ")
         if len(notice["reason"]) > 0:
             print(f"Raison : {notice['reason']}")
 
-    def on_tweet(self, tweet):
+    def on_tweet(self, tweet: Tweet):
         print(tweet)
         exit(0)
         json = status._json
@@ -156,12 +156,6 @@ class Listener(StreamingClient):
                 else:
                     if keys["VERBOSE"]:
                         print("Annulation car le dernier mot n'est pas intéressant.")
-
-    def do_stuff(self):
-        """Loop for the Listener"""
-        while True:
-            self.q.get()
-            self.q.task_done()
 
     def on_request_error(self, status_code):
         print(f"{errorMessage[:-2]} ({status_code}) !", end = " ")
@@ -270,12 +264,29 @@ def createClient(consumer_key, consumer_secret, access_token, access_token_secre
                 pseudos = f"@{', @'.join(keys['PSEUDOS'])}"
             print(f"Les comptes suivis par ces comptes sont traqués : {pseudos}.\n")
 
-            print("Notez que si un compte est dans la whiteliste, il sera dans tout les cas ignoré.\n")
+            print("Notez que si un compte est dans la whitelist, il sera dans tout les cas ignoré.\n")
         except:
             print("Erreur d'authentification.")
             exit(1)
 
     return client
+
+def create_rules(tracked_users: list[str]) -> list[str]:
+    """Create rules for tracking users, by respecting the twitter API policies"""
+    rules = []
+    buffer = ""
+    for user in tracked_users:
+        # Check if the rule don't exceeds the maximum length of a rule (512)
+        # 5 is len of "from:"
+        if len(buffer) + len(user) + 5 > 512:
+            rules.append(buffer[:-4])
+            buffer = ""
+        buffer += f'from:{user} OR '
+
+    if len(buffer) > 0:
+        rules.append(buffer[:-4])
+
+    return rules
 
 def start():
     """Start the bot"""
@@ -286,11 +297,6 @@ def start():
         keys["TOKEN_SECRET"],
     )
 
-    stream = Listener(
-        bearer_token=keys["BEARER_TOKEN"],
-        client=client,
-    )
-
     # Only track specifics users
     # Including users in forcelist and removing users in whitelist
     tracked_users = [
@@ -298,7 +304,14 @@ def start():
             user.data["username"] for user in getFriends(client, keys["PSEUDOS"])
         ] + keys["FORCELIST"] if i not in keys["WHITELIST"]
     ]
-    stream.add_rules(StreamRule(''.join([f'from:{word} OR ' for word in tracked_users])[:-3]))
+
+    stream = Listener(
+        bearer_token=keys["BEARER_TOKEN"],
+        client=client,
+    )
+
+    for rule in create_rules(tracked_users):
+        stream.add_rules(StreamRule(rule))
     stream.filter(threaded=True)
 
 if __name__ == "__main__":
