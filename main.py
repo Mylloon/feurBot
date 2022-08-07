@@ -85,7 +85,7 @@ class Listener(StreamingClient):
             "users": users,
             "forcelist": forcelist
         }
-        self.listOfFriendsID = getFriendsID(client, users) + getIDs(client, forcelist)
+        self.victim_list = getFriends(client, users) + getIDs(client, forcelist)
 
     def on_connect(self):
         if self.accounts['forcelist'] == []:
@@ -101,9 +101,11 @@ class Listener(StreamingClient):
             print(f"Raison : {notice['reason']}")
 
     def on_status(self, status):
+        print(status)
+        exit(0)
         json = status._json
         # Verify the author of the tweet
-        if json["user"]["id"] in self.listOfFriendsID and json["user"]["screen_name"] not in keys["WHITELIST"]:
+        if json["user"]["id"] in self.victim_list and json["user"]["screen_name"] not in keys["WHITELIST"]:
             # Verify the age of the tweet
             if seniority(json["created_at"]):
                 # Verify if the tweet isn't a retweet
@@ -198,23 +200,22 @@ def repeater(word: str) -> str:
     # Random format from the base answer
     return createBaseAnswers(word)
 
-def getFriendsID(client: Client, users: list[str]) -> list:
+def getFriends(client: Client, users: list[str]) -> list:
     """Get all friends of choosen users"""
-    liste = []
+    friends_list = []
     # Get IDs of the user's friends
     for user in users:
-        # TODO: Update Twitter API V2
-        liste.extend(client.get_friend_ids(screen_name=user))
-    return list(set(liste))
+        user_id = client.get_user(username=user, user_auth=True).data.id
+        friends_list.extend(client.get_users_following(id=user_id, user_auth=True))
+    return friends_list[0]
 
 def getIDs(client: Client, users: list[str]) -> list:
     """Get all the ID of users"""
-    liste = []
+    users_list = []
     # Get IDs of the users
     for user in users:
-        # TODO: Update Twitter API V2
-        liste.append(client.get_user(screen_name=user)._json["id"])
-    return list(set(liste))
+        users_list.append(client.get_user(username=user, user_auth=True).data)
+    return users_list
 
 def seniority(date: str) -> bool:
     """Return True only if the given string date is less than one day old"""
