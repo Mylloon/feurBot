@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from os import environ
-from tweepy import OAuth1UserHandler, API, Stream
+from tweepy import StreamingClient, Client, StreamRule
 from re import sub, findall
 from random import choice
 from datetime import datetime
@@ -68,31 +68,31 @@ def cleanTweet(tweet: str) -> str:
 
     return tweet.strip()
 
-class Listener(Stream):
+class Listener(StreamingClient):
     """Watch for tweets that match criteria in real-time"""
     def __init__(
         self,
-        consumer_key,
-        consumer_secret,
-        access_token,
-        access_token_secret,
-        api: API = None,
-        users: list = None,
-        forcelist: list = None,
+        bearer_token,
+        client: Client,
+        users: list = [],
+        forcelist: list = [],
         q = Queue()
     ):
-        super(Listener, self).__init__(consumer_key, consumer_secret, access_token, access_token_secret)
+        super(Listener, self).__init__(bearer_token)
         self.q = q
-        self.api = api
-        self.accounts = [users, forcelist]
-        self.listOfFriendsID = getFriendsID(api, users) + getIDs(api, forcelist)
+        self.client = client
+        self.accounts = {
+            "users": users,
+            "forcelist": forcelist
+        }
+        self.listOfFriendsID = getFriendsID(client, users) + getIDs(client, forcelist)
 
     def on_connect(self):
-        if self.accounts[1] == []:
+        if self.accounts['forcelist'] == []:
             forcelist = "Aucun"
         else:
-            forcelist = f"@{', @'.join(self.accounts[1])}"
-        print(f"Début du scroll sur Twitter avec les abonnements de @{', @'.join(self.accounts[0])} et ces comptes en plus : {forcelist} comme timeline...")
+            forcelist = f"@{', @'.join(self.accounts['forcelist'])}"
+        print(f"Début du scroll sur Twitter avec les abonnements de @{', @'.join(self.accounts['users'])} et ces comptes en plus : {forcelist} comme timeline...")
 
     def on_disconnect_message(notice):
         notice = notice["disconnect"]
@@ -150,6 +150,7 @@ class Listener(Stream):
                                 print(f"Envoie d'un {answer[0]}...", end = " ")
                             try:
                                 # Send the tweet with the answer
+                                # TODO: Update Twitter API V2
                                 self.api.update_status(status = choice(answer), in_reply_to_status_id = json["id"], auto_populate_reply_metadata = True)
                                 print(f"{json['user']['screen_name']} s'est fait {answer[0]} !")
                             except Exception as error:
@@ -197,20 +198,22 @@ def repeater(word: str) -> str:
     # Random format from the base answer
     return createBaseAnswers(word)
 
-def getFriendsID(api: API, users: list[str]) -> list:
+def getFriendsID(client: Client, users: list[str]) -> list:
     """Get all friends of choosen users"""
     liste = []
     # Get IDs of the user's friends
     for user in users:
-        liste.extend(api.get_friend_ids(screen_name=user))
+        # TODO: Update Twitter API V2
+        liste.extend(client.get_friend_ids(screen_name=user))
     return list(set(liste))
 
-def getIDs(api: API, users: list[str]) -> list:
+def getIDs(client: Client, users: list[str]) -> list:
     """Get all the ID of users"""
     liste = []
     # Get IDs of the users
     for user in users:
-        liste.append(api.get_user(screen_name=user)._json["id"])
+        # TODO: Update Twitter API V2
+        liste.append(client.get_user(screen_name=user)._json["id"])
     return list(set(liste))
 
 def seniority(date: str) -> bool:
@@ -277,21 +280,22 @@ def createBaseAnswers(word: str) -> list:
         f"{word}...",
     ]
 
-def start():
-    """Start the bot"""
-    auth = OAuth1UserHandler(keys["CONSUMER_KEY"], keys["CONSUMER_SECRET"])
-    auth.set_access_token(keys["TOKEN"], keys["TOKEN_SECRET"])
-
-    api = API(auth)
+def createClient(consumer_key, consumer_secret, access_token, access_token_secret) -> Client:
+    """Create a client for the Twitter API v2"""
+    client = Client(
+        consumer_key=consumer_key,
+        consumer_secret=consumer_secret,
+        access_token=access_token,
+        access_token_secret=access_token_secret
+    )
 
     if keys["VERBOSE"]:
         try:
-            api.verify_credentials()
-            print(f"Authentification réussie en tant que", end = " ")
+            client.get_me().data.username
+            print(f"Authentification réussie en tant que @{client.get_me().data.username}.", end = " ")
         except:
             print("Erreur d'authentification.")
             exit(1)
-        print(f"@{api.verify_credentials().screen_name}.")
 
     if keys['WHITELIST'] == []:
         whitelist = "Aucun"
@@ -299,16 +303,25 @@ def start():
         whitelist = f"@{', @'.join(keys['WHITELIST'])}"
     print(f"Liste des comptes ignorés : {whitelist}.")
 
+    return client
+
+def start():
+    """Start the bot"""
     stream = Listener(
-        consumer_key=keys["CONSUMER_KEY"],
-        consumer_secret=keys["CONSUMER_SECRET"],
-        access_token=keys["TOKEN"],
-        access_token_secret=keys["TOKEN_SECRET"],
-        api=api,
+        bearer_token=keys["BEARER_TOKEN"],
+        client=createClient(
+            keys["CONSUMER_KEY"],
+            keys["CONSUMER_SECRET"],
+            keys["TOKEN"],
+            keys["TOKEN_SECRET"],
+        ),
         users=keys["PSEUDOS"],
-        forcelist=keys["FORCELIST"]
+        forcelist=keys["FORCELIST"],
     )
-    stream.filter(track = triggerWords, languages = ["fr"], stall_warnings = True, threaded = True)
+
+    # Only track specifics words
+    stream.add_rules([StreamRule(word) for word in triggerWords])
+    stream.filter(threaded=True)
 
 if __name__ == "__main__":
     """
@@ -494,7 +507,7 @@ if __name__ == "__main__":
     triggerWords = generateWords(universalBase)
 
     # Loading environment variables
-    keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS", "VERBOSE", "WHITELIST", "FORCELIST"])
+    keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS", "VERBOSE", "WHITELIST", "FORCELIST", "BEARER_TOKEN"])
 
     # Start the bot
     start()
