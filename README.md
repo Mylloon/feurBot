@@ -16,7 +16,7 @@ N'hésitez pas à ouvrir un ticket ou faire une merge-request pour contribuer au
 
 ## Lancer le Bot
 
-Donner la permission `Read and Write` (ou `Read + Write + Direct Messages` mais aucun DM n'est envoyé) au bot dans `Settings` puis `App permissions`.
+Donner la permission au minimum `Read and Write` au bot dans `Settings` puis `App permissions`.
 
 Les codes fourni par l'API de Twitter sont généralements disponible dans la page `Keys and tokens`.
 
