@@ -157,6 +157,7 @@ class Listener(Stream):
                                 # https://developer.twitter.com/en/support/twitter-api/error-troubleshooting
                                 if error["code"] == 385:
                                     error["message"] = "Tweet supprimé ou auteur en privé/bloqué."
+                                    # Don't show the error 385 if verbose is False
                                     if not keys["VERBOSE"]:
                                         pass
                                 print(f"{errorMessage[:-2]} ({error['code']}) ! {error['message']}")
