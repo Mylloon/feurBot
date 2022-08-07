@@ -320,6 +320,9 @@ def start():
         forcelist=keys["FORCELIST"],
     )
 
+    # TODO: Break in v2 API : max 25 rule (https://docs.tweepy.org/en/stable/streamrule.html#tweepy.StreamRule)
+    # Need research, is it possible to run the stream without filter and still catching everything we want?
+
     # Only track specifics words
     stream.add_rules([StreamRule(word) for word in triggerWords])
     stream.filter(threaded=True)
