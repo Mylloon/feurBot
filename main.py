@@ -83,6 +83,7 @@ class Listener(StreamingClient):
     ):
         super(Listener, self).__init__(bearer_token, wait_on_rate_limit=True)
         self.client = client
+        self.cache = {}
 
     def on_connect(self):
         print(f"Début du scroll sur Twitter...")
@@ -93,18 +94,40 @@ class Listener(StreamingClient):
         if len(notice["reason"]) > 0:
             print(f"Raison : {notice['reason']}")
 
+    def get_user(self, uid: int) -> str:
+        """Return username by ID, with cache support"""
+        # If not cached
+        if not uid in self.cache:
+            # Fetch from Twitter
+            self.cache[uid] = self.client.get_user(
+                id=uid, user_auth=True).data.username
+
+        # Return the username
+        return self.cache[uid]
+
     def on_tweet(self, tweet: Tweet):
         # Check if the tweet is not a retweet
         if not tweet.text.startswith("RT @"):
-            # Fetch the last word of the tweet
-            tweet.username: str = self.client.get_user(
-                id=tweet.author_id, user_auth=True).data.username
-            lastWord = cleanTweet(tweet.text).split()[-1:][0]
+            username = self.get_user(tweet.author_id)
+            # Clean the tweet
+            lastWord = cleanTweet(tweet.text)
+
+            # Log
             if keys["VERBOSE"]:
-                infoLastWord = f"dernier mot : \"{lastWord}\"" if len(
-                    lastWord) > 0 else "tweet ignoré car trop de hashtags"
+                infoLastWord = "dernier mot : "
+                if len(lastWord) > 0:
+                    infoLastWord += f"dernier mot : {lastWord}"
+                else:
+                    infoLastWord += "tweet ignoré car trop de hashtags"
                 print(
-                    f"Tweet trouvé de {tweet.username} ({infoLastWord})...", end=" ")
+                    f"Tweet trouvé de {username} ({infoLastWord})...", end=" ")
+
+            if len(lastWord) > 0:
+                return
+
+            # Fetch the last word of the tweet
+            lastWord = lastWord.split()[-1:][0]
+
             # Check if the last word found is a supported word
             if lastWord in universalBase:
                 answer = None
@@ -142,13 +165,13 @@ class Listener(StreamingClient):
                         # Send the tweet with the answer
                         self.client.create_tweet(
                             in_reply_to_tweet_id=tweet.id, text=choice(answer))
-                        print(f"{tweet.username} s'est fait {answer[0]} !")
+                        print(f"{username} s'est fait {answer[0]} !")
                     except Exception as error:
                         error = loads(error.response.text)["errors"][0]
                         # https://developer.twitter.com/en/support/twitter-api/error-troubleshooting
                         show_error = True
                         if error["code"] == 385:
-                            error["message"] = f"Tweet supprimé ou auteur ({tweet.username}) en privé/bloqué."
+                            error["message"] = f"Tweet supprimé ou auteur ({username}) en privé/bloqué."
                             show_error = False
 
                         # Show error only if relevant, always in verbose
@@ -311,7 +334,7 @@ def start():
 
     for rule in create_rules(tracked_users):
         stream.add_rules(StreamRule(rule))
-    stream.filter(threaded=True)
+    stream.filter(threaded=True, tweet_fields=['author_id'])
 
 
 if __name__ == "__main__":
