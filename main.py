@@ -263,7 +263,19 @@ def createBaseTrigger(lists: list[list]) -> list:
 
 def createBaseAnswers(word: str) -> list:
     """Generates default answers for a given word"""
-    return [word, f"({word})", word.upper(), f"{word} lol", f"{word} 👀"]
+    irritating_word = [
+        "lol",
+        "👀",
+        "XD",
+    ]
+
+    return [
+        word,
+        f"({word})",
+        word.upper(),
+        f"{word} {choice(irritating_word)}",
+        f"{word}...",
+    ]
 
 def start():
     """Start the bot"""
