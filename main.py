@@ -5,7 +5,6 @@ from random import choice
 from re import findall, sub
 
 from dotenv import load_dotenv
-from pytz import timezone
 from tweepy import Client, StreamingClient, StreamRule, Tweet
 
 
@@ -95,8 +94,8 @@ class Listener(StreamingClient):
             print(f"Raison : {notice['reason']}")
 
     def on_tweet(self, tweet: Tweet):
-        # Verify the age of the tweet
-        if seniority(tweet.created_at):
+        # Check if the tweet is not a retweet
+        if not tweet.text.startswith("RT @"):
             # Fetch the last word of the tweet
             tweet.username: str = self.client.get_user(
                 id=tweet.author_id, user_auth=True).data.username
@@ -192,18 +191,6 @@ def getFriends(client: Client, users: list[str]) -> list:
         friends_list.extend(client.get_users_following(
             id=user_id, user_auth=True))
     return friends_list[0]
-
-
-def seniority(date: datetime) -> bool:
-    """Return True only if the given string date is less than one day old"""
-    # Convert string format to datetime format
-    datetimeObject = datetime.strptime(date, "%a %b %d %H:%M:%S +0000 %Y")
-    # Twitter give us an UTC time
-    datetimeObject = datetimeObject.replace(tzinfo=timezone("UTC"))
-    # time now in UTC minus the time we got to get the age of the date
-    age = datetime.now(timezone("UTC")) - datetimeObject
-    # False if older than a day, else True
-    return False if age.days >= 1 else True
 
 
 def createBaseTrigger(lists: list[list]) -> list:
