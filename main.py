@@ -155,12 +155,14 @@ class Listener(Stream):
                             except Exception as error:
                                 error = loads(error.response.text)["errors"][0]
                                 # https://developer.twitter.com/en/support/twitter-api/error-troubleshooting
+                                show_error = True
                                 if error["code"] == 385:
-                                    error["message"] = "Tweet supprimé ou auteur en privé/bloqué."
-                                    # Don't show the error 385 if verbose is False
-                                    if not keys["VERBOSE"]:
-                                        pass
-                                print(f"{errorMessage[:-2]} ({error['code']}) ! {error['message']}")
+                                    error["message"] = f"Tweet supprimé ou auteur ({json['user']['screen_name']}) en privé/bloqué."
+                                    show_error = False
+
+                                # Show error only if relevant, always in verbose
+                                if show_error or keys["VERBOSE"]:
+                                    print(f"{errorMessage[:-2]} ({error['code']}) ! {error['message']}")
                     else:
                         if keys["VERBOSE"]:
                             print("Annulation car le dernier mot n'est pas intéressant.")
