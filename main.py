@@ -116,7 +116,7 @@ class Listener(StreamingClient):
             if keys["VERBOSE"]:
                 infoLastWord = "dernier mot : "
                 if len(lastWord) > 0:
-                    infoLastWord += f"dernier mot : {lastWord}"
+                    infoLastWord += f"dernier mot : {lastWord.split()[-1:][0]}"
                 else:
                     infoLastWord += "tweet ignoré car trop de hashtags"
                 print(
