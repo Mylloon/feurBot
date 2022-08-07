@@ -118,7 +118,7 @@ class Listener(StreamingClient):
                 if len(lastWord) > 0:
                     infoLastWord += f"dernier mot : {lastWord.split()[-1:][0]}"
                 else:
-                    infoLastWord += "tweet ignoré car trop de hashtags"
+                    infoLastWord += "tweet ignoré car trop de hashtags.\n"
                 print(
                     f"Tweet trouvé de {username} ({infoLastWord})...", end=" ")
 
