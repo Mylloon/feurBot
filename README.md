@@ -18,13 +18,16 @@ N'hésitez pas à ouvrir un ticket ou faire une merge-request pour contribuer au
 
 Donner la permission `Read and Write` (ou `Read + Write + Direct Messages` mais aucun DM n'est envoyé) au bot dans `Settings` puis `App permissions`.
 
+Les codes fourni par l'API de Twitter sont généralements disponible dans la page `Keys and tokens`.
+
 Détails des variables d'environnement :
 | Variable      | Explication et où elle se trouve
 ----------------|-
 TOKEN           | Token d'accès disponible dans la section `Authentication Tokens` sous la sous-rubrique `Access Token and Secret`
 TOKEN_SECRET    | Token d'accès secret disponible dans la section `Authentication Tokens` sous la sous-rubrique `Access Token and Secret`
-CONSUMER_KEY    | Clé API disponible dans la section `Consumer Keys`
-CONSUMER_SECRET | Clé secrète API disponible dans la section `Consumer Keys`
+CONSUMER_KEY    | Clé API disponible dans la section `Consumer Keys` sous la sous-rubrique `API Key and Secret`
+CONSUMER_SECRET | Clé secrète API disponible dans la section `Consumer Keys` sous la sous-rubrique `API Key and Secret`
+BEARER_TOKEN    | Token disponible dans la section `Authentication Tokens` sous la sous-rubrique `Bearer Token`
 PSEUDOS         | Pseudos du ou des compte.s que vous voulez écouter pour le snipe (a séparer avec une virgule **sans** espaces)
 WHITELIST       | Pseudos des comptes qui ne seront pas touché par le Bot (facultatif, a séparer avec une virgule **sans** espaces, par défaut la liste est vide)
 VERBOSE         | Affiche plus de messages dans la console [False\|True] (facultatif, par défaut sur False)
