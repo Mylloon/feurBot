@@ -325,12 +325,17 @@ def start():
 
 if __name__ == "__main__":
     """
-    TOKEN is the Access Token available in the Authentication Tokens section under Access Token and Secret sub-heading.
-    TOKEN_SECRET is the Access Token Secret available in the Authentication Tokens section under Access Token and Secret sub-heading.
-    CONSUMER_KEY is the API Key available in the Consumer Keys section.
-    CONSUMER_SECRET is the API Secret Key available in the Consumer Keys section.
+    TOKEN is the Access Token available in the Authentication Tokens section under the Access Token and Secret sub-heading
+    TOKEN_SECRET is the Access Token Secret available in the Authentication Tokens section under the Access Token and Secret sub-heading
+    CONSUMER_KEY is the API Key available in the Consumer Keys section under the API Key and Secret sub-heading
+    CONSUMER_SECRET is the API Secret Key available in the Consumer Keys section under the API Key and Secret sub-heading
+    BEARER_TOKEN is the Bearer Token available in the Authentication Tokens section under the Bearer Token sub-heading
     --
-    PSEUDO is the PSEUDO of the account you want to listen to snipe.
+    PSEUDOS is a list of account you want to listen, all of his·er following (guys followed by PSEUDO) will be sniped
+    WHITELSIT is a list of account who are protected from the bot
+    FORCELIST is a list of account who are targeted by the bot, if user is in the whitelist, he·r will be ignored
+    ---
+    VERBOSE enable some debugs log
     """
     # Error message
     errorMessage = "Une erreur survient !"
@@ -507,7 +512,7 @@ if __name__ == "__main__":
     triggerWords = generateWords(universalBase)
 
     # Loading environment variables
-    keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "PSEUDOS", "VERBOSE", "WHITELIST", "FORCELIST", "BEARER_TOKEN"])
+    keys = load(["TOKEN", "TOKEN_SECRET", "CONSUMER_KEY", "CONSUMER_SECRET", "BEARER_TOKEN", "PSEUDOS", "VERBOSE", "WHITELIST", "FORCELIST"])
 
     # Start the bot
     start()
