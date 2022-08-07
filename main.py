@@ -1,11 +1,13 @@
-from dotenv import load_dotenv
-from os import environ
-from tweepy import StreamingClient, Client, StreamRule, Tweet
-from re import sub, findall
-from random import choice
 from datetime import datetime
-from pytz import timezone
 from json import loads
+from os import environ
+from random import choice
+from re import findall, sub
+
+from dotenv import load_dotenv
+from pytz import timezone
+from tweepy import Client, StreamingClient, StreamRule, Tweet
+
 
 def load(variables) -> dict:
     """Load environment variables"""
