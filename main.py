@@ -347,6 +347,7 @@ if __name__ == "__main__":
         "quand": ["quand", "kan", "qand", "quan"],
         "sol": ["sol"],
         "vois": ["vois", "voit", "voie", "voi"],
+        "akhy": ["akhy", "aquis", "aquit"],
     }
 
     # Answers for all the triggers (keys in lowercase)
@@ -470,6 +471,8 @@ if __name__ == "__main__":
         "sol": createBaseAnswers("itaire"),
 
         "vois": createBaseAnswers("ture"),
+
+        "akhy": createBaseAnswers("nator"),
     }
 
     # List of all the trigger words

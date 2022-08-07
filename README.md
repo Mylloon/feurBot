@@ -9,7 +9,7 @@ quoi  | feur       | ¦ | con     | combre    | ¦ | coup | teau                
 oui   | stiti/fi   | ¦ | ok      | sur glace | ¦ | ça   | pristi/perlipopette/von       | ¦ | fais                    | rtile      | ¦ | toi   | lette/ture        | ¦ | quand | dide/tal/didat
 non   | bril       | ¦ | ouais   | stern     | ¦ | bon  | jour/soir (dépend de l'heure) | ¦ | tant (ou autre syntaxe) | gente      | ¦ | top   | inambour          | ¦ | sol   | itaire
 nan   | cy         | ¦ | comment | tateur    | ¦ | qui  | wi/mono                       | ¦ | et                      | eint/ain   | ¦ | jour  | nal               | ¦ | vois  | ture
-hein  | deux       | ¦ | mais    | on        | ¦ | sur  | prise                         | ¦ | la                      | vabo/vande | ¦ | ya/yo | hourt/yo          | ¦ |
+hein  | deux       | ¦ | mais    | on        | ¦ | sur  | prise                         | ¦ | la                      | vabo/vande | ¦ | ya/yo | hourt/yo          | ¦ | akhy  | nator
 ci    | tron       | ¦ | fort    | boyard    | ¦ | pas  | nini/steur                    | ¦ | tki                     | la         | ¦ | re    | pas/veil/tourne   | ¦ |
 
 N'hésitez pas à ouvrir un ticket ou faire une merge-request pour contribuer au projet.
