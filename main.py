@@ -172,6 +172,19 @@ class Listener(StreamingClient):
                 if keys["VERBOSE"]:
                     print("Annulation car le dernier mot n'est pas intéressant.")
 
+    def on_request_error(self, status_code):
+        print(f"{errorMessage[:-2]} ({status_code}) !", end=" ")
+        match status_code:
+            case 420:
+                if keys["VERBOSE"]:
+                    print("Déconnecter du flux.")
+            case 429:
+                if keys["VERBOSE"]:
+                    print("En attente de reconnexion...")
+            case _:
+                print("\n")
+        return False
+
 
 def repeater(word: str) -> str:
     """Formating a word who need to be repeated"""
