@@ -39,11 +39,11 @@ docker build https://git.kennel.ml/Anri/feurBot.git#main --tag feurbot:main && \
 docker run -d \
     --name="feurBot" \
     feurbot:main \
-    --TOKEN="" \
-    --TOKEN_SECRET="" \
     --CONSUMER_KEY="" \
     --CONSUMER_SECRET="" \
     --BEARER_TOKEN="" \
+    --TOKEN="" \
+    --TOKEN_SECRET="" \
     --PSEUDOS=""
 ```
 Ou avec un `docker-compose.yml` :
@@ -54,11 +54,11 @@ services:
     build: https://git.kennel.ml/Anri/feurBot.git#main
     container_name: feurBot
     environment:
-      - TOKEN=
-      - TOKEN_SECRET=
       - CONSUMER_KEY=
       - CONSUMER_SECRET=
       - BEARER_TOKEN=
+      - TOKEN=
+      - TOKEN_SECRET=
       - PSEUDOS=
     restart: unless-stopped
 ```
