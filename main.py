@@ -288,7 +288,7 @@ def create_rules(tracked_users: list[str]) -> list[str]:
     rules = []
 
     # Repeating rules
-    repeat = "-is:retweet"
+    repeat = "-is:retweet ("
 
     # Buffer
     buffer = repeat
@@ -297,13 +297,14 @@ def create_rules(tracked_users: list[str]) -> list[str]:
     for user in tracked_users:
         # Check if the rule don't exceeds the maximum length of a rule (512)
         # 5 is len of "from:"
-        if len(buffer) + len(user) + 5 > 512:
-            rules.append(buffer)
+        # 1 is len for closing parenthesis
+        if len(buffer) + len(user) + 5 + 1 > 512:
+            rules.append(buffer[:-4] + ")")
             buffer = repeat
-        buffer += f' OR from:{user}'
+        buffer += f"from:{user} OR "
 
     if len(buffer) > 0:
-        rules.append(buffer)
+        rules.append(buffer[:-4] + ")")
 
     if len(rules) > 25:
         raise BufferError("Too much rules.")
@@ -333,7 +334,7 @@ def start():
     # Clean rules
     old_rules = stream.get_rules()
     if (old_rules.data):
-        stream.delete_rules([rule for rule in old_rules.data])
+        stream.delete_rules([rule.id for rule in old_rules.data])
 
     # Add new rules
     stream.add_rules([StreamRule(rule)
