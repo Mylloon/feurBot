@@ -74,23 +74,23 @@ on obtient `si`, qui est dans la liste.
 | oui                     | stiti/fi                      |
 | non                     | bril                          |
 | nan                     | cy                            |
-| hein                    | deux                          |
-| ci                      | tron                          |
-| con                     | combre                        |
+| hein                    | deux/bécile                   |
+| ci                      | tron/prine                    |
+| con                     | combre/gelé/pas               |
 | ok                      | sur glace                     |
 | ouais                   | stern                         |
-| comment                 | tateur                        |
+| comment                 | tateur/tatrice/dant Cousteau  |
 | mais                    | on                            |
 | fort                    | boyard                        |
 | coup                    | teau                          |
-| ça                      | pristi/perlipopette/von       |
+| ça                      | pristi/von/perlipopette       |
 | bon                     | jour/soir (dépend de l'heure) |
 | qui                     | wi/mono                       |
 | sur                     | prise                         |
-| pas                     | nini/steur                    |
-| ka                      | pitaine                       |
+| pas                     | nini/steur/trimoine/té/stis   |
+| ka                      | pitaine/pitulation            |
 | fais                    | rtile                         |
-| tant (ou autre syntaxe) | gente                         |
+| tant (ou autre syntaxe) | gente/tation                  |
 | et                      | eint/ain                      |
 | la                      | vabo/vande                    |
 | tki                     | la                            |
@@ -98,9 +98,10 @@ on obtient `si`, qui est dans la liste.
 | toi                     | lette/ture                    |
 | top                     | inambour                      |
 | jour                    | nal                           |
-| ya/yo                   | hourt/yo                      |
-| re                      | pas/veil/tourne               |
+| ya                      | hourt                         |
+| yo                      | yo/ghourt                     |
 | ni                      | cotine                        |
+| re                      | pas/veil/tourne               |
 | quand                   | dide/tal/didat                |
 | sol                     | itaire                        |
 | vois                    | ture                          |
