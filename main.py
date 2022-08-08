@@ -229,6 +229,7 @@ def createBaseAnswers(word: str) -> list:
     ]
 
     return [
+        # Assuming the first element of this list is always word, don't change it
         word,
         f"({word})",
         word.upper(),
