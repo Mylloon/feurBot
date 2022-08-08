@@ -331,12 +331,13 @@ def start():
     stream = Listener(keys["BEARER_TOKEN"], client)
 
     # Clean rules
-    for rule in stream.get_rules().data:
-        stream.delete_rules(rule.id)
+    old_rules = stream.get_rules()
+    if (old_rules.data):
+        stream.delete_rules([rule for rule in old_rules.data])
 
     # Add new rules
-    for rule in create_rules(tracked_users):
-        stream.add_rules(StreamRule(rule))
+    stream.add_rules([StreamRule(rule)
+                     for rule in create_rules(tracked_users)])
     stream.filter(threaded=True, tweet_fields=['author_id'])
 
 
