@@ -286,22 +286,24 @@ def createClient(consumer_key, consumer_secret, access_token, access_token_secre
 def create_rules(tracked_users: list[str]) -> list[str]:
     """Create rules for tracking users, by respecting the twitter API policies"""
     rules = []
-    buffer = ""
+
+    # Repeating rules
+    repeat = "-is:retweet"
+
+    # Buffer
+    buffer = repeat
 
     # Track users
     for user in tracked_users:
         # Check if the rule don't exceeds the maximum length of a rule (512)
         # 5 is len of "from:"
         if len(buffer) + len(user) + 5 > 512:
-            rules.append(buffer[:-4])
-            buffer = ""
-        buffer += f'from:{user} OR '
+            rules.append(buffer)
+            buffer = repeat
+        buffer += f' OR from:{user}'
 
     if len(buffer) > 0:
-        rules.append(buffer[:-4])
-
-    # Ignore retweets
-    rules.append("-is:retweet")
+        rules.append(buffer)
 
     if len(rules) > 25:
         raise BufferError("Too much rules.")
@@ -328,6 +330,11 @@ def start():
 
     stream = Listener(keys["BEARER_TOKEN"], client)
 
+    # Clean rules
+    for rule in stream.get_rules().data:
+        stream.delete_rules(rule.id)
+
+    # Add new rules
     for rule in create_rules(tracked_users):
         stream.add_rules(StreamRule(rule))
     stream.filter(threaded=True, tweet_fields=['author_id'])
