@@ -5,7 +5,7 @@ from random import choice
 from re import findall, sub
 
 from dotenv import load_dotenv
-from tweepy import Client, StreamingClient, StreamRule, Tweet
+from tweepy import Client, StreamingClient, StreamRule, Tweet, errors
 
 
 def load(variables) -> dict:
@@ -88,12 +88,6 @@ class Listener(StreamingClient):
     def on_connect(self):
         print(f"Début du scroll sur Twitter...")
 
-    def on_exception():
-        notice = notice["disconnect"]
-        print(f"Erreur (code {notice['code']}).", end=" ")
-        if len(notice["reason"]) > 0:
-            print(f"Raison : {notice['reason']}")
-
     def get_user(self, uid: int) -> str:
         """Return username by ID, with cache support"""
         # If not cached
@@ -170,30 +164,13 @@ class Listener(StreamingClient):
                         self.client.create_tweet(
                             in_reply_to_tweet_id=tweet.id, text=choice(answer))
                         print(f"{username} s'est fait {answer[0]} !")
-                    except Exception as error:
-                        error = loads(error.response.text)["errors"][0]
-                        # https://developer.twitter.com/en/support/twitter-api/error-troubleshooting
-                        show_error = True
-                        if error["code"] == 385:
-                            error["message"] = f"Tweet supprimé ou auteur ({username}) en privé/bloqué."
-                            show_error = False
-
-                        # Show error only if relevant, always in verbose
-                        if show_error or keys["VERBOSE"]:
+                    except errors.Forbidden:
+                        if keys["VERBOSE"]:
                             print(
-                                f"{errorMessage[:-2]} ({error['code']}) ! {error['message']}")
+                                f"{errorMessage[:-2]} ! Tweet supprimé ou auteur ({username}) en privé/bloqué.")
             else:
                 if keys["VERBOSE"]:
                     print("Annulation car le dernier mot n'est pas intéressant.")
-
-    def on_request_error(self, status_code):
-        print(f"{errorMessage[:-2]} ({status_code}) !", end=" ")
-        if status_code == 420:
-            if keys["VERBOSE"]:
-                print("Déconnecter du flux.")
-        else:
-            print("\n")
-        return False
 
 
 def repeater(word: str) -> str:
