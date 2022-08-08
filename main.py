@@ -42,7 +42,7 @@ def load(variables) -> dict:
     return keys
 
 
-def cleanTweet(tweet: str) -> str:
+def cleanTweet(tweet: str) -> str | None:
     """Remove all unwanted elements from the tweet"""
     # Convert to lower case
     tweet = tweet.lower()
@@ -56,7 +56,7 @@ def cleanTweet(tweet: str) -> str:
         tweet = sub(r"#\S+", " ", tweet)
     else:
         # Too much hashtags in the tweet -> so ignore it
-        return ""
+        return None
     # Remove usernames
     tweet = sub(r"@\S+", " ", tweet)
     # Remove everything who isn't a letter/number/space
@@ -109,18 +109,20 @@ class Listener(StreamingClient):
             # Log
             if keys["VERBOSE"]:
                 infoLastWord = "dernier mot : "
-                if len(lastWord) > 0:
-                    infoLastWord += f"dernier mot : {lastWord.split()[-1:][0]}"
-                else:
-                    infoLastWord += "tweet ignoré car trop de hashtags"
+                newline = "\n"
+                match lastWord:
+                    case None:
+                        infoLastWord += "tweet ignoré car trop de hashtags"
+                    case w if len(w) == 0:
+                        infoLastWord += "tweet pas intéressant"
+                    case _:
+                        infoLastWord += f"dernier mot : {lastWord.split()[-1:][0]}"
+                        newline = ""
                 print(
-                    f"Tweet trouvé de {username} ({infoLastWord})...", end=" ")
+                    f"Tweet trouvé de {username} ({infoLastWord})...{newline}", end=" ")
 
-            # Hashtag tweet
-            if len(lastWord) == 0:
-                if keys["VERBOSE"]:
-                    # Newline
-                    print("")
+            # Ignore a tweet
+            if lastWord == None or len(lastWord) == 0:
                 return
 
             # Fetch the last word of the tweet
