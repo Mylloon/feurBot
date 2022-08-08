@@ -66,7 +66,7 @@ def cleanTweet(tweet: str) -> str:
     tweet = sub(r"\S+(?=si|ci)", " ", tweet)
 
     # Remove key smashing in certains words
-    #              uiii      naaaan          quoiiii     noooon          heiiin           siiii
+    #       uiii      naaaan          quoiiii     noooon          heiiin           siiii
     tweet = sub(
         r"(?<=ui)i+|(?<=na)a+(?<!n)|(?<=quoi)i+|(?<=no)o+(?<!n)|(?<=hei)i+(?<!n)|(?<=si)i+", "", tweet)
 
