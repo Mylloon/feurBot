@@ -53,6 +53,7 @@ docker run -d \
     --TOKEN_SECRET="" \
     --CONSUMER_KEY="" \
     --CONSUMER_SECRET="" \
+    --BEARER_TOKEN="" \
     --PSEUDOS=""
 ```
 Ou avec un `docker-compose.yml` :
@@ -67,6 +68,7 @@ services:
       - TOKEN_SECRET=
       - CONSUMER_KEY=
       - CONSUMER_SECRET=
+      - BEARER_TOKEN=
       - PSEUDOS=
     restart: unless-stopped
 ```
