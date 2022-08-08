@@ -122,7 +122,8 @@ class Listener(StreamingClient):
                 print(
                     f"Tweet trouvé de {username} ({infoLastWord})...", end=" ")
 
-            if len(lastWord) > 0:
+            # Hashtag tweet
+            if len(lastWord) == 0:
                 return
 
             # Fetch the last word of the tweet
@@ -163,8 +164,8 @@ class Listener(StreamingClient):
                         print(f"Envoie d'un {answer[0]}...", end=" ")
                     try:
                         # Send the tweet with the answer
-                        self.client.create_tweet(
-                            in_reply_to_tweet_id=tweet.id, text=choice(answer))
+                        """ self.client.create_tweet(
+                            in_reply_to_tweet_id=tweet.id, text=choice(answer)) """
                         print(f"{username} s'est fait {answer[0]} !")
                     except Exception as error:
                         error = loads(error.response.text)["errors"][0]
