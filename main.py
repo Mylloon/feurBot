@@ -15,7 +15,8 @@ def load(variables) -> dict:
         try:
             if var == "VERBOSE":  # check is VERBOSE is set
                 try:
-                    res = bool(environ[var])
+                    if environ[var].lower() == "true":
+                        res = True
                 except:
                     res = False  # if not its False
             elif var == "WHITELIST":  # check if WHITELIST is set
