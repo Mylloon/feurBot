@@ -352,7 +352,8 @@ def start():
 
     if need_changes:
         # Clean old rules
-        stream.delete_rules([rule.id for rule in old_rules])
+        if old_rules:
+            stream.delete_rules([rule.id for rule in old_rules])
 
         # Add new rules
         stream.add_rules([StreamRule(rule) for rule in rules])
