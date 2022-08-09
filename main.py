@@ -336,18 +336,26 @@ def start():
 
     # Check if rules already exists
     old_rules = stream.get_rules().data
-    old_rules_values = [rule.value for rule in old_rules]
+    old_rules_values = []
+    if old_rules:
+        old_rules_values = [rule.value for rule in old_rules]
+    need_changes = False
     # Same amount of rules
     if len(old_rules_values) == len(rules):
         for rule in rules:
             # Check if Twitter doesn't know the rule and change rules if needed
             if rule not in old_rules_values:
-                # Clean old rules
-                stream.delete_rules([rule.id for rule in old_rules])
-
-                # Add new rules
-                stream.add_rules([StreamRule(rule) for rule in rules])
+                need_changes = True
                 break
+    else:
+        need_changes = True
+
+    if need_changes:
+        # Clean old rules
+        stream.delete_rules([rule.id for rule in old_rules])
+
+        # Add new rules
+        stream.add_rules([StreamRule(rule) for rule in rules])
 
     # Apply the filter
     stream.filter(threaded=True, tweet_fields="author_id")
