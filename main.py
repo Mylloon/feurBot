@@ -331,14 +331,24 @@ def start():
 
     stream = Listener(keys["BEARER_TOKEN"], client)
 
-    # Clean rules
-    old_rules = stream.get_rules()
-    if (old_rules.data):
-        stream.delete_rules([rule.id for rule in old_rules.data])
+    # Gathering rules
+    rules = [rule for rule in create_rules(tracked_users)]
 
-    # Add new rules
-    stream.add_rules([StreamRule(rule)
-                     for rule in create_rules(tracked_users)])
+    # Check if rules already exists
+    old_rules = stream.get_rules().data
+    old_rules_values = [rule.value for rule in old_rules]
+    # Same amount of rules
+    if len(old_rules_values) == len(rules):
+        for rule in rules:
+            # Check if Twitter doesn't know the rule and change rules if needed
+            if rule not in old_rules_values:
+                # Clean old rules
+                stream.delete_rules([rule.id for rule in old_rules])
+
+                # Add new rules
+                stream.add_rules([StreamRule(rule) for rule in rules])
+                break
+
     stream.filter(threaded=True, tweet_fields="author_id")
 
 
