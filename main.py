@@ -87,7 +87,7 @@ class Listener(StreamingClient):
     def on_connect(self):
         print(f"Début du scroll sur Twitter...")
 
-    def get_user(self, uid: int) -> str:
+    def _get_user(self, uid: int) -> str:
         """Return username by ID, with cache support"""
         # If not cached
         if not uid in self.cache:
@@ -101,7 +101,7 @@ class Listener(StreamingClient):
     def on_tweet(self, tweet: Tweet):
         # Check if the tweet is not a retweet
         if not tweet.text.startswith("RT @"):
-            username = self.get_user(tweet.author_id)
+            username = self._get_user(tweet.author_id)
             # Clean the tweet
             lastWord = cleanTweet(tweet.text)
 
@@ -349,6 +349,7 @@ def start():
                 stream.add_rules([StreamRule(rule) for rule in rules])
                 break
 
+    # Apply the filter
     stream.filter(threaded=True, tweet_fields="author_id")
 
 
