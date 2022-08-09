@@ -351,11 +351,17 @@ def start():
         need_changes = True
 
     if need_changes:
+        if keys["VERBOSE"]:
+            print("Changes needed... ", end=" ")
         # Clean old rules
         if old_rules:
+            if keys["VERBOSE"]:
+                print("deleting old rules... ", end=" ")
             stream.delete_rules([rule.id for rule in old_rules])
 
         # Add new rules
+        if keys["VERBOSE"]:
+            print("sending new filter to Twitter.")
         stream.add_rules([StreamRule(rule) for rule in rules])
 
     # Apply the filter
