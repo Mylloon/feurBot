@@ -1,5 +1,4 @@
 from datetime import datetime
-from json import loads
 from os import environ
 from random import choice
 from re import findall, sub
@@ -184,7 +183,8 @@ class Listener(StreamingClient):
                 if keys["VERBOSE"]:
                     print("En attente de reconnexion...")
             case _:
-                print("\n")
+                # newline
+                print("")
         return False
 
 
@@ -194,7 +194,7 @@ def repeater(word: str) -> str:
     # Explanation: Trigger word for the repeater is "di" and sometimes it is
     # "dis", sometimes its "dit", that's why we need to remove this 2 letters
     # from the final answer
-    if word[0] == 's' or word[0] == 't':
+    if word[0] == "s" or word[0] == "t":
         word = word[1:]
 
     # Random format from the base answer
@@ -249,26 +249,25 @@ def createClient(consumer_key, consumer_secret, access_token, access_token_secre
 
     if keys["VERBOSE"]:
         try:
-            client.get_me().data.username
             print(
                 f"Authentification réussie en tant que @{client.get_me().data.username}.\n")
 
             # Compte ignorés
-            if keys['WHITELIST'] == []:
+            if keys["WHITELIST"] == []:
                 whitelist = "Aucun"
             else:
                 whitelist = f"@{', @'.join(keys['WHITELIST'])}"
             print(f"Liste des comptes ignorés : {whitelist}.")
 
             # Compte forcés
-            if keys['FORCELIST'] == []:
+            if keys["FORCELIST"] == []:
                 forcelist = "Aucun"
             else:
                 forcelist = f"@{', @'.join(keys['FORCELIST'])}"
             print(f"Liste des comptes forcés : {forcelist}.")
 
             # Compte aux following suivis
-            if keys['PSEUDOS'] == []:
+            if keys["PSEUDOS"] == []:
                 pseudos = "Aucun"
             else:
                 pseudos = f"@{', @'.join(keys['PSEUDOS'])}"
@@ -289,7 +288,7 @@ def create_rules(tracked_users: list[str]) -> list[str]:
     rules = []
 
     # Repeating rules
-    repeat = "-is:retweet ("
+    repeat = "-is:retweet lang:fr ("
 
     # Buffer
     buffer = repeat
@@ -340,7 +339,7 @@ def start():
     # Add new rules
     stream.add_rules([StreamRule(rule)
                      for rule in create_rules(tracked_users)])
-    stream.filter(threaded=True, tweet_fields=['author_id'])
+    stream.filter(threaded=True, tweet_fields="author_id")
 
 
 if __name__ == "__main__":
