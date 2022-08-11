@@ -104,8 +104,15 @@ class Listener(StreamingClient):
         if not tweet.text.startswith("RT @"):
             # Cancel if author of the first tweet in the conversation is in private
             if tweet.conversation_id:
+                if keys["VERBOSE"]:
+                    print("Thread...", end=" ")
                 if self._get_user(self.client.get_tweet(id=tweet.conversation_id, tweet_fields="author_id", user_auth=True).data.author_id).protected:
+                    if keys["VERBOSE"]:
+                        print("Auteur du premier tweet en privé, pas de réponses.")
                     return
+                else:
+                    if keys["VERBOSE"]:
+                        print("Auteur du premier tweet en publique...", end=" ")
             author = self._get_user(tweet.author_id)
             # Clean the tweet
             lastWord = cleanTweet(tweet.text)
