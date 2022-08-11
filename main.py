@@ -379,7 +379,7 @@ def start():
         stream.add_rules([StreamRule(rule) for rule in rules])
 
     # Apply the filter
-    stream.filter(threaded=True, tweet_fields=["author_id", "conversation_id"])
+    stream.filter(tweet_fields=["author_id", "conversation_id"])
 
 
 if __name__ == "__main__":
