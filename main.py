@@ -107,14 +107,22 @@ class Listener(StreamingClient):
                 if keys["VERBOSE"]:
                     print("Thread...", end=" ")
                 base_tweet = self.client.get_tweet(id=tweet.conversation_id, tweet_fields="author_id", user_auth=True).data
-                # If we have an author ID, the author account is in private
+                # Sometimes Twitter don't give what we want
                 if hasattr(base_tweet, 'author_id'):
-                    if keys["VERBOSE"]:
-                        print("Auteur du premier tweet en privé, pas de réponses.")
-                    return
+                    base_author = self._get_user(base_tweet.author_id)
+                    # Check if account is in private mode
+                    if base_author.protected:
+                        if keys["VERBOSE"]:
+                            print("Auteur du premier tweet en privé, pas de réponses.")
+                        return
+                    else:
+                        if keys["VERBOSE"]:
+                            print("Auteur du premier tweet en publique...", end=" ")
                 else:
+                    # Can't check the status of the first tweet in the thread, ignoring for safety
                     if keys["VERBOSE"]:
-                        print("Auteur du premier tweet en publique...", end=" ")
+                        print("Impossible de vérifier le status de l'auteur du fil.")
+                    return
             author = self._get_user(tweet.author_id)
             # Clean the tweet
             lastWord = cleanTweet(tweet.text)
