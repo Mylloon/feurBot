@@ -307,6 +307,8 @@ def create_rules(tracked_users: list[str]) -> list[str]:
     # Buffer
     buffer = repeat
 
+    tracked_users.sort()
+
     # Track users
     for user in tracked_users:
         # Check if the rule don't exceeds the maximum length of a rule (512)
