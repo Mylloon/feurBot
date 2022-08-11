@@ -103,7 +103,7 @@ class Listener(StreamingClient):
         # Check if the tweet is not a retweet
         if not tweet.text.startswith("RT @"):
             # Cancel if author of the first tweet in the conversation is in private
-            if tweet.conversation_id:
+            if tweet.conversation_id and tweet.id != tweet.conversation_id:
                 if keys["VERBOSE"]:
                     print("Thread...", end=" ")
                 base_tweet = self.client.get_tweet(id=tweet.conversation_id, tweet_fields="author_id", user_auth=True).data
