@@ -108,7 +108,7 @@ class Listener(StreamingClient):
                     print("Thread...", end=" ")
                 base_tweet = self.client.get_tweet(id=tweet.conversation_id, tweet_fields="author_id", user_auth=True).data
                 # If we have an author ID, the author account is in private
-                if base_tweet.author_id:
+                if hasattr(base_tweet, 'author_id'):
                     if keys["VERBOSE"]:
                         print("Auteur du premier tweet en privé, pas de réponses.")
                     return
