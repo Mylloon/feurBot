@@ -4,7 +4,7 @@ from random import choice
 from re import findall, sub
 
 from dotenv import load_dotenv
-from tweepy import Client, StreamingClient, StreamRule, Tweet, errors
+from tweepy import Client, StreamingClient, StreamRule, Tweet, User, errors
 
 
 def load(variables) -> dict:
@@ -88,21 +88,25 @@ class Listener(StreamingClient):
     def on_connect(self):
         print(f"Début du scroll sur Twitter...")
 
-    def _get_user(self, uid: int) -> str:
+    def _get_user(self, uid: int) -> User:
         """Return username by ID, with cache support"""
         # If not cached
         if not uid in self.cache:
             # Fetch from Twitter
             self.cache[uid] = self.client.get_user(
-                id=uid, user_auth=True).data.username
+                id=uid, user_fields="protected", user_auth=True).data
 
-        # Return the username
+        # Return the user
         return self.cache[uid]
 
     def on_tweet(self, tweet: Tweet):
         # Check if the tweet is not a retweet
         if not tweet.text.startswith("RT @"):
-            username = self._get_user(tweet.author_id)
+            # Cancel if author of the first tweet in the conversation is in private
+            if tweet.conversation_id:
+                if self._get_user(self.client.get_tweet(id=tweet.conversation_id, tweet_fields="author_id", user_auth=True).data.author_id).protected:
+                    return
+            author = self._get_user(tweet.author_id)
             # Clean the tweet
             lastWord = cleanTweet(tweet.text)
 
@@ -119,7 +123,7 @@ class Listener(StreamingClient):
                         infoLastWord += f"dernier mot : {lastWord.split()[-1:][0]}"
                         newline = ""
                 print(
-                    f"Tweet trouvé de {username} ({infoLastWord})...{newline}", end=" ")
+                    f"Tweet trouvé de {author.username} ({infoLastWord})...{newline}", end=" ")
 
             # Ignore a tweet
             if lastWord == None or len(lastWord) == 0:
@@ -134,7 +138,7 @@ class Listener(StreamingClient):
 
                 # Check repetition
                 repetition = findall(r"di(\S+)", lastWord)
-                if(len(repetition) > 0):
+                if len(repetition) > 0:
                     # We need to repeat something...
                     answer = repeater(repetition[0])
 
@@ -165,11 +169,11 @@ class Listener(StreamingClient):
                         # Send the tweet with the answer
                         self.client.create_tweet(
                             in_reply_to_tweet_id=tweet.id, text=choice(answer))
-                        print(f"{username} s'est fait {answer[0]} !")
+                        print(f"{author.username} s'est fait {answer[0]} !")
                     except errors.Forbidden:
                         if keys["VERBOSE"]:
                             print(
-                                f"{errorMessage[:-2]} ! Tweet supprimé ou auteur ({username}) en privé/bloqué.")
+                                f"{errorMessage[:-2]} ! Tweet supprimé ou auteur ({author.username}) en privé/bloqué.")
             else:
                 if keys["VERBOSE"]:
                     print("Annulation car le dernier mot n'est pas intéressant.")
@@ -366,7 +370,7 @@ def start():
         stream.add_rules([StreamRule(rule) for rule in rules])
 
     # Apply the filter
-    stream.filter(threaded=True, tweet_fields="author_id")
+    stream.filter(threaded=True, tweet_fields=["author_id", "conversation_id"])
 
 
 if __name__ == "__main__":
