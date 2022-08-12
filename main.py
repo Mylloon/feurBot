@@ -192,7 +192,7 @@ class Listener(StreamingClient):
                         # Send the tweet with the answer
                         self.client.create_tweet(
                             in_reply_to_tweet_id=tweet.id, text=choice(answer))
-                        print(f"{author.username} s'est fait {answer[0]} !")
+                        print(f"{author.username} s'est fait -{answer[0]} !")
                     except errors.Forbidden:
                         if keys["VERBOSE"]:
                             print(
